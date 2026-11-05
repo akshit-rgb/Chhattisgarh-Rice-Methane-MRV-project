@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Satellite-Based Rice Methane Assessment & Carbon MRV Pipeline
 ### State: Chhattisgarh, India | Pilot: Durg District (LGD Code: 378) | Scalable to all 33 Districts
 ### Master Spatial Boundary Source: Official Survey of India (`archive.zip` / `DISTRICT_BOUNDARY.shp`)
@@ -122,3 +123,7 @@ streamlit run chhattisgarh_rice_methane_mrv/outputs/dashboard/app.py
 ```bash
 python chhattisgarh_rice_methane_mrv/tests/test_pipeline.py
 ```
+=======
+# Chhattisgarh-Rice-Methane-MRV-project
+An end-to-end geospatial and IPCC Tier-2 modeling framework to quantify rice paddy extent, inundation dynamics, and methane mitigation scenarios across 33 districts in Chhattisgarh.
+>>>>>>> 8dd008604170c2ffb2106e024014cbe8c7ab90ee
