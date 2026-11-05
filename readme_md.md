@@ -29,7 +29,7 @@ Here are visual previews of the statewide rice density mapping and modelled meth
 
 | Statewide Rice Paddy Density | Modelled $\text{CH}_4$ & Uncertainty |
 | :-------------------------: | :--------------------------------: |
-| ![Rice Paddy Density](outputs/maps/07_chhattisgarh_statewide_rice_paddy_density.png) | ![Modelled CH4](outputs/maps/04_modelled_ch4_and_uncertainty.png) |
+| ![Rice Paddy Density](outputs/maps/07_statewide_rice_paddy_density.png)| ![Modelled CH4](outputs/maps/04_modelled_ch4_and_uncertainty.png) |
 
 ### 📊 Scientific Diagnostic & Uncertainty Charts
 | SAR vs. Optical Phenology Curve | Monte Carlo Sensitivity Tornado |
