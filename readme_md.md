@@ -42,40 +42,40 @@ Here are visual previews of the statewide rice density mapping and modelled meth
 
 ```text
 chhattisgarh_rice_methane_mrv/
-├── config/
-│   └── parameters.yaml              # IPCC 2019 constants, GEE project ID, CRS, & Monte Carlo bounds
-├── metadata/
-│   ├── data_inventory.csv           # Schema for tracking open datasets, URLs, vintages, & licenses
-│   └── district_name_crosswalk.csv  # LGD codes, canonical names, and boundary vintages for all 33 districts
-├── data/
-│   ├── raw/admin_boundaries/
-│   │   └── india_districts/         # Extracted official Survey of India shapefile
-│   └── processed/admin_boundaries/
-│       ├── chhattisgarh_district_boundaries.gpkg # Validated 33-district polygons in EPSG:32644
-│       └── durg_pilot_boundary.geojson           # Pilot boundary in EPSG:4326 for GEE reductions
-├── gee/
-│   ├── 01_durg_rice_phenology.py    # GEE Python API: S1 SAR specular dip + rise + S2 cloud-masked LSWI/NDVI
-│   └── 02_inundation_metrics.py     # GEE Python API: Wet observation counts, hydro-period, & confidence
-├── scripts/
-│   ├── wp1_boundary_validator.py    # GeoPandas pipeline: Ingests official shapefile, repairs, reprojects
-│   ├── wp2_accuracy_assessment.py   # Olofsson area-adjusted accuracy, confusion matrix, UA/PA, F1 score
-│   ├── wp4_ipcc_tier2_engine.py     # Vectorized IPCC Tier-2 CH4 calculator + 10,000-draw Monte Carlo
-│   ├── wp5_awd_scenarios.py         # Counterfactual AWD calculator with N2O trade-off penalty deduction
-│   ├── wp6_district_aggregator.py   # Compiles final 20-column district output table
-│   ├── generate_tables.py           # Structured CSV reporting engine (4 tables)
-│   ├── generate_maps.py             # Publication-grade cartography engine (5 maps @ 300 DPI)
-│   └── generate_charts.py           # Diagnostic & uncertainty visualization engine (5 charts @ 300 DPI)
-├── outputs/
-│   ├── tables/                      # Master 20-column CSV, confusion matrix, AWD trade-offs, gap matrix
-│   ├── maps/                        # 5 publication maps in EPSG:32644
-│   ├── charts/                      # 5 scientific diagnostic charts
-│   └── dashboard/
-│       └── app.py                   # Streamlit + Folium interactive web portfolio & simulator
-├── tests/
-│   └── test_pipeline.py             # Unit test suite verifying CRS, Olofsson, IPCC math, and schema
-├── run_pipeline.py                  # Master pipeline orchestrator executing WP1 through WP6
-├── run_all_visualizations.py        # Master runner generating all maps, charts, and tables
-└── requirements.txt                 # Pinned dependencies
+├── 📂 config/
+│   └── ⚙️ parameters.yaml              # IPCC 2019 constants, GEE project ID, CRS, & Monte Carlo bounds
+├── 📂 metadata/
+│   ├── 📊 data_inventory.csv           # Schema for tracking open datasets, URLs, vintages, & licenses
+│   └── 🗺️ district_name_crosswalk.csv  # LGD codes, canonical names, and boundary vintages for all 33 districts
+├── 📂 data/
+│   ├── 📂 raw/admin_boundaries/
+│   │   └── 📐 india_districts/         # Extracted official Survey of India shapefile
+│   └── 📂 processed/admin_boundaries/
+│       ├── 🗺️ chhattisgarh_district_boundaries.gpkg # Validated 33-district polygons in EPSG:32644
+│       └── 📍 durg_pilot_boundary.geojson           # Pilot boundary in EPSG:4326 for GEE reductions
+├── 📂 gee/
+│   ├── 🛰️ 01_durg_rice_phenology.py    # GEE Python API: S1 SAR specular dip + rise + S2 cloud-masked LSWI/NDVI
+│   └── 🛰️ 02_inundation_metrics.py     # GEE Python API: Wet observation counts, hydro-period, & confidence
+├── 📂 scripts/
+│   ├── 🐍 wp1_boundary_validator.py    # GeoPandas pipeline: Ingests official shapefile, repairs, reprojects
+│   ├── 🐍 wp2_accuracy_assessment.py   # Olofsson area-adjusted accuracy, confusion matrix, UA/PA, F1 score
+│   ├── 🐍 wp4_ipcc_tier2_engine.py     # Vectorized IPCC Tier-2 CH4 calculator + 10,000-draw Monte Carlo
+│   ├── 🐍 wp5_awd_scenarios.py         # Counterfactual AWD calculator with N2O trade-off penalty deduction
+│   ├── 🐍 wp6_district_aggregator.py   # Compiles final 20-column district output table
+│   ├── 🐍 generate_tables.py           # Structured CSV reporting engine (4 tables)
+│   ├── 🗺️ generate_maps.py             # Publication-grade cartography engine (5 maps @ 300 DPI)
+│   └── 📈 generate_charts.py           # Diagnostic & uncertainty visualization engine (5 charts @ 300 DPI)
+├── 📂 outputs/
+│   ├── 📊 tables/                      # Master 20-column CSV, confusion matrix, AWD trade-offs, gap matrix
+│   ├── 🗺️ maps/                        # 5 publication maps in EPSG:32644
+│   ├── 📈 charts/                      # 5 scientific diagnostic charts
+│   └── 📂 dashboard/
+│       └── 🌐 app.py                   # Streamlit + Folium interactive web portfolio & simulator
+├── 📂 tests/
+│   └── 🧪 test_pipeline.py             # Unit test suite verifying CRS, Olofsson, IPCC math, and schema
+├── 🐍 run_pipeline.py                  # Master pipeline orchestrator executing WP1 through WP6
+├── 🚀 run_all_visualizations.py        # Master runner generating all maps, charts, and tables
+└── 📄 requirements.txt                 # Pinned dependencies
 ```
 
 ---
