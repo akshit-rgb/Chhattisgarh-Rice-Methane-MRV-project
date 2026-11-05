@@ -1,0 +1,34 @@
+district_name,district_code,boundary_vintage,rice_area_ha,rice_area_year,rice_map_accuracy,wet_observation_count,estimated_inundation_duration_days,inundation_confidence,water_regime_assumption,cultivation_duration_days
+Balod,646,2012,82622.41,2024,0.9161,6.0,20.7,1.0,single_aeration,105
+Balodabazar-Bhatapara,644,2012,162312.29,2024,0.9163,6.0,20.7,1.0,single_aeration,105
+Balrampur-Ramanujganj,649,2012,174065.25,2024,0.9363,6.0,20.7,0.95,regular_rainfed,105
+Bastar,374,2000,145979.35,2024,0.9261,6.0,20.7,0.95,regular_rainfed,105
+Bemetara,650,2012,112748.72,2024,0.9351,6.0,20.7,1.0,single_aeration,105
+Bijapur,636,2007,27307.73,2024,0.9215,6.0,20.7,0.95,regular_rainfed,105
+Bilaspur,375,2000,91654.83,2024,0.9172,6.0,20.7,1.0,single_aeration,105
+Dakshin Bastar Dantewada,376,2000,18235.34,2024,0.9142,6.0,20.7,0.95,regular_rainfed,105
+Dhamtari,377,2000,84341.34,2024,0.9319,6.0,20.7,1.0,single_aeration,105
+Durg,378,2000,108821.68,2024,0.9227,12.02,35.08,1.0,single_aeration,105
+Gariyaband,645,2012,85670.07,2024,0.9305,6.0,20.7,0.95,regular_rainfed,105
+Gaurela-Pendra-Marwahi,734,2020,37981.51,2024,0.9337,6.0,20.7,0.95,regular_rainfed,105
+Janjgir-Champa,379,2000,66016.52,2024,0.9319,6.0,20.7,0.95,regular_rainfed,105
+Jashpur,380,2000,89378.34,2024,0.9189,6.0,20.7,0.95,regular_rainfed,105
+Kabeerdham,382,2000,90070.68,2024,0.9263,6.0,20.7,0.95,regular_rainfed,105
+Khairagarh-Chhuikhadan-Gandai,759,2022,78794.86,2024,0.9169,6.0,20.7,0.95,regular_rainfed,105
+Kondagaon,643,2012,97747.91,2024,0.913,6.0,20.7,0.95,regular_rainfed,105
+Korba,383,2000,88613.84,2024,0.9136,6.0,20.7,0.95,regular_rainfed,105
+Koriya,384,2000,80476.36,2024,0.9152,6.0,20.7,1.0,single_aeration,105
+Mahasamund,385,2000,118969.34,2024,0.9365,6.0,20.7,1.0,single_aeration,105
+Manendragarh-Chirmiri-Bharatpur,760,2022,28516.87,2024,0.9207,6.0,20.7,0.95,regular_rainfed,105
+Mohla-Manpur-Ambagarh Chowki,761,2022,30631.79,2024,0.9151,6.0,20.7,0.95,regular_rainfed,105
+Mungeli,647,2012,51244.53,2024,0.9309,6.0,20.7,0.95,regular_rainfed,105
+Narayanpur,637,2007,15000.0,2024,0.9184,6.0,20.7,0.95,regular_rainfed,105
+Raigarh,386,2000,34241.79,2024,0.91,6.0,20.7,1.0,single_aeration,105
+Raipur,387,2000,120559.89,2024,0.9145,6.0,20.7,1.0,single_aeration,105
+Rajnandgaon,388,2000,83334.28,2024,0.916,6.0,20.7,0.95,regular_rainfed,105
+Sakti,762,2022,85335.65,2024,0.9225,6.0,20.7,1.0,single_aeration,105
+Sarangarh-Bilaigarh,763,2022,24527.03,2024,0.9341,6.0,20.7,1.0,single_aeration,105
+Sukma,642,2012,27279.87,2024,0.9357,6.0,20.7,0.95,regular_rainfed,105
+Surajpur,648,2012,134044.17,2024,0.9306,6.0,20.7,0.95,regular_rainfed,105
+Surguja,389,2000,66941.75,2024,0.9258,6.0,20.7,0.95,regular_rainfed,105
+Uttar Bastar Kanker,381,2000,63328.12,2024,0.9365,6.0,20.7,1.0,single_aeration,105

@@ -1,0 +1,5 @@
+scenario,adoption_rate_pct,adopted_area_ha,ch4_reduction_pct_on_adopted,gross_ch4_reduction_tonnes_ch4,gwp_ch4_ar6,gross_ch4_reduction_tonnes_co2e,n2o_emission_penalty_kg_per_ha,induced_n2o_tonnes_n2o,gwp_n2o_ar6,n2o_penalty_tonnes_co2e,net_ghg_impact_tonnes_co2e,leakage_deduction_tonnes_co2e,net_creditable_carbon_credits_tco2e,assumptions
+Baseline (Current Conventional Flooding),0.0,0.0,0.0,0.0,27.9,0.0,0.0,0.0,273.0,0.0,0.0,0.0,0.0,Standard continuous/intermittent flooding; zero certified AWD water tube tracking
+Conservative AWD (15% Adoption),15.0,10610.11,30.0,209.77,27.9,5852.56,0.35,3.714,273.0,1013.8,4838.76,241.94,4596.82,Gravity canal tail-ends; 1 single aeration event; self-reported farm registers
+Central Case AWD (30% Adoption),30.0,21220.23,45.0,629.31,27.9,17557.67,0.55,11.671,273.0,3186.22,14371.45,718.57,13652.88,Perforated field water tubes (pani pipes); multiple aeration events; mobile geostamped verification
+Optimistic Scaled AWD (50% Adoption),50.0,35367.05,55.0,1281.92,27.9,35765.62,0.8,28.294,273.0,7724.16,28041.45,1402.07,26639.38,Programmatic solar-pump command areas; IoT water sensors; calibrated slow-release N fertilizer

@@ -1,0 +1,3 @@
+class_name,mapped_area_ha,sample_count_map,sample_count_ref_true,commission_errors,omission_errors,users_accuracy_pct,producers_accuracy_pct,f1_score,area_adjusted_ha,area_adjusted_se_ha,area_adjusted_ci95_low_ha,area_adjusted_ci95_high_ha,overall_accuracy_pct,overall_accuracy_se_pct,methodology
+Rice (Paddy),108821.68,150.0,138.0,12.0,11.0,92.0,94.82,0.9339,105580.57,2895.18,99906.01,111255.13,92.27,1.58,Pontus Olofsson et al. (2014) Good Practices for Estimating Area
+Non-Rice (Other LC),74517.57,150.0,139.0,11.0,12.0,92.67,88.8,0.9069,77758.68,2895.18,72084.12,83433.24,92.27,1.58,Pontus Olofsson et al. (2014) Good Practices for Estimating Area

@@ -1,0 +1,183 @@
+# ==============================================================================
+# SATELLITE-BASED RICE METHANE ASSESSMENT & CARBON MRV: CONFIGURATION
+# Location: Chhattisgarh, India (Pilot: Durg District, LGD 378)
+# Standards: IPCC 2006 Guidelines & IPCC 2019 Refinement (Vol 4, Ch 5)
+# Global Warming Potentials: IPCC Sixth Assessment Report (AR6 WG1 Table 7.15)
+# ==============================================================================
+
+project:
+  name: "chhattisgarh_rice_methane_mrv"
+  state: "Chhattisgarh"
+  total_districts: 33
+  pilot_district: "Durg"
+  pilot_lgd_code: 378
+  kharif_season:
+    start_date: "2024-06-01"
+    end_date: "2024-11-30"
+    transplanting_window_start: "2024-06-15"
+    transplanting_window_end: "2024-08-15"
+    harvest_window_start: "2024-10-15"
+    harvest_window_end: "2024-11-30"
+
+crs:
+  projected_crs: "EPSG:32644"  # WGS 84 / UTM Zone 44N - MANDATORY FOR AREA CALCULATIONS
+  geographic_crs: "EPSG:4326"  # Unprojected WGS 84
+  strict_projected_enforcement: true
+
+gee:
+  project_id: "ee-akshitvaishnavonline"
+  export_target: "toDrive"      # 'toDrive' or 'toCloudStorage'
+  export_folder: "GEE_Rice_Methane_MRV"
+  cloud_storage_bucket: "ee-akshitvaishnavonline-mrv"
+  resolution_meters: 10
+  crs: "EPSG:32644"
+  tile_scale: 4
+  max_cloud_cover_s2: 30
+
+# ------------------------------------------------------------------------------
+# IPCC 2019 REFINEMENT TIER 2 METHANE EMISSION PARAMETERS
+# Vol 4, Chapter 5: Cropland, Section 5.5: Cultivated Rice
+# ------------------------------------------------------------------------------
+ipcc_tier2:
+  # Baseline Emission Factor (EF_base) for continuously flooded fields without organic amendments
+  # IPCC 2019 Refinement, Vol 4, Ch 5, Table 5.11
+  # Unit: kg CH4 / ha / day
+  ef_base:
+    mean: 1.30
+    low_ci: 0.80
+    high_ci: 2.20
+    distribution: "lognormal"
+    unit: "kg CH4 / ha / day"
+    source: "IPCC (2019) Refinement to the 2006 IPCC Guidelines, Vol 4, Ch 5, Table 5.11"
+
+  # Water Regime Scaling Factors during cultivation period (SF_w)
+  # IPCC 2019 Refinement, Vol 4, Ch 5, Table 5.12
+  sf_w:
+    continuously_flooded:
+      value: 1.00
+      low_ci: 1.00
+      high_ci: 1.00
+      description: "Continuously flooded with standing water"
+    single_aeration:
+      value: 0.71
+      low_ci: 0.52
+      high_ci: 0.97
+      description: "Intermittently flooded: single aeration of >= 3 days at panicle initiation"
+    multiple_aeration:
+      value: 0.55
+      low_ci: 0.41
+      high_ci: 0.72
+      description: "Intermittently flooded: multiple aeration (AWD / alternate wetting and drying)"
+    regular_rainfed:
+      value: 0.54
+      low_ci: 0.38
+      high_ci: 0.77
+      description: "Rainfed: regularly rainfed with intermittent wet and dry dry spells"
+    drought_prone:
+      value: 0.45
+      low_ci: 0.31
+      high_ci: 0.66
+      description: "Rainfed: drought prone"
+    deep_water:
+      value: 0.71
+      low_ci: 0.44
+      high_ci: 1.15
+      description: "Deep water (> 50 cm water depth for significant period)"
+    source: "IPCC (2019) Refinement, Vol 4, Ch 5, Table 5.12"
+
+  # Pre-season Water Regime Scaling Factors (SF_p)
+  # IPCC 2019 Refinement, Vol 4, Ch 5, Table 5.13
+  sf_p:
+    non_flooded_preseason_gt_180d:
+      value: 0.68
+      low_ci: 0.58
+      high_ci: 0.80
+      description: "Non-flooded pre-season > 180 days (standard fallow prior to Kharif)"
+    non_flooded_preseason_lt_180d:
+      value: 1.00
+      low_ci: 1.00
+      high_ci: 1.00
+      description: "Non-flooded pre-season < 180 days (standard default)"
+    flooded_preseason_gt_30d:
+      value: 1.90
+      low_ci: 1.65
+      high_ci: 2.18
+      description: "Flooded pre-season > 30 days"
+    source: "IPCC (2019) Refinement, Vol 4, Ch 5, Table 5.13"
+
+  # Organic Amendment Conversion Factors (CFOA)
+  # IPCC 2019 Refinement, Vol 4, Ch 5, Table 5.14
+  # Formula: SF_o = (1 + sum(CFOA_i * ROA_i))^0.59
+  sf_o:
+    power_exponent: 0.59
+    cfoa_types:
+      straw_incorporated_long:
+        cfoa: 0.29
+        description: "Straw incorporated > 30 days before cultivation"
+      straw_incorporated_short:
+        cfoa: 1.00
+        description: "Straw incorporated < 30 days before cultivation"
+      farmyard_manure:
+        cfoa: 0.14
+        description: "Farmyard manure (FYM)"
+      compost:
+        cfoa: 0.05
+        description: "Composted organic matter"
+      green_manure:
+        cfoa: 0.50
+        description: "Green manure incorporated prior to planting"
+    default_roa_t_ha: 0.0  # Default dry matter application rate (t/ha) when unmonitored
+    source: "IPCC (2019) Refinement, Vol 4, Ch 5, Table 5.14"
+
+  # Cultivation duration (t) in days
+  cultivation_duration:
+    default_days: 105
+    min_days: 90
+    max_days: 125
+    distribution: "uniform"
+    source: "Directorate of Agriculture, Government of Chhattisgarh - Kharif crop calendar"
+
+# ------------------------------------------------------------------------------
+# GLOBAL WARMING POTENTIALS (IPCC AR6 WG1 Table 7.15 - 100-Year GWP)
+# ------------------------------------------------------------------------------
+gwp_ar6_100yr:
+  ch4: 27.9   # Methane 100-year GWP without climate-carbon feedbacks
+  n2o: 273.0  # Nitrous Oxide 100-year GWP without climate-carbon feedbacks
+  source: "IPCC AR6 WGI (2021) Chapter 7, Table 7.15"
+
+# ------------------------------------------------------------------------------
+# MONTE CARLO UNCERTAINTY PROPAGATION
+# ------------------------------------------------------------------------------
+monte_carlo:
+  iterations: 10000
+  seed: 42
+  confidence_interval: 95.0
+  low_percentile: 2.5
+  high_percentile: 97.5
+
+# ------------------------------------------------------------------------------
+# COUNTERFACTUAL ALTERNATE WETTING AND DRYING (AWD) SCENARIOS
+# ------------------------------------------------------------------------------
+awd_scenarios:
+  baseline_regime: "continuously_flooded"
+  target_regime: "multiple_aeration"
+  # N2O trade-off emission factor increase (Tier 1 estimate: 0.35 to 0.85 kg N2O-N/ha converted to N2O)
+  scenarios:
+    conservative:
+      name: "Conservative Adoption"
+      adoption_rate: 0.25
+      ch4_reduction_factor: 0.28   # 28% reduction in baseline CH4 for adopted area
+      n2o_tradeoff_kg_per_ha: 0.35 # Additional kg N2O emitted per hectare converted
+      description: "Modest farmer adoption in gravity canal commands with intermittent supply"
+    central:
+      name: "Central MRV Case"
+      adoption_rate: 0.50
+      ch4_reduction_factor: 0.45   # 45% reduction (consistent with IPCC multiple aeration SF_w 0.55)
+      n2o_tradeoff_kg_per_ha: 0.60 # Additional kg N2O emitted per hectare converted
+      description: "Structured tube-well and canal command AWD with field water tube verification"
+    optimistic:
+      name: "Optimistic Scaled Program"
+      adoption_rate: 0.80
+      ch4_reduction_factor: 0.55   # 55% reduction
+      n2o_tradeoff_kg_per_ha: 0.85 # Additional kg N2O emitted per hectare converted
+      description: "Widespread programmatic AWD with IoT water pipes, volumetric billing & carbon finance"
