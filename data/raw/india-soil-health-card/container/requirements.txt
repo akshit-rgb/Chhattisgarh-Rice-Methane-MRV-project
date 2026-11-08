@@ -1,0 +1,11 @@
+requests
+nest-asyncio
+pyppeteer
+pyppdf
+absl-py
+google-cloud-storage
+google-cloud-logging
+google-cloud-spanner
+bs4
+shapely
+protobuf==3.20.*
