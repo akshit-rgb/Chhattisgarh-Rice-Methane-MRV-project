@@ -15,11 +15,9 @@ An open-source, publication-grade **geospatial machine learning, hydrogeological
 > **Statewide Scope Rule**: All extractions, hydrogeological integrations, ML models, and cartographic deliverables cover **100% of Chhattisgarh at the ADM3 Block level** across all three Agro-Ecological Zones (Chhattisgarh Central Plains, Bastar Plateau, and Northern Hills).
 
 > [!TIP]
-> **🚀 Explore the Interactive MRV Dashboards (4 Easy Options)**:
-> - **1. One-Click Python Launcher**: Run `python run_dashboard.py` (or double-click `run_dashboard.bat`) to automatically launch and open the dashboard in your default browser.
-> - **2. Streamlit Dashboard**: Run `streamlit run app.py` for rich interactive charts, block inspectors, and CMIP6 scenario sliders.
-> - **3. Live Web GIS (GitHub Pages)**: Open **[Live Chhattisgarh MRV Web GIS](https://akshit-rgb.github.io/Chhattisgarh-Rice-Methane-MRV-project/)** (or run `python -m http.server 8000` to serve `index.html` locally).
-> - **4. Google Earth Engine Application**: Run [`gee_app/chhattisgarh_statewide_kharif_rabi_future_dashboard.js`](gee_app/chhattisgarh_statewide_kharif_rabi_future_dashboard.js) directly in the **[GEE Code Editor](https://code.earthengine.google.com/)** (Cloud Project: `ee-akshitvaishnavonline`).
+> **🚀 Open the Interactive Statewide Dashboard**:
+> - **In Browser / Local**: Open [`index.html`](file:///C:/Users/akshi/Downloads/geospatial_project/index.html) directly in any web browser (zero installation, instant launch).
+> - **Live Online**: Open the **[Live Chhattisgarh Statewide MRV Dashboard](https://akshit-rgb.github.io/Chhattisgarh-Rice-Methane-MRV-project/)** hosted on GitHub Pages.
 
 ---
 
