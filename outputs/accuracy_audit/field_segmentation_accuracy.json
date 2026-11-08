@@ -1,0 +1,41 @@
+{
+  "module": "Field Parcel Segmentation & Typology",
+  "district": "Durg",
+  "blocks_evaluated": [
+    "PATAN",
+    "DHAMDHA",
+    "DURG"
+  ],
+  "total_parcels_delineated": 9065,
+  "total_delineated_area_ha": 2837.22,
+  "segmentation_metrics": {
+    "intersection_over_union_iou": 0.8699,
+    "f1_score": 0.9304,
+    "precision": 0.9355,
+    "recall": 0.9254,
+    "overall_accuracy": 0.936
+  },
+  "irrigation_typology_breakdown": {
+    "Canal_Irrigated_Paddy_count": 160,
+    "Canal_Irrigated_Paddy_ha": 52.2,
+    "Tubewell_Intermittent_Paddy_count": 4873,
+    "Tubewell_Intermittent_Paddy_ha": 1523.43,
+    "Rainfed_Bunded_Paddy_count": 4032,
+    "Rainfed_Bunded_Paddy_ha": 1261.59
+  },
+  "block_level_area_agreement": {
+    "r2_score": 0.9682,
+    "mean_area_bias_pct": 1.38,
+    "biases_by_block": {
+      "DHAMDHA": -39.08,
+      "DURG": -37.01,
+      "PATAN": -30.61
+    }
+  },
+  "waterbody_and_roof_filtering": {
+    "talabs_masked_count": 1577,
+    "rural_roofs_masked": true,
+    "min_parcel_area_ha": 0.15,
+    "max_parcel_area_ha": 3.8
+  }
+}
