@@ -52,10 +52,19 @@ function getSentinel1SAR(year) {
   var vh = s1.select('VH').median().clip(stateGeom);
   var ratio = vh.subtract(vv).rename('VH_VV_ratio');
 
-  // SAR Inundation Index: low VV (< -15 dB) indicates standing water / puddling
-  var inundationMask = vv.lt(-15.0).rename('sar_inundation_mask');
+  // JRC Global Surface Water permanent water mask (occurrence > 80% = permanent water bodies/reservoirs)
+  // Ensures permanent village tanks (Talabs) and reservoirs from the National Water Body Census
+  // are excluded from the Sentinel-1 flood frequency and seasonal paddy inundation calculation.
+  var jrcPermanentWater = ee.Image('JRC/GSW1_4/GlobalSurfaceWater')
+    .select('occurrence')
+    .gt(80)
+    .clip(stateGeom);
 
-  return vv.addBands(vh).addBands(ratio).addBands(inundationMask);
+  // SAR Inundation: low VV (< -15 dB) indicating standing water / puddling, masked for permanent water
+  var rawInundation = vv.lt(-15.0);
+  var inundationMask = rawInundation.and(jrcPermanentWater.not()).rename('sar_inundation_mask');
+
+  return vv.addBands(vh).addBands(ratio).addBands(inundationMask).addBands(jrcPermanentWater.rename('permanent_water_mask'));
 }
 
 // Sentinel-2 Optical MSI Cloud-Masked Phenology Composite

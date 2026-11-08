@@ -4,7 +4,7 @@ Step 04: Spatial Cross-Validation and ML Ensemble Training (RF + XGBoost)
 -------------------------------------------------------------------------
 Trains a spatial machine learning ensemble (Random Forest + XGBoost Regressor)
 to predict block-level rice methane emissions from satellite SAR, optical,
-climate, soil, and topography features.
+climate, soil, topography, and permanent water body masking features.
 Enforces:
   1. Spatial GroupKFold CV grouped by district (tests spatial generalizability).
   2. Out-of-Time Temporal Validation on 2023–2024 test horizon.
@@ -12,7 +12,6 @@ Outputs model weights, performance tables, and validation prediction datasets.
 """
 
 import os
-import json
 import joblib
 import numpy as np
 import pandas as pd
@@ -26,8 +25,10 @@ FEATURE_COLS = [
     "s1_vv_db", "s1_vh_db", "s1_vh_vv_ratio_db",
     # Sentinel-2 MSI
     "s2_ndvi_mean", "s2_ndvi_max", "s2_evi_mean", "s2_lswi_mean",
-    # Inferred Inundation
+    # Inferred Inundation (Masked for Permanent Water)
     "seasonal_inundation_days", "inundation_frequency",
+    # Permanent Water Masking (National Waterbody Census)
+    "permanent_water_fraction", "permanent_water_count",
     # Climate
     "chirps_rainfall_mm", "heavy_rain_days", "era5_temp_c",
     # Soil & Topography
@@ -117,9 +118,9 @@ def run_spatial_cross_validation(df_train, n_splits=5):
 def run_out_of_time_validation(df):
     """
     Evaluates Out-of-Time generalization:
-    - Train set: 2019–2022 (584 observations)
-    - Test / Validation set: 2023–2024 (292 observations)
-    - Forecasting horizon: 2025–2026 (292 observations)
+    - Train set: 2019–2022
+    - Test / Validation set: 2023–2024
+    - Forecasting horizon: 2025–2026
     """
     print("\n[INFO] Running Out-of-Time Temporal Validation (Train: 2019-2022 | Test: 2023-2024)...")
     train_mask = (df["year"] >= 2019) & (df["year"] <= 2022)
@@ -134,14 +135,12 @@ def run_out_of_time_validation(df):
     X_test, y_test = df_test[FEATURE_COLS], df_test[TARGET_COL]
     X_fore = df_forecast[FEATURE_COLS]
 
-    # Fit final models on 2019-2022
     rf = RandomForestRegressor(n_estimators=200, max_depth=12, min_samples_leaf=2, random_state=42, n_jobs=-1)
     rf.fit(X_train, y_train)
 
     model_xgb = xgb.XGBRegressor(n_estimators=200, max_depth=5, learning_rate=0.05, subsample=0.85, colsample_bytree=0.85, random_state=42, n_jobs=-1)
     model_xgb.fit(X_train, y_train)
 
-    # Test predictions
     pred_test_rf = rf.predict(X_test)
     pred_test_xgb = model_xgb.predict(X_test)
     pred_test_ens = 0.5 * pred_test_rf + 0.5 * pred_test_xgb
@@ -162,18 +161,15 @@ def run_out_of_time_validation(df):
     df_test["pred_xgb_tonnes"] = pred_test_xgb
     df_test["pred_ensemble_tonnes"] = pred_test_ens
 
-    # Forecast on 2025-2026
     pred_fore_ens = 0.5 * rf.predict(X_fore) + 0.5 * model_xgb.predict(X_fore)
     df_forecast["pred_ensemble_tonnes"] = pred_fore_ens
 
-    # Save trained models
     os.makedirs("models", exist_ok=True)
     joblib.dump(rf, "models/random_forest_mrv.joblib")
     model_xgb.save_model("models/xgboost_mrv.json")
     print("[SAVED] models/random_forest_mrv.joblib")
     print("[SAVED] models/xgboost_mrv.json")
 
-    # Feature Importances
     fi_rf = rf.feature_importances_
     fi_xgb = model_xgb.feature_importances_
     fi_ens = 0.5 * fi_rf + 0.5 * fi_xgb
@@ -244,8 +240,8 @@ def main():
     print("\n--- Model Performance Summary Table ---")
     print(df_metrics.to_string(index=False))
 
-    print("\n--- Top 7 Biophysical & Remote Sensing Drivers ---")
-    print(oot_res["df_fi"].head(7)[["feature", "importance_ensemble"]].to_string(index=False))
+    print("\n--- Top 8 Biophysical & Remote Sensing Drivers ---")
+    print(oot_res["df_fi"].head(8)[["feature", "importance_ensemble"]].to_string(index=False))
 
     print("\n[SUCCESS] Step 04 complete.\n")
 

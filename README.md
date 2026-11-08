@@ -4,15 +4,19 @@
 [![Google Earth Engine](https://img.shields.io/badge/Google%20Earth%20Engine-API%20Enabled-green.svg)](https://earthengine.google.com/)
 [![IPCC Tier-2](https://img.shields.io/badge/Methodology-IPCC%20Tier--2%20Refinement-orange.svg)](https://www.ipcc-nggip.iges.or.jp/)
 [![Verra VM0051](https://img.shields.io/badge/Carbon%20Standard-Verra%20VM0051%20AWD-brightgreen.svg)](https://verra.org/)
+[![India Geodata](https://img.shields.io/badge/Boundaries%20%26%20Hydrology-yashveeeeeeer%2Findia--geodata-informational.svg)](https://github.com/yashveeeeeeer/india-geodata)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-An open-source, reproducible **geospatial machine learning and carbon Monitoring, Reporting, and Verification (MRV) system** for estimating block-level methane ($\text{CH}_4$) emissions and counterfactual Alternate Wetting and Drying (AWD) carbon offsets across the **33 districts and 146 development blocks of Chhattisgarh, India** (2019–2026).
+An open-source, reproducible **geospatial machine learning and carbon Monitoring, Reporting, and Verification (MRV) system** for estimating block-level methane ($\text{CH}_4$) emissions and counterfactual Alternate Wetting and Drying (AWD) carbon offsets across the **official 146 Local Government Directory (LGD) Community Development Blocks and 33 districts of Chhattisgarh, India** (2019–2026).
 
 ---
 
 ## 🛰️ 1. Project Overview & Architecture
 
-Paddy rice agriculture is a significant source of atmospheric methane due to prolonged anaerobic decomposition in inundated soils. This project couples multi-temporal **Copernicus Sentinel-1 SAR** (radar backscatter & seasonal water inundation), **Sentinel-2 MSI** (optical vegetation phenology & LSWI), **CHIRPS precipitation**, **ERA5-Land reanalysis temperature**, **ISRIC SoilGrids 250m v2.0**, and **NASA SRTM DEM** with **IPCC Tier-2 Monte Carlo simulation** and a **Spatial ML Ensemble (Random Forest + XGBoost)**.
+Paddy rice agriculture is a major source of atmospheric methane due to prolonged anaerobic decomposition in inundated soils. This project couples multi-temporal **Copernicus Sentinel-1 SAR** (radar backscatter & seasonal water inundation), **Sentinel-2 MSI** (optical vegetation phenology & LSWI), **CHIRPS precipitation**, **ERA5-Land reanalysis temperature**, **ISRIC SoilGrids 250m v2.0**, and **NASA SRTM DEM** with official Indian open geodata layers from [`yashveeeeeeer/india-geodata`](https://github.com/yashveeeeeeer/india-geodata):
+- **Official LGD Blocks (`admin/blocks`)**: 146 Community Development Blocks with standard LGD codes.
+- **SOI / WRIS River & Canal Network (`water/rivers`)**: 1,942 linear stream, canal, and river network features.
+- **National Waterbody Census & Jal Dharohar Ponds (`water/waterbodies`)**: 36,902 permanent village tanks (*Talabs*) and reservoirs explicitly masked out to eliminate false positives in Sentinel-1 SAR flood frequency calculations.
 
 ```mermaid
 flowchart TD
@@ -21,16 +25,20 @@ flowchart TD
         S2["Sentinel-2 Optical Harmonized<br/>(NDVI, EVI, LSWI Phenology)"]
         CLIM["Climate & Topography<br/>(CHIRPS Rain, ERA5 Temp, SRTM)"]
         SOIL["ISRIC SoilGrids 250m v2.0<br/>(SOC, Clay %, pH)"]
+        HYDRO["india-geodata Hydrology<br/>(36.9k Census Waterbodies & SOI Canals)"]
     end
 
     subgraph Feature_Engineering["2. Block-Level Panel Aggregation (2019–2026)"]
-        GADM["Chhattisgarh ADM3 Vector Boundaries<br/>(33 Districts, 146 Blocks in EPSG:32644)"]
+        LGD["Official 146 LGD Community Blocks<br/>(LGD Codes, EPSG:32644 Projection)"]
+        MASK["Permanent Waterbody Masking Engine<br/>(Excludes Talabs from SAR Flood Frequency)"]
         PANEL["Multi-Year Panel Fusion<br/>(1,168 Block-Year Observations)"]
-        S1 --> PANEL
+        S1 --> MASK
+        HYDRO --> MASK
+        MASK --> PANEL
         S2 --> PANEL
         CLIM --> PANEL
         SOIL --> PANEL
-        GADM --> PANEL
+        LGD --> PANEL
     end
 
     subgraph IPCC_Accounting["3. IPCC Tier-2 & Monte Carlo Uncertainty Engine"]
@@ -51,13 +59,13 @@ flowchart TD
         OOT --> ENS
     end
 
-    subgraph Deliverables["5. MRV Reporting & GEE Cloud Dashboard"]
+    subgraph Deliverables["5. MRV Reporting, India Map Maker & GEE Dashboard"]
         DASH["Interactive GEE UI App<br/>(gee_app/chhattisgarh_mrv_dashboard.js)"]
-        FIGS["300 DPI Publication Cartography<br/>(outputs/figures/)"]
-        DATA["Processed Spatial MRV Geopackages & CSVs<br/>(data/processed/)"]
+        MAPMAKER["India Map Maker Policy Table<br/>(outputs/policy_tables/india_map_maker_chhattisgarh_blocks.csv)"]
+        FIGS["300 DPI Publication Cartography<br/>(outputs/figures/fig1_chhattisgarh_methane_flux_map.png)"]
         ENS --> DASH
+        ENS --> MAPMAKER
         ENS --> FIGS
-        ENS --> DATA
     end
 ```
 
@@ -69,22 +77,24 @@ To strictly avoid spatial autocorrelation leakage, models are evaluated via **Sp
 
 | Validation Scheme | Model Architecture | Metric | Score / Value | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| **Spatial GroupKFold CV** | Random Forest | $R^2$ Score | **0.9702** | 5-Fold cross-validation grouped strictly by district |
-| **Spatial GroupKFold CV** | XGBoost Regressor | $R^2$ Score | **0.9884** | Gradient boosted trees evaluated on unseen districts |
-| **Spatial GroupKFold CV** | **Weighted Ensemble (RF + XGB)** | **Spatial $R^2$** | **0.9794** | Ensemble mean spatial generalizability |
-| **Spatial GroupKFold CV** | **Weighted Ensemble (RF + XGB)** | **Spatial RMSE** | **303.70 t $\text{CH}_4$** | Average error across 146 independent blocks |
-| **Out-of-Time Validation** | **Weighted Ensemble (RF + XGB)** | **OOT $R^2$ (2023–2024)** | **0.9898** | Trained on 2019–2022, evaluated strictly on 2023–2024 |
-| **Out-of-Time Validation** | **Weighted Ensemble (RF + XGB)** | **OOT RMSE** | **249.64 t $\text{CH}_4$** | Root Mean Squared Error on future test horizon |
-| **Out-of-Time Validation** | **Weighted Ensemble (RF + XGB)** | **OOT MAE** | **170.04 t $\text{CH}_4$** | Mean Absolute Error across test blocks |
-| **Out-of-Time Validation** | **Weighted Ensemble (RF + XGB)** | **OOT MAPE** | **4.16%** | Mean Absolute Percentage Error on test observations |
+| **Spatial GroupKFold CV** | Random Forest | $R^2$ Score | **0.9254** | 5-Fold cross-validation grouped strictly by district |
+| **Spatial GroupKFold CV** | XGBoost Regressor | $R^2$ Score | **0.9528** | Gradient boosted trees evaluated on unseen districts |
+| **Spatial GroupKFold CV** | **Weighted Ensemble (RF + XGB)** | **Spatial $R^2$** | **0.9434** | Ensemble mean spatial generalizability |
+| **Spatial GroupKFold CV** | **Weighted Ensemble (RF + XGB)** | **Spatial RMSE** | **1,105.88 t $\text{CH}_4$** | Average error across 146 independent LGD blocks |
+| **Out-of-Time Validation** | **Weighted Ensemble (RF + XGB)** | **OOT $R^2$ (2023–2024)** | **0.9811** | Trained on 2019–2022, evaluated strictly on 2023–2024 |
+| **Out-of-Time Validation** | **Weighted Ensemble (RF + XGB)** | **OOT RMSE** | **757.02 t $\text{CH}_4$** | Root Mean Squared Error on future test horizon |
+| **Out-of-Time Validation** | **Weighted Ensemble (RF + XGB)** | **OOT MAE** | **376.07 t $\text{CH}_4$** | Mean Absolute Error across test blocks |
+| **Out-of-Time Validation** | **Weighted Ensemble (RF + XGB)** | **OOT MAPE** | **5.84%** | Mean Absolute Percentage Error on test observations |
 
 ### Top Biophysical & Remote Sensing Drivers
-1. **Topographic Elevation (`elevation_m`)**: 51.8% importance (strong upland vs alluvial basin segregation).
-2. **ERA5 Air Temperature (`era5_temp_c`)**: 27.5% importance (temperature control on anaerobic methanogenesis rates).
-3. **Paddy Cultivation Extent (`rice_area_ha`)**: 8.1% importance.
-4. **Paddy Area Fraction (`rice_fraction`)**: 4.1% importance.
-5. **SAR Seasonal Inundation Days (`seasonal_inundation_days`)**: 3.5% importance.
-6. **Inundation Frequency (`inundation_frequency`)**: 2.7% importance.
+1. **Paddy Cultivation Extent (`rice_area_ha`)**: 57.9% importance.
+2. **Topographic Elevation (`elevation_m`)**: 9.5% importance (basin vs plateau demarcation).
+3. **Paddy Area Fraction (`rice_fraction`)**: 7.4% importance.
+4. **Permanent Waterbody Density (`permanent_water_fraction`)**: 4.4% importance (Census waterbody control).
+5. **SAR Seasonal Inundation Days (`seasonal_inundation_days`)**: 3.8% importance.
+6. **Inundation Frequency (`inundation_frequency`)**: 3.6% importance.
+7. **Permanent Waterbody Count (`permanent_water_count`)**: 3.1% importance.
+8. **ERA5 Air Temperature (`era5_temp_c`)**: 2.8% importance.
 
 ---
 
@@ -94,19 +104,19 @@ All figures are rendered at 300 DPI and stored in [`outputs/figures/`](file:///o
 
 ### Figure 1: High-Resolution Spatial Methane MRV Inventory across Chhattisgarh
 ![Figure 1: Spatial Methane Map](outputs/figures/fig1_chhattisgarh_methane_flux_map.png)
-*(A) Block-level Kharif rice methane flux (kg $\text{CH}_4$/ha/season) in 2024; (B) Sentinel-1 SAR-inferred seasonal inundation duration (days); (C) Top 10 emitting districts in Chhattisgarh.*
+*(A) Official LGD Block-level Kharif rice methane flux (kg $\text{CH}_4$/ha/season) in 2024, overlaid with dissolved District boundaries, SOI/WRIS river and irrigation canal networks in blue (`#0288d1`), and a dedicated labeled inset callout panel for Durg District blocks (Durg, Dhamdha, Patan); (B) Sentinel-1 SAR-inferred seasonal inundation duration (days) purified of 36,902 permanent waterbodies; (C) Top 10 emitting districts in Chhattisgarh.*
 
 ---
 
 ### Figure 2: Rigorous Spatial & Out-of-Time Machine Learning Ensemble Evaluation
 ![Figure 2: Cross-Validation Parity Plots](outputs/figures/fig2_spatial_cv_parity_plots.png)
-*(A) 5-Fold Spatial GroupKFold CV parity plot (District-grouped, $R^2=0.9794$); (B) Out-of-Time 2023–2024 validation parity plot ($R^2=0.9898$, $\text{MAPE}=4.16\%$); (C) Residual error distribution across Agro-Ecological Zones.*
+*(A) 5-Fold Spatial GroupKFold CV parity plot (District-grouped, $R^2=0.9434$); (B) Out-of-Time 2023–2024 validation parity plot ($R^2=0.9811$, $\text{MAPE}=5.84\%$); (C) Residual error distribution across Agro-Ecological Zones.*
 
 ---
 
 ### Figure 3: Biophysical Mechanisms and Remote Sensing Feature Attribution
 ![Figure 3: Feature Drivers](outputs/figures/fig3_feature_importance_drivers.png)
-*(A) Normalized feature importances for Random Forest vs. XGBoost; (B) Empirical response curve between SAR inundation duration and methane flux; (C) Interaction of soil organic carbon (SOC) and topographic elevation on methanogenesis.*
+*(A) Normalized feature importances for Random Forest vs. XGBoost; (B) Empirical response curve between SAR inundation duration and methane flux; (C) Interaction of permanent waterbody area fraction and soil organic carbon (SOC) on methanogenesis.*
 
 ---
 
@@ -118,11 +128,26 @@ All figures are rendered at 300 DPI and stored in [`outputs/figures/`](file:///o
 
 ### Figure 5: Scalable Alternate Wetting & Drying (AWD) Carbon Credit Opportunity
 ![Figure 5: AWD Mitigation and Carbon Credits](outputs/figures/fig5_awd_mitigation_carbon_credits.png)
-*(A) Baseline versus counterfactual AWD emissions by Agro-Ecological Zone; (B) Top 10 districts for voluntary carbon offsets under Verra VM0051 (accounting for $\text{N}_2\text{O}$ trade-off); (C) Economic revenue potential at \$15/t $\text{CO}_2\text{e}$ carbon pricing (\$105.7M/yr state-wide).*
+*(A) Baseline versus counterfactual AWD emissions by Agro-Ecological Zone; (B) Top 10 districts for voluntary carbon offsets under Verra VM0051 (accounting for $\text{N}_2\text{O}$ trade-off); (C) Economic revenue potential at \$15/t $\text{CO}_2\text{e}$ carbon pricing.*
 
 ---
 
-## 💻 4. Interactive Google Earth Engine UI Dashboard
+## 🗺️ 4. India Map Maker Integration
+
+To enable publication and dynamic cartographic design in SVG and PDF formats, the pipeline exports an official formatted policy table:
+- **File**: [`outputs/policy_tables/india_map_maker_chhattisgarh_blocks.csv`](file:///outputs/policy_tables/india_map_maker_chhattisgarh_blocks.csv)
+- **Columns**: `Block_Name`, `LGD_Code`, `District_Name`, `CH4_kg_ha_day`, `AWD_Abatement_tCO2e`
+- **Tool**: [India Map Maker](https://yashveeeeeeer.github.io/india-geodata/)
+
+**How to Use**:
+1. Open [`https://yashveeeeeeer.github.io/india-geodata/`](https://yashveeeeeeer.github.io/india-geodata/).
+2. Select **State: Chhattisgarh** and level: **Blocks**.
+3. Upload `outputs/policy_tables/india_map_maker_chhattisgarh_blocks.csv`.
+4. Match by **LGD_Code** or **Block_Name** to render interactive choropleths and export vector SVG / PDF maps directly.
+
+---
+
+## 💻 5. Interactive Google Earth Engine UI Dashboard
 
 The repository includes a complete, standalone Google Earth Engine UI Application in [`gee_app/chhattisgarh_mrv_dashboard.js`](file:///gee_app/chhattisgarh_mrv_dashboard.js).
 
@@ -134,31 +159,33 @@ The repository includes a complete, standalone Google Earth Engine UI Applicatio
 5. Use the interactive controls:
    - **Year Selector Dropdown**: Toggle dynamically between Kharif seasons (2019 through 2026).
    - **Agricultural Basin Zoom**: Instantly fly to Durg (validation basin), Raipur, Bilaspur, Bastar, or Surguja.
-   - **Thematic Layer Checkboxes**: Overlay Sentinel-1 SAR inundation composites, Sentinel-2 False Color composites, IPCC Tier-2 Methane Flux, and AWD mitigation surfaces.
+   - **Thematic Layer Checkboxes**: Overlay Sentinel-1 SAR inundation composites (masked for permanent water), Sentinel-2 False Color composites, IPCC Tier-2 Methane Flux, and AWD mitigation surfaces.
    - **Pixel-Level Inspector**: Click any paddy pixel on the map to inspect live satellite radar backscatter ($\text{VV}$ in dB), peak $\text{NDVI}$, SoilGrids clay %, $\text{CH}_4$ flux, and avoided $\text{CO}_2\text{e}$.
 
 ---
 
-## ⚙️ 5. Repository Structure & Execution Workflow
+## ⚙️ 6. Repository Structure & Execution Workflow
 
 ```text
 ├── gee_app/
-│   └── chhattisgarh_mrv_dashboard.js      # Full GEE UI interactive dashboard script
+│   └── chhattisgarh_mrv_dashboard.js                      # Full GEE UI interactive dashboard script
 ├── src/
-│   ├── 01_fetch_adm3_and_benchmarks.py     # Administrative boundaries (33 dist, 146 blk) in EPSG:32644
-│   ├── 02_gee_multiyear_feature_panel.py   # Multi-year GEE feature extraction (2019-2026, 1168 records)
-│   ├── 03_ipcc_tier2_and_target_fusion.py  # IPCC Tier-2 Monte Carlo simulation (2000 runs) & AWD module
-│   ├── 04_train_spatial_ml_ensemble.py     # Spatial GroupKFold CV & Out-of-Time RF + XGBoost ensemble
-│   └── 05_generate_mrv_maps_and_plots.py   # 5 publication-grade 300 DPI figures
+│   ├── 01_fetch_open_boundaries.py                        # Fetches LGD Blocks, WRIS Rivers, Waterbodies from india-geodata
+│   ├── 02_gee_multiyear_feature_panel.py                  # Multi-year GEE panel with permanent waterbody masking (2019-2026)
+│   ├── 03_ipcc_tier2_and_target_fusion.py                 # IPCC Tier-2 Monte Carlo simulation (2000 runs) & AWD module
+│   ├── 04_train_spatial_ml_ensemble.py                    # Spatial GroupKFold CV & Out-of-Time RF + XGBoost ensemble
+│   └── 05_generate_mrv_maps_and_plots.py                  # 5 publication figures (300 DPI) + India Map Maker export
 ├── data/
-│   ├── raw/boundaries/                     # Raw boundary GeoJSONs
-│   └── processed/                          # Fused panel CSVs, validation predictions, crosswalk tables
+│   ├── raw/india_geodata/                                 # Official LGD blocks, WRIS rivers, census waterbodies GeoJSONs/parquets
+│   └── processed/                                         # Fused panel CSVs, validation predictions, crosswalk tables
 ├── models/
-│   ├── random_forest_mrv.joblib            # Trained Random Forest model checkpoint
-│   └── xgboost_mrv.json                    # Trained XGBoost model checkpoint
-├── outputs/figures/                        # Publication figures (PNG, 300 DPI)
-├── requirements.txt                        # Python dependencies
-└── README.md                               # Project documentation
+│   ├── random_forest_mrv.joblib                           # Trained Random Forest model checkpoint
+│   └── xgboost_mrv.json                                   # Trained XGBoost model checkpoint
+├── outputs/
+│   ├── figures/                                           # Publication figures (PNG, 300 DPI) with Durg inset & rivers
+│   └── policy_tables/                                     # Formatted India Map Maker block CSV
+├── requirements.txt                                       # Python dependencies
+└── README.md                                              # Project documentation
 ```
 
 ### Reproducing the Pipeline:
@@ -166,26 +193,27 @@ The repository includes a complete, standalone Google Earth Engine UI Applicatio
 # 1. Install dependencies
 pip install -r requirements.txt
 
-# 2. Step 1: Construct boundaries and data inventory
-python src/01_fetch_adm3_and_benchmarks.py
+# 2. Step 1: Fetch official LGD boundaries & hydrology from india-geodata
+python src/01_fetch_open_boundaries.py
 
-# 3. Step 2: Extract multi-year GEE feature panel (2019–2026)
+# 3. Step 2: Extract multi-year GEE feature panel with permanent waterbody masking
 python src/02_gee_multiyear_feature_panel.py
 
 # 4. Step 3: Run IPCC Tier-2 Monte Carlo simulation & AWD fusion
 python src/03_ipcc_tier2_and_target_fusion.py
 
-# 5. Step 4: Train Spatial ML ensemble & cross-validation
+# 5. Step 4: Train Spatial ML ensemble & spatial cross-validation
 python src/04_train_spatial_ml_ensemble.py
 
-# 6. Step 5: Render publication figures
+# 6. Step 5: Render upgraded publication figures & export India Map Maker CSV
 python src/05_generate_mrv_maps_and_plots.py
 ```
 
 ---
 
-## 📜 6. Scientific References & Methodological Standards
+## 📜 7. Scientific References & Methodological Standards
 
+- **yashveeeeeeer/india-geodata**: *Open Geodata Library for India*, [GitHub](https://github.com/yashveeeeeeer/india-geodata) & [India Map Maker](https://yashveeeeeeer.github.io/india-geodata/).
 - **IPCC 2006 / 2019 Refinement**: *2019 Refinement to the 2006 IPCC Guidelines for National Greenhouse Gas Inventories*, Volume 4 (AFOLU), Chapter 5: Cropland.
 - **Verra VM0051**: *Methodology for Improved Water Management in Rice Cultivation Systems (v1.0)*, VCS Program.
 - **Chen et al. (2025)**: *Global Rice Paddy Inventory (GRPI): A High-Resolution Inventory of Methane Emissions From Rice Agriculture Based on Landsat Satellite Inundation Data*, Earth's Future, [doi:10.1029/2024EF005479](https://doi.org/10.1029/2024EF005479).

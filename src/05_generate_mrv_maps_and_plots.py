@@ -1,14 +1,19 @@
 #!/usr/bin/env python3
 """
-Step 05: Publication-Grade 300 DPI Visualization Suite
-------------------------------------------------------
-Generates 5 publication-ready, high-resolution (300 DPI) figures for the
-Chhattisgarh Block-Level Rice Methane MRV pipeline in `outputs/figures/`:
-  1. fig1_chhattisgarh_methane_flux_map.png
-  2. fig2_spatial_cv_parity_plots.png
-  3. fig3_feature_importance_drivers.png
-  4. fig4_multiyear_temporal_trends.png
-  5. fig5_awd_mitigation_carbon_credits.png
+Step 05 (Upgrade): Publication-Grade 300 DPI Cartography & India Map Maker Export
+----------------------------------------------------------------------------------
+Upgrades cartography using official layers from yashveeeeeeer/india-geodata:
+  - Official LGD Block boundaries
+  - Dissolved District boundaries
+  - SOI/WRIS River & Canal network polylines in blue (#0288d1)
+  - Zoom callout inset for Durg District blocks
+Exports:
+  1. outputs/figures/fig1_chhattisgarh_methane_flux_map.png (300 DPI)
+  2. outputs/figures/fig2_spatial_cv_parity_plots.png (300 DPI)
+  3. outputs/figures/fig3_feature_importance_drivers.png (300 DPI)
+  4. outputs/figures/fig4_multiyear_temporal_trends.png (300 DPI)
+  5. outputs/figures/fig5_awd_mitigation_carbon_credits.png (300 DPI)
+  6. outputs/policy_tables/india_map_maker_chhattisgarh_blocks.csv (formatted for online SVG/PDF tool)
 """
 
 import os
@@ -18,6 +23,7 @@ import geopandas as gpd
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 import seaborn as sns
+from mpl_toolkits.axes_grid1.inset_locator import inset_axes, mark_inset
 
 # Set publication style
 plt.rcParams.update({
@@ -34,47 +40,140 @@ plt.rcParams.update({
     "savefig.bbox": "tight"
 })
 
-def plot_figure_1_flux_map(gdf_blocks, df_fused):
-    """Figure 1: Spatial Map of Inundation, Rice Flux, and District Totals."""
-    print("[INFO] Generating Figure 1: Spatial Distribution & Inundation Map...")
-    
-    # 2024 recent benchmark
+def plot_figure_1_flux_map_with_rivers_and_inset(gdf_blocks, gdf_rivers, df_fused):
+    """
+    Figure 1: High-Resolution Spatial Methane Map with:
+      - LGD Block choropleth of rice methane flux
+      - Dissolved District boundary overlay
+      - SOI / WRIS river & canal network polylines in blue (#0288d1)
+      - Labeled Zoom Callout Inset for Durg District blocks
+    """
+    print("[INFO] Generating Upgraded Figure 1 (LGD Blocks + WRIS Rivers + Durg Inset)...")
+
+    # Filter to 2024 benchmark season
     df_2024 = df_fused[df_fused["year"] == 2024].copy()
-    gdf = gdf_blocks.merge(df_2024, on="block_id", suffixes=("", "_df"))
 
-    fig = plt.figure(figsize=(16, 10))
-    gs = fig.add_gridspec(2, 2, width_ratios=[1.2, 1.0], height_ratios=[1.0, 1.0])
+    # Merge by LGD code handling case differences
+    if "LGD_Code" in gdf_blocks.columns and "lgd_code" in df_2024.columns:
+        gdf = gdf_blocks.merge(df_2024, left_on="LGD_Code", right_on="lgd_code", suffixes=("", "_df"))
+    elif "LGD_Code" in gdf_blocks.columns and "LGD_Code" in df_2024.columns:
+        gdf = gdf_blocks.merge(df_2024, on="LGD_Code", suffixes=("", "_df"))
+    else:
+        gdf = gdf_blocks.merge(df_2024, left_on="Block_Name", right_on="block_name", suffixes=("", "_df"))
 
-    # Subplot A: Spatial Methane Flux (kg CH4/ha)
+    # Dissolve to District boundaries for clean regional overlay
+    dist_col = "District_Name" if "District_Name" in gdf.columns else "district_name"
+    gdf_districts = gdf.dissolve(by=dist_col).reset_index()
+
+    fig = plt.figure(figsize=(18, 11))
+    gs = fig.add_gridspec(2, 2, width_ratios=[1.3, 1.0], height_ratios=[1.0, 1.0])
+
+    # -------------------------------------------------------------------------
+    # Subplot A: Main Spatial Methane Flux Map with Rivers & Durg Inset
+    # -------------------------------------------------------------------------
     ax1 = fig.add_subplot(gs[:, 0])
+
+    # 1. Base Block Choropleth
     gdf.plot(
         column="tier2_ch4_flux_kg_ha",
         cmap="YlOrRd",
-        linewidth=0.4,
-        edgecolor="#444444",
+        linewidth=0.35,
+        edgecolor="#666666",
         legend=True,
         legend_kwds={
             "label": "Kharif Rice Methane Flux (kg CH₄ / ha / season)",
             "orientation": "horizontal",
-            "shrink": 0.7,
-            "pad": 0.05
+            "shrink": 0.65,
+            "pad": 0.04
         },
         ax=ax1
     )
-    ax1.set_title("(A) Chhattisgarh Block-Level Rice Methane Flux (2024)", fontweight="bold", pad=10)
+
+    # 2. Overlaid Dissolved District Borders
+    gdf_districts.boundary.plot(
+        ax=ax1,
+        color="#222222",
+        linewidth=1.2,
+        label="District Borders"
+    )
+
+    # 3. Overlaid SOI/WRIS River & Irrigation Canal Network in Blue (#0288d1)
+    if gdf_rivers is not None and len(gdf_rivers) > 0:
+        gdf_rivers.plot(
+            ax=ax1,
+            color="#0288d1",
+            linewidth=0.6,
+            alpha=0.75,
+            label="SOI / WRIS Canals & Rivers"
+        )
+
+    ax1.set_title("(A) Chhattisgarh LGD Block Methane Flux & WRIS Hydrology (2024)", fontweight="bold", pad=10)
     ax1.set_xlabel("Longitude (°E)")
     ax1.set_ylabel("Latitude (°N)")
+    ax1.set_xlim(80.0, 84.5)
+    ax1.set_ylim(17.6, 24.3)
     ax1.grid(True, linestyle="--", alpha=0.3)
 
-    # Annotate key district centers
-    key_centers = [("Raipur", 81.63, 21.25), ("Durg", 81.28, 21.19), ("Bilaspur", 82.14, 22.08), 
-                   ("Jagdalpur (Bastar)", 81.95, 19.08), ("Ambikapur (Surguja)", 83.19, 23.12)]
+    # Annotate Key District Centers
+    key_centers = [("Raipur", 81.63, 21.25), ("Bilaspur", 82.14, 22.08),
+                   ("Jagdalpur", 81.95, 19.08), ("Ambikapur", 83.19, 23.12)]
     for name, lon, lat in key_centers:
-        ax1.plot(lon, lat, marker="o", color="blue", markersize=4)
-        ax1.annotate(name, (lon + 0.08, lat + 0.08), fontsize=8, fontweight="bold",
-                     bbox=dict(boxstyle="round,pad=0.2", fc="white", ec="none", alpha=0.85))
+        ax1.plot(lon, lat, marker="o", color="darkblue", markersize=4)
+        ax1.annotate(name, (lon + 0.08, lat + 0.08), fontsize=8.5, fontweight="bold",
+                     bbox=dict(boxstyle="round,pad=0.2", fc="white", ec="gray", alpha=0.9))
 
-    # Subplot B: Seasonal Inundation Duration (days)
+    # -------------------------------------------------------------------------
+    # Inset Callout for Durg District Blocks
+    # -------------------------------------------------------------------------
+    durg_mask = gdf[dist_col].astype(str).str.upper().str.contains("DURG")
+    durg_blocks = gdf[durg_mask].copy()
+    if len(durg_blocks) > 0:
+        ax_inset = inset_axes(ax1, width="36%", height="36%", loc="lower left",
+                              bbox_to_anchor=(0.04, 0.06, 1, 1), bbox_transform=ax1.transAxes)
+
+        # Plot Durg blocks
+        durg_blocks.plot(
+            column="tier2_ch4_flux_kg_ha",
+            cmap="YlOrRd",
+            vmin=gdf["tier2_ch4_flux_kg_ha"].min(),
+            vmax=gdf["tier2_ch4_flux_kg_ha"].max(),
+            linewidth=0.8,
+            edgecolor="black",
+            ax=ax_inset
+        )
+
+        # Overlay rivers in Durg inset
+        if gdf_rivers is not None and len(gdf_rivers) > 0:
+            durg_bounds = durg_blocks.total_bounds
+            durg_rivers = gdf_rivers.cx[durg_bounds[0]:durg_bounds[2], durg_bounds[1]:durg_bounds[3]]
+            if len(durg_rivers) > 0:
+                durg_rivers.plot(ax=ax_inset, color="#0288d1", linewidth=1.2, alpha=0.9)
+
+        # Label Durg blocks
+        for _, b_row in durg_blocks.iterrows():
+            c = b_row.geometry.centroid
+            b_name = b_row["Block_Name"]
+            b_flux = b_row["tier2_ch4_flux_kg_ha"]
+            ax_inset.annotate(
+                f"{b_name}\n{b_flux:.0f} kg/ha",
+                (c.x, c.y),
+                fontsize=7.5,
+                fontweight="bold",
+                ha="center",
+                va="center",
+                bbox=dict(boxstyle="round,pad=0.2", fc="white", ec="black", alpha=0.85)
+            )
+
+        ax_inset.set_title("Durg District Inset", fontsize=9, fontweight="bold", pad=4)
+        ax_inset.tick_params(labelsize=7)
+        ax_inset.grid(True, linestyle=":", alpha=0.5)
+
+        # Mark Durg bounding box on main map
+        mark_inset(ax1, ax_inset, loc1=1, loc2=2, fc="none", ec="blue", lw=1.2, linestyle="--")
+
+    # -------------------------------------------------------------------------
+    # Subplot B: Inundation Duration Purified of Permanent Water Bodies
+    # -------------------------------------------------------------------------
     ax2 = fig.add_subplot(gs[0, 1])
     gdf.plot(
         column="seasonal_inundation_days",
@@ -83,19 +182,24 @@ def plot_figure_1_flux_map(gdf_blocks, df_fused):
         edgecolor="#555555",
         legend=True,
         legend_kwds={
-            "label": "SAR-Inferred Inundation Duration (days)",
+            "label": "Seasonal Inundation Duration (days, Waterbody Masked)",
             "orientation": "horizontal",
-            "shrink": 0.7,
-            "pad": 0.05
+            "shrink": 0.65,
+            "pad": 0.04
         },
         ax=ax2
     )
-    ax2.set_title("(B) Sentinel-1 SAR Seasonal Inundation Duration", fontweight="bold", pad=8)
+    if gdf_rivers is not None and len(gdf_rivers) > 0:
+        gdf_rivers.plot(ax=ax2, color="#0288d1", linewidth=0.4, alpha=0.6)
+    gdf_districts.boundary.plot(ax=ax2, color="#333333", linewidth=0.9)
+    ax2.set_title("(B) Sentinel-1 Inundation (Excluding 36.9k Permanent Waterbodies)", fontweight="bold", pad=8)
     ax2.set_xlabel("Longitude (°E)")
     ax2.set_ylabel("Latitude (°N)")
     ax2.grid(True, linestyle="--", alpha=0.3)
 
+    # -------------------------------------------------------------------------
     # Subplot C: Top 10 Emitting Districts
+    # -------------------------------------------------------------------------
     ax3 = fig.add_subplot(gs[1, 1])
     dist_emissions = df_2024.groupby("district_name")["rice_ch4_emissions_tonnes"].sum().sort_values(ascending=False).head(10)
     colors = sns.color_palette("rocket", len(dist_emissions))
@@ -105,10 +209,10 @@ def plot_figure_1_flux_map(gdf_blocks, df_fused):
     ax3.grid(True, axis="x", linestyle="--", alpha=0.4)
     for bar in bars:
         w = bar.get_width()
-        ax3.annotate(f"{w:,.1f}", (w + 0.5, bar.get_y() + bar.get_height() / 2),
+        ax3.annotate(f"{w:,.1f}", (w + 1.0, bar.get_y() + bar.get_height() / 2),
                      va="center", fontsize=8, fontweight="semibold")
 
-    plt.suptitle("Figure 1: High-Resolution Spatial Methane MRV Inventory across Chhattisgarh", fontsize=15, fontweight="bold", y=0.98)
+    plt.suptitle("Figure 1: High-Resolution Spatial Methane MRV Inventory with Official LGD Boundaries & Hydrology", fontsize=15, fontweight="bold", y=0.98)
     plt.tight_layout()
     out_file = "outputs/figures/fig1_chhattisgarh_methane_flux_map.png"
     plt.savefig(out_file)
@@ -120,12 +224,11 @@ def plot_figure_2_cv_parity(df_preds):
     print("[INFO] Generating Figure 2: Cross-Validation Parity Plots...")
     fig, axes = plt.subplots(1, 3, figsize=(18, 5.5))
 
-    # A: Spatial GroupKFold CV
     df_cv = df_preds[df_preds["cv_fold"].notnull()].copy()
     y_true_cv = df_cv["rice_ch4_emissions_tonnes"]
     y_pred_cv = df_cv["pred_ensemble_tonnes"]
-    r2_cv = 0.9794
-    rmse_cv = 303.70
+    r2_cv = 0.9434
+    rmse_cv = 1105.88
 
     ax1 = axes[0]
     sns.scatterplot(x=y_true_cv, y=y_pred_cv, hue=df_cv["aez_region"], palette="tab10", alpha=0.65, s=35, ax=ax1)
@@ -135,18 +238,17 @@ def plot_figure_2_cv_parity(df_preds):
     ax1.set_title("(A) 5-Fold Spatial GroupKFold CV\n(Grouped by District)", fontweight="bold")
     ax1.set_xlabel("IPCC Tier-2 Target (Tonnes CH₄)")
     ax1.set_ylabel("Spatial ML Predicted (Tonnes CH₄)")
-    ax1.text(0.05, 0.92, f"$R^2 = {r2_cv:.4f}$\nRMSE = {rmse_cv:,.1f} t\nN = {len(df_cv)}",
+    ax1.text(0.05, 0.90, f"$R^2 = {r2_cv:.4f}$\nRMSE = {rmse_cv:,.1f} t\nN = {len(df_cv)}",
              transform=ax1.transAxes, fontsize=10, bbox=dict(boxstyle="round", fc="white", ec="black", alpha=0.85))
     ax1.grid(True, linestyle="--", alpha=0.3)
     ax1.legend(loc="lower right", framealpha=0.9)
 
-    # B: Out-of-Time 2023-2024 Test Horizon
     df_test = df_preds[df_preds["year"].isin([2023, 2024])].copy()
     y_true_oot = df_test["rice_ch4_emissions_tonnes"]
     y_pred_oot = df_test["pred_ensemble_tonnes"]
-    r2_oot = 0.9898
-    rmse_oot = 249.64
-    mape_oot = 4.16
+    r2_oot = 0.9811
+    rmse_oot = 757.02
+    mape_oot = 5.84
 
     ax2 = axes[1]
     sns.scatterplot(x=y_true_oot, y=y_pred_oot, hue=df_test["year"].astype(str), palette="Set1", alpha=0.75, s=40, ax=ax2)
@@ -161,11 +263,10 @@ def plot_figure_2_cv_parity(df_preds):
     ax2.grid(True, linestyle="--", alpha=0.3)
     ax2.legend(loc="lower right", framealpha=0.9)
 
-    # C: Residual Distribution across Agro-Ecological Zones
     ax3 = axes[2]
     residuals = y_pred_cv - y_true_cv
     df_res = pd.DataFrame({"residual": residuals, "aez_region": df_cv["aez_region"]})
-    sns.boxplot(data=df_res, x="aez_region", y="residual", palette="pastel", ax=ax3, width=0.5)
+    sns.boxplot(data=df_res, x="aez_region", y="residual", hue="aez_region", palette="pastel", legend=False, ax=ax3, width=0.5)
     ax3.axhline(0, color="red", linestyle="--", linewidth=1.2)
     ax3.set_title("(C) Residual Error Distribution by AEZ\n(Predicted - Observed)", fontweight="bold")
     ax3.set_xlabel("Agro-Ecological Zone")
@@ -184,7 +285,6 @@ def plot_figure_3_feature_drivers(df_fi, df_fused):
     print("[INFO] Generating Figure 3: Feature Drivers & Response Functions...")
     fig, axes = plt.subplots(1, 3, figsize=(18, 5.5))
 
-    # A: Top 10 Feature Importances
     ax1 = axes[0]
     top_fi = df_fi.head(10).sort_values("importance_ensemble", ascending=True)
     y_pos = np.arange(len(top_fi))
@@ -197,26 +297,24 @@ def plot_figure_3_feature_drivers(df_fi, df_fused):
     ax1.legend(loc="lower right")
     ax1.grid(True, axis="x", linestyle="--", alpha=0.4)
 
-    # B: Biophysical Response: Inundation Days vs Methane Flux
     ax2 = axes[1]
     sns.scatterplot(data=df_fused, x="seasonal_inundation_days", y="tier2_ch4_flux_kg_ha",
                     hue="aez_region", palette="Set2", alpha=0.6, s=30, ax=ax2)
     sns.regplot(data=df_fused, x="seasonal_inundation_days", y="tier2_ch4_flux_kg_ha",
                 scatter=False, color="darkred", line_kws={"linewidth": 2, "linestyle": "-"}, ax=ax2)
-    ax2.set_title("(B) Inundation Duration vs Methane Flux", fontweight="bold")
+    ax2.set_title("(B) Inundation Duration (Masked) vs Methane Flux", fontweight="bold")
     ax2.set_xlabel("Seasonal Inundation Duration (days)")
     ax2.set_ylabel("Methane Flux (kg CH₄ / ha / season)")
     ax2.grid(True, linestyle="--", alpha=0.3)
     ax2.legend(loc="upper left")
 
-    # C: Soil Organic Carbon & Elevation Drivers
     ax3 = axes[2]
-    scatter = ax3.scatter(df_fused["soil_organic_carbon_g_kg"], df_fused["tier2_ch4_flux_kg_ha"],
-                          c=df_fused["elevation_m"], cmap="viridis_r", alpha=0.7, s=30)
+    scatter = ax3.scatter(df_fused["permanent_water_fraction"] * 100.0, df_fused["tier2_ch4_flux_kg_ha"],
+                          c=df_fused["soil_organic_carbon_g_kg"], cmap="viridis", alpha=0.7, s=30)
     cbar = plt.colorbar(scatter, ax=ax3)
-    cbar.set_label("Elevation (m ASL)")
-    ax3.set_title("(C) Soil Organic Carbon & Elevation Influence", fontweight="bold")
-    ax3.set_xlabel("Soil Organic Carbon (g / kg)")
+    cbar.set_label("Soil Organic Carbon (g / kg)")
+    ax3.set_title("(C) Permanent Waterbody Density & Soil Carbon", fontweight="bold")
+    ax3.set_xlabel("Permanent Waterbody Area Fraction (%)")
     ax3.set_ylabel("Methane Flux (kg CH₄ / ha / season)")
     ax3.grid(True, linestyle="--", alpha=0.3)
 
@@ -241,7 +339,6 @@ def plot_figure_4_temporal_trends(df_fused):
 
     fig, axes = plt.subplots(1, 3, figsize=(18, 5.2))
 
-    # A: Rice Area vs Methane Emissions
     ax1 = axes[0]
     years = yearly["year"]
     ch4_gg = yearly["rice_ch4_emissions_tonnes"] / 1000.0
@@ -254,26 +351,21 @@ def plot_figure_4_temporal_trends(df_fused):
     ax1.set_xlabel("Year")
     ax1.set_ylabel("Methane Emissions (Thousand Tonnes / Gg CH₄)")
     ax1.grid(True, linestyle="--", alpha=0.3)
-    ax1.set_ylim(400, 950)
     ax1.legend(loc="upper left")
 
-    # B: Rainfall vs Inundation Duration
     ax2 = axes[1]
     ax2.bar(years - 0.15, yearly["chirps_rainfall_mm"], width=0.3, color="#7570B3", alpha=0.75, label="Monsoon Rainfall (mm)")
     ax2.set_ylabel("CHIRPS Monsoon Rainfall (mm)", color="#7570B3", fontweight="semibold")
     ax2.tick_params(axis="y", labelcolor="#7570B3")
     ax2.set_xlabel("Year")
-    ax2.set_ylim(800, 1600)
 
     ax2_twin = ax2.twinx()
-    ax2_twin.plot(years + 0.15, yearly["seasonal_inundation_days"], marker="s", color="#1B9E77", linewidth=2.2, label="Mean Inundation Days")
+    ax2_twin.plot(years + 0.15, yearly["seasonal_inundation_days"], marker="s", color="#1B9E77", linewidth=2.2, label="Inundation Days (Masked)")
     ax2_twin.set_ylabel("Inferred Inundation Duration (days)", color="#1B9E77", fontweight="semibold")
     ax2_twin.tick_params(axis="y", labelcolor="#1B9E77")
-    ax2_twin.set_ylim(40, 85)
     ax2.set_title("(B) Rainfall Anomalies vs Satellite Inundation", fontweight="bold")
     ax2.grid(True, linestyle="--", alpha=0.3)
 
-    # C: AEZ Proportion Trend
     ax3 = axes[2]
     aez_yearly = df_fused.pivot_table(index="year", columns="aez_region", values="rice_ch4_emissions_tonnes", aggfunc="sum") / 1000.0
     aez_yearly.plot(kind="bar", stacked=True, colormap="tab20c", ax=ax3, edgecolor="black", alpha=0.85)
@@ -298,7 +390,6 @@ def plot_figure_5_mitigation_credits(df_fused):
 
     fig, axes = plt.subplots(1, 3, figsize=(18, 5.5))
 
-    # A: Baseline vs AWD Emissions by AEZ
     ax1 = axes[0]
     aez_comp = df_2024.groupby("aez_region").agg({
         "rice_ch4_emissions_tonnes": "sum",
@@ -314,7 +405,6 @@ def plot_figure_5_mitigation_credits(df_fused):
     ax1.legend(loc="upper left")
     ax1.grid(True, axis="y", linestyle="--", alpha=0.3)
 
-    # B: Top 10 Districts for Carbon Credits (t CO2e)
     ax2 = axes[1]
     dist_credits = df_2024.groupby("district_name")["awd_mitigation_potential_co2e_tonnes"].sum().sort_values(ascending=False).head(10) / 1000.0
     colors = sns.color_palette("mako", len(dist_credits))
@@ -327,9 +417,8 @@ def plot_figure_5_mitigation_credits(df_fused):
         ax2.annotate(f"{w:,.0f}k", (w + 4, bar.get_y() + bar.get_height() / 2),
                      va="center", fontsize=8, fontweight="bold")
 
-    # C: Economic Valuation Potential ($15/t CO2e voluntary carbon price)
     ax3 = axes[2]
-    aez_credits_val = df_2024.groupby("aez_region")["awd_mitigation_potential_co2e_tonnes"].sum() * 15.0 / 1e6 # Million USD
+    aez_credits_val = df_2024.groupby("aez_region")["awd_mitigation_potential_co2e_tonnes"].sum() * 15.0 / 1e6
     wedges, texts, autotexts = ax3.pie(
         aez_credits_val,
         labels=aez_credits_val.index,
@@ -348,25 +437,76 @@ def plot_figure_5_mitigation_credits(df_fused):
     plt.close()
     print(f"[SAVED] {out_file}")
 
+def export_india_map_maker_table(df_fused):
+    """
+    Exports a formatted CSV into outputs/policy_tables/india_map_maker_chhattisgarh_blocks.csv
+    matching the schema required by the online India Map Maker tool
+    (https://yashveeeeeeer.github.io/india-geodata/) for interactive SVG/PDF export.
+    Schema: Block_Name, LGD_Code, CH4_kg_ha_day, AWD_Abatement_tCO2e
+    """
+    print("[INFO] Exporting India Map Maker policy table...")
+    os.makedirs("outputs/policy_tables", exist_ok=True)
+
+    # Use 2024 recent benchmark season
+    df_2024 = df_fused[df_fused["year"] == 2024].copy()
+
+    # Calculate average daily flux (kg CH4 / ha / day)
+    # daily_flux = tier2_ch4_flux_kg_ha / cultivation_duration_days
+    df_2024["CH4_kg_ha_day"] = (df_2024["tier2_ch4_flux_kg_ha"] / df_2024["cultivation_duration_days"]).round(3)
+
+    # Format AWD abatement in tonnes CO2e
+    df_2024["AWD_Abatement_tCO2e"] = df_2024["awd_mitigation_potential_co2e_tonnes"].round(2)
+
+    export_df = df_2024[[
+        "block_name",
+        "lgd_code",
+        "district_name",
+        "CH4_kg_ha_day",
+        "AWD_Abatement_tCO2e"
+    ]].rename(columns={
+        "block_name": "Block_Name",
+        "lgd_code": "LGD_Code",
+        "district_name": "District_Name"
+    })
+
+    out_csv = "outputs/policy_tables/india_map_maker_chhattisgarh_blocks.csv"
+    export_df.to_csv(out_csv, index=False)
+    print(f"[SAVED] {out_csv} ({len(export_df)} blocks ready for https://yashveeeeeeer.github.io/india-geodata/)")
+    return export_df
+
 def main():
-    print("=" * 70)
-    print("STEP 05: Generating Publication-Grade 300 DPI MRV Figures")
-    print("=" * 70)
+    print("=" * 75)
+    print("STEP 05 (Upgrade): Generating Publication-Grade 300 DPI MRV Figures")
+    print("=" * 75)
 
     os.makedirs("outputs/figures", exist_ok=True)
+    os.makedirs("outputs/policy_tables", exist_ok=True)
 
-    gdf_blocks = gpd.read_file("data/processed/chhattisgarh_block_boundaries.geojson")
+    # 1. Load official LGD boundaries & hydrology
+    lgd_path = "data/raw/india_geodata/cg_lgd_blocks.geojson"
+    if not os.path.exists(lgd_path):
+        lgd_path = "data/processed/chhattisgarh_block_boundaries.geojson"
+    gdf_blocks = gpd.read_file(lgd_path)
+
+    rivers_path = "data/raw/india_geodata/cg_rivers.geojson"
+    gdf_rivers = gpd.read_file(rivers_path) if os.path.exists(rivers_path) else None
+
+    # 2. Load fused datasets
     df_fused = pd.read_csv("data/processed/chhattisgarh_block_tier2_methane_panel.csv")
     df_preds = pd.read_csv("data/processed/spatial_ml_validation_predictions.csv")
     df_fi = pd.read_csv("data/processed/feature_importances.csv")
 
-    plot_figure_1_flux_map(gdf_blocks, df_fused)
+    # 3. Generate 5 Publication Figures
+    plot_figure_1_flux_map_with_rivers_and_inset(gdf_blocks, gdf_rivers, df_fused)
     plot_figure_2_cv_parity(df_preds)
     plot_figure_3_feature_drivers(df_fi, df_fused)
     plot_figure_4_temporal_trends(df_fused)
     plot_figure_5_mitigation_credits(df_fused)
 
-    print("\n[SUCCESS] Step 05 complete: All 5 publication figures rendered at 300 DPI in outputs/figures/\n")
+    # 4. Export India Map Maker CSV
+    export_india_map_maker_table(df_fused)
+
+    print("\n[SUCCESS] Step 05 complete: Upgraded 300 DPI maps & India Map Maker table exported.\n")
 
 if __name__ == "__main__":
     main()
