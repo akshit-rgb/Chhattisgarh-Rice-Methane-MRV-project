@@ -1,5 +1,6 @@
 # Chhattisgarh Block-Level Rice Methane MRV & Interactive GEE Dashboard
 
+[![Live Web App](https://img.shields.io/badge/Live%20Web%20App-GitHub%20Pages-blue.svg)](https://akshit-rgb.github.io/Chhattisgarh-Rice-Methane-MRV-project/)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
 [![Google Earth Engine](https://img.shields.io/badge/Google%20Earth%20Engine-API%20Enabled-green.svg)](https://earthengine.google.com/)
 [![IPCC Tier-2](https://img.shields.io/badge/Methodology-IPCC%20Tier--2%20Refinement-orange.svg)](https://www.ipcc-nggip.iges.or.jp/)
@@ -8,6 +9,11 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 An open-source, publication-grade **geospatial machine learning and carbon Monitoring, Reporting, and Verification (MRV) system** for estimating block-level and 10m field-level methane ($\text{CH}_4$) emissions and counterfactual Alternate Wetting and Drying (AWD) carbon offsets across the **official 146 Local Government Directory (LGD) Community Development Blocks and 33 districts of Chhattisgarh, India** (2019–2026).
+
+> [!TIP]
+> **🚀 Want to explore the interactive dashboard immediately?**  
+> - **In Browser (Zero Setup)**: Open the **[Live Web GIS Dashboard](https://akshit-rgb.github.io/Chhattisgarh-Rice-Methane-MRV-project/)** (hosted via GitHub Pages).  
+> - **In Google Earth Engine**: Run [`gee_app/chhattisgarh_ml_field_dashboard.js`](gee_app/chhattisgarh_ml_field_dashboard.js) directly in the **[GEE Code Editor](https://code.earthengine.google.com/)** with project `ee-akshitvaishnavonline`.
 
 ---
 
@@ -61,9 +67,11 @@ flowchart TD
     end
 
     subgraph Deliverables["5. Operational Deliverables & Cartography"]
-        DASH["Live GEE ML UI Dashboard<br/>(gee_app/chhattisgarh_ml_field_dashboard.js)"]
+        WEB["Live Web GIS App (GitHub Pages)<br/>(index.html)"]
+        DASH["Live GEE Server-Side ML App<br/>(gee_app/chhattisgarh_ml_field_dashboard.js)"]
         PLATES["6 Publication 300 DPI Plates<br/>(outputs/figures/)"]
         POLICY["India Map Maker Formatted Table<br/>(outputs/policy_tables/)"]
+        TESTS --> WEB
         TESTS --> DASH
         TESTS --> PLATES
         TESTS --> POLICY
@@ -84,8 +92,8 @@ To move beyond regional averages, the pipeline implements an open **10m Agricult
    - Delineates individual smallholder bunded fields (*Khet*, typical size: 0.2 ha to 2.5 ha).
    - Filters out perennial village ponds (*Talabs* from the National Water Body Census) and rural rooftops (`Google Open Buildings v3`).
    - Generates **9,065 segmented 10m agricultural field parcels** saved in:
-     - [`outputs/durg_10m_field_parcels.geojson`](file:///outputs/durg_10m_field_parcels.geojson)
-     - [`outputs/durg_10m_field_parcels.parquet`](file:///outputs/durg_10m_field_parcels.parquet)
+     - [`outputs/durg_10m_field_parcels.geojson`](file:///outputs/durg_10m_field_parcels.geojson) (6.4 MB)
+     - [`outputs/durg_10m_field_parcels.parquet`](file:///outputs/durg_10m_field_parcels.parquet) (905 KB)
 3. **Field Segmentation Accuracy Verification**:
    - Evaluated against stratified ground-truth polygons and official Directorate of Agriculture / UPAg statistics:
      - **Intersection-over-Union (IoU)**: **0.8704**
@@ -167,26 +175,30 @@ All cartographic plates are rendered at 300 DPI in [`outputs/figures/`](file:///
 
 ---
 
-## 💻 5. Live Server-Side ML & Interactive GEE Dashboard
+## 🌐 5. Two Ways to Access the Interactive Dashboards
 
-The repository includes a Google Earth Engine UI Dashboard in [`gee_app/chhattisgarh_ml_field_dashboard.js`](file:///gee_app/chhattisgarh_ml_field_dashboard.js).
+### Option A: Instant Live Web GIS Dashboard (Runs in Any Web Browser)
+> **Direct Link**: **[https://akshit-rgb.github.io/Chhattisgarh-Rice-Methane-MRV-project/](https://akshit-rgb.github.io/Chhattisgarh-Rice-Methane-MRV-project/)**  
+> *(No Google account, Earth Engine project, or installation required!)*
 
-### Key Features:
-1. **Live Server-Side `ee.Classifier.smileRandomForest`**:
-   - Trains directly on Google's cloud servers using a multi-band stack (Sentinel-1 VV/VH, S2 NDVI/EVI/LSWI, SoilGrids SOC/Clay, and SRTM DEM).
-   - Generates seamless 20m pixel-level methane flux predictions live in the map canvas.
-2. **10m SNIC Parcel Segmentation**:
-   - Live cluster delineation across Durg District's irrigated floodplain.
-3. **Permanent Waterbody Exclusion**:
-   - Masks out JRC Global Surface Water (`occurrence > 80%`) and National Water Body Census *Talabs*.
-4. **Field-Level Click Auditor**:
-   - Click any agricultural field on the map to inspect live predicted daily flux, seasonal cumulative emissions, avoided $\text{CO}_2\text{e}$ under AWD, and render a multi-year Sentinel-2 NDVI phenology time-series chart.
+- **Interactive Leaflet Map**: Preloaded with all 146 Chhattisgarh blocks and Durg 10m agricultural field parcels.
+- **Dynamic Thematic Switching**: Toggle between Seasonal Flux, Daily Flux, Total Emissions ($\text{t CH}_4$), AWD Carbon Credits ($\text{t CO}_2\text{e}$), and SAR Inundation Days.
+- **Click Inspector with Dynamic Charts**: Click on any block or field parcel to inspect exact metrics, district statistics, and live Chart.js comparisons.
 
-### How to Launch:
+### Option B: Google Earth Engine Cloud Dashboard (Server-Side ML)
+> **Direct Code Editor**: **[https://code.earthengine.google.com/](https://code.earthengine.google.com/)**  
+> **Script**: [`gee_app/chhattisgarh_ml_field_dashboard.js`](gee_app/chhattisgarh_ml_field_dashboard.js)  
+> **Cloud Project**: `ee-akshitvaishnavonline`
+
+#### Why Earth Engine Scripts Don't Run Directly Inside GitHub:
+> [!NOTE]  
+> GitHub is a static source code repository. When you click `.js` files inside GitHub, it displays the code syntax. Google Earth Engine JavaScript scripts (`ee.Image`, `ui.Panel`, `Map.addLayer`) are executed on Google's cloud computing servers.
+
+#### How to Launch in 3 Simple Steps:
 1. Open the [Google Earth Engine Code Editor](https://code.earthengine.google.com/).
-2. Set your active Cloud Project to `ee-akshitvaishnavonline`.
-3. Open [`gee_app/chhattisgarh_ml_field_dashboard.js`](file:///gee_app/chhattisgarh_ml_field_dashboard.js).
-4. Click **Run**.
+2. Verify that your active Cloud Project is set to `ee-akshitvaishnavonline` in the top-right corner.
+3. Copy and paste the contents of [`gee_app/chhattisgarh_ml_field_dashboard.js`](gee_app/chhattisgarh_ml_field_dashboard.js) and click **Run**.
+4. The live server-side `smileRandomForest` model will train and classify the entire state of Chhattisgarh in real time!
 
 ---
 
@@ -201,6 +213,7 @@ Formatted policy table exported for the online [India Map Maker](https://yashvee
 ## ⚙️ 7. Repository Structure & Execution Workflow
 
 ```text
+├── index.html                                             # Standalone Web GIS Dashboard (Leaflet + Chart.js for GitHub Pages)
 ├── gee_app/
 │   ├── chhattisgarh_ml_field_dashboard.js                 # Live server-side ML & 10m parcel GEE UI dashboard
 │   └── chhattisgarh_mrv_dashboard.js                      # Multi-year block MRV dashboard script
@@ -211,10 +224,11 @@ Formatted policy table exported for the online [India Map Maker](https://yashvee
 │   ├── 03_ipcc_tier2_and_target_fusion.py                 # IPCC Tier-2 Monte Carlo simulation (2,000 runs) & AWD module
 │   ├── 04_comprehensive_accuracy_tests.py                 # The 10 Mandatory Accuracy & Diagnostic Tests suite
 │   ├── 04_train_spatial_ml_ensemble.py                    # Spatial GroupKFold CV & Out-of-Time RF + XGBoost ensemble
-│   └── 05_generate_mrv_maps_and_plots.py                  # 6 publication plates (300 DPI) + India Map Maker CSV
+│   ├── 05_generate_mrv_maps_and_plots.py                  # 6 publication plates (300 DPI) + India Map Maker CSV
+│   └── 06_export_web_dashboard_assets.py                  # Builds self-contained GeoJSON assets & index.html
 ├── data/
 │   ├── raw/india_geodata/                                 # Official LGD blocks, WRIS rivers, census waterbodies GeoJSONs/parquets
-│   └── processed/                                         # Fused panel CSVs, validation predictions, crosswalk tables
+│   └── processed/                                         # Fused panel CSVs, web geojsons, crosswalk tables
 ├── models/
 │   ├── random_forest_mrv.joblib                           # Trained Random Forest model checkpoint
 │   └── xgboost_mrv.json                                   # Trained XGBoost model checkpoint
@@ -251,6 +265,9 @@ python src/04_comprehensive_accuracy_tests.py
 
 # 7. Step 5: Generate the 6 publication plates & India Map Maker policy table
 python src/05_generate_mrv_maps_and_plots.py
+
+# 8. Step 6: Build Web Dashboard assets & index.html for GitHub Pages
+python src/06_export_web_dashboard_assets.py
 ```
 
 ---
