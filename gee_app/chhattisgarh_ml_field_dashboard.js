@@ -7,21 +7,21 @@
  * Study Area: Chhattisgarh, India (146 LGD Blocks, Durg Command Focus)
  * Platform: Google Earth Engine UI JavaScript API
  *
- * KEY FEATURES:
- * 1. Live Server-Side Machine Learning: Trains ee.Classifier.smileRandomForest
- *    on multi-sensor feature stack (Sentinel-1 SAR, Sentinel-2 Optical,
- *    SoilGrids SOC/Clay, and SRTM DEM) to predict pixel-level daily CH4 flux.
+ * KEY HIGHLIGHTS:
+ * 1. Live Server-Side smileRandomForest in REGRESSION Mode:
+ *    Trained on Sentinel-1 SAR Dual-Pol, Sentinel-2 Optical (NDVI/EVI/LSWI),
+ *    SRTM Topography, and JRC Waterbody Masking.
  * 2. 10m Parcel Instance Segmentation (SNIC Superpixels) over Durg District
  *    (Patan, Dhamdha, Durg canal command) to delineate individual bunded fields (Khet).
  * 3. Permanent Waterbody Exclusion: JRC Global Surface Water (occurrence > 80%)
- *    and National Water Body Census (Talabs) masked out to purify SAR flood detection.
- * 4. Interactive Inspector Panel: Real-time parcel click auditor with multi-year
- *    phenology time series charts and Verra VM0051 carbon credit calculator.
+ *    masked out to purify Sentinel-1 SAR flood frequency calculations.
+ * 4. Interactive Field Auditor: Click on any parcel to inspect live predicted
+ *    daily flux (kg/ha/day), seasonal emissions, and Verra VM0051 AWD offsets.
  *
- * INSTRUCTIONS:
+ * HOW TO RUN:
  * 1. Open Google Earth Engine Code Editor: https://code.earthengine.google.com/
- * 2. Paste this entire script and select project 'ee-akshitvaishnavonline'.
- * 3. Click 'Run'.
+ * 2. Select Project: 'ee-akshitvaishnavonline' in the top-right corner.
+ * 3. Paste this script and click 'Run'.
  * ==============================================================================
  */
 
@@ -36,9 +36,14 @@ var cgDistricts = ee.FeatureCollection('FAO/GAUL/2015/level2')
 
 var stateGeom = cgState.geometry();
 
-// Durg District Focus Area
+// Durg District Command Area Focus
 var durgGeom = ee.Geometry.Polygon([
   [[81.148, 20.849], [81.625, 20.849], [81.625, 21.545], [81.148, 21.545], [81.148, 20.849]]
+]);
+
+// Central Agrarian Training Region (Mahanadi Basin)
+var trainRegion = ee.Geometry.Polygon([
+  [[80.80, 20.40], [82.50, 20.40], [82.50, 22.40], [80.80, 22.40], [80.80, 20.40]]
 ]);
 
 // ------------------------------------------------------------------------------
@@ -52,13 +57,11 @@ var kharifEnd = ee.Date.fromYMD(currentYear, 11, 15);
 var s1Col = ee.ImageCollection('COPERNICUS/S1_GRD')
   .filterBounds(stateGeom)
   .filterDate(kharifStart, kharifEnd)
-  .filter(ee.Filter.listContains('transmitterReceiverPolarisation', 'VV'))
-  .filter(ee.Filter.listContains('transmitterReceiverPolarisation', 'VH'))
   .filter(ee.Filter.eq('instrumentMode', 'IW'));
 
 var s1VV = s1Col.select('VV').median().clip(stateGeom);
 var s1VH = s1Col.select('VH').median().clip(stateGeom);
-var s1Ratio = s1VH.subtract(s1VV).rename('VH_VV_ratio');
+var s1Ratio = s1VH.subtract(s1VV).rename('s1_ratio');
 
 // B. Permanent Waterbody Mask (JRC Occurrence > 80% = Perennial Talabs / Reservoirs)
 var jrcWater = ee.Image('JRC/GSW1_4/GlobalSurfaceWater')
@@ -103,20 +106,16 @@ var dwCrops = ee.ImageCollection('GOOGLE/DYNAMICWORLD/V1')
   .clip(stateGeom);
 
 var esaWorldCover = ee.Image('ESA/WorldCover/v200/2021').select('Map').clip(stateGeom);
-var croplandMask = dwCrops.gt(0.40).or(esaWorldCover.eq(40)).and(jrcWater.not());
+var croplandMask = dwCrops.gt(0.35).or(esaWorldCover.eq(40)).and(jrcWater.not());
 
-// E. Topography & Soil Properties
+// E. Topography (SRTM 30m)
 var srtm = ee.Image('USGS/SRTMGL1_003').clip(stateGeom);
 var elevation = srtm.select('elevation').rename('elevation');
 var slope = ee.Terrain.slope(elevation).rename('slope');
 
-var soc = ee.Image('projects/soilgrids-isric/soc_mean').select('soc_0-5cm_mean').divide(10).rename('soc').clip(stateGeom);
-var clay = ee.Image('projects/soilgrids-isric/clay_mean').select('clay_0-5cm_mean').divide(10).rename('clay').clip(stateGeom);
-
 // Seasonal SAR Inundation Frequency (puddling proxy)
-var inundationFreq = s1Col.map(function(img) {
-  var puddling = img.select('VV').lt(-15.0).and(jrcWater.not());
-  return puddling.rename('inundation');
+var inundationFreq = s1Col.select('VV').map(function(img) {
+  return img.lt(-15.0).rename('inundation');
 }).mean().rename('inundation_freq').clip(stateGeom);
 
 // ------------------------------------------------------------------------------
@@ -125,55 +124,44 @@ var inundationFreq = s1Col.map(function(img) {
 var featureStack = ee.Image.cat([
   s1VV.rename('s1_vv'),
   s1VH.rename('s1_vh'),
-  s1Ratio.rename('s1_ratio'),
+  s1Ratio,
   inundationFreq,
   ndvi,
   evi,
   lswi,
   elevation,
-  slope,
-  soc,
-  clay
+  slope
 ]).updateMask(croplandMask);
 
-// ------------------------------------------------------------------------------
-// 4. Live Server-Side smileRandomForest Training
-// ------------------------------------------------------------------------------
-// Mechanistic training sample generation across Chhattisgarh agro-ecological zones
-// Target: daily methane flux (kg CH4/ha/day) scaled by inundation, SOC, and clay
-var targetMethaneFlux = featureStack.expression(
-  '0.35 + 1.25 * (inund / (inund + 0.25)) * (0.8 + 0.4 * (soc / 15.0)) * (0.7 + 0.5 * (clay / 35.0)) * (lswi + 0.2)', {
-    'inund': featureStack.select('inundation_freq'),
-    'soc': featureStack.select('soc'),
-    'clay': featureStack.select('clay'),
-    'lswi': featureStack.select('LSWI')
-  }
-).clamp(0.2, 2.9).multiply(100).round().toInt().rename('target_flux_scaled');
+// Continuous Mechanistic Target Methane Flux for Training
+var targetFlux = inundationFreq.multiply(1.4)
+  .add(ndvi.multiply(0.6))
+  .add(0.35)
+  .clamp(0.2, 2.5)
+  .rename('target_flux');
 
-var trainingImage = featureStack.addBands(targetMethaneFlux);
+var trainingImage = featureStack.addBands(targetFlux).updateMask(croplandMask);
 
-// Stratified random sampling for live server-side training
+// Stratified spatial sample across Mahanadi agrarian basin (fast, snappy, zero memory limits)
 var trainingSamples = trainingImage.sample({
-  region: stateGeom,
-  scale: 150,
-  numPixels: 1800,
-  seed: 42,
-  geometries: true
+  region: trainRegion,
+  scale: 300,
+  numPixels: 800,
+  seed: 42
 });
 
-// Train smileRandomForest in Earth Engine server
+// Train smileRandomForest in REGRESSION Mode
 var mlClassifier = ee.Classifier.smileRandomForest({
-  numberOfTrees: 50,
-  minLeafPopulation: 3
-}).train({
+  numberOfTrees: 35,
+  minLeafPopulation: 4
+}).setOutputMode('REGRESSION').train({
   features: trainingSamples,
-  classProperty: 'target_flux_scaled',
-  inputProperties: ['s1_vv', 's1_vh', 's1_ratio', 'inundation_freq', 'NDVI', 'EVI', 'LSWI', 'elevation', 'slope', 'soc', 'clay']
+  classProperty: 'target_flux',
+  inputProperties: ['s1_vv', 's1_vh', 's1_ratio', 'inundation_freq', 'NDVI', 'EVI', 'LSWI', 'elevation', 'slope']
 });
 
 // Live server-side classification to predict methane flux
 var predictedMethaneFlux = featureStack.classify(mlClassifier)
-  .divide(100.0)
   .rename('pred_ch4_kg_ha_day')
   .updateMask(croplandMask);
 
@@ -181,15 +169,14 @@ var predictedMethaneFlux = featureStack.classify(mlClassifier)
 var seasonCh4KgHa = predictedMethaneFlux.multiply(105.0).rename('season_ch4_kg_ha');
 
 // Verra VM0051 AWD Mitigation Potential (tonnes CO2e / ha / season)
-// 38% reduction under single/multiple aerations; AR6 GWP CH4 = 27.9; minus 6% N2O trade-off
 var awdMitigationTco2e = seasonCh4KgHa.multiply(0.38).divide(1000.0).multiply(27.9 * 0.94).rename('awd_tco2e_ha');
 
 // ------------------------------------------------------------------------------
-// 5. 10m Parcel Instance Segmentation (SNIC Superpixels) over Durg District
+// 4. 10m Parcel Instance Segmentation (SNIC Superpixels) over Durg District
 // ------------------------------------------------------------------------------
 var durgCropStack = featureStack.clip(durgGeom);
 var snicParcels = ee.Algorithms.Image.Segmentation.SNIC({
-  image: durgCropStack.select(['NDVI', 'LSWI', 's1_vv']),
+  image: durgCropStack.select(['NDVI', 'LSWI']),
   size: 16,
   compactness: 1.5,
   connectivity: 8,
@@ -197,9 +184,9 @@ var snicParcels = ee.Algorithms.Image.Segmentation.SNIC({
 }).select('clusters').rename('parcel_clusters');
 
 // ------------------------------------------------------------------------------
-// 6. UI Dashboard Architecture & Visual Design
+// 5. UI Dashboard Architecture & Visual Design
 // ------------------------------------------------------------------------------
-Map.setCenter(81.45, 21.15, 10);
+Map.setCenter(81.45, 21.15, 9);
 Map.setOptions('HYBRID');
 
 // Palettes
@@ -210,12 +197,12 @@ var awdPalette = ['#e8f5e9', '#c8e6c9', '#81c784', '#4caf50', '#2e7d32', '#1b5e2
 Map.addLayer(jrcWater.selfMask(), {palette: ['#00e5ff']}, 'Permanent Waterbodies (Talabs Mask)', false);
 Map.addLayer(croplandMask.selfMask(), {palette: ['#a5d6a7']}, 'Delineated Rice Cropland Mask', false);
 Map.addLayer(snicParcels.randomVisualizer(), {}, '10m Bunded Field Parcels (SNIC Clusters - Durg)', false);
-Map.addLayer(predictedMethaneFlux, {min: 0.5, max: 2.2, palette: methanePalette}, 'Live ML Predicted CH4 Flux (kg/ha/day)', true);
-Map.addLayer(awdMitigationTco2e, {min: 0.5, max: 2.5, palette: awdPalette}, 'AWD Carbon Mitigation Potential (tCO2e/ha)', true);
+Map.addLayer(predictedMethaneFlux, {min: 0.4, max: 2.2, palette: methanePalette}, 'Live ML Predicted CH4 Flux (kg/ha/day)', true);
+Map.addLayer(awdMitigationTco2e, {min: 0.4, max: 2.4, palette: awdPalette}, 'AWD Carbon Mitigation Potential (tCO2e/ha)', true);
 Map.addLayer(cgDistricts.style({color: 'white', fillColor: '00000000', width: 1.5}), {}, 'District Boundaries', true);
 
 // ------------------------------------------------------------------------------
-// 7. Interactive Control & Auditor Panel
+// 6. Interactive Control & Auditor Panel
 // ------------------------------------------------------------------------------
 var mainPanel = ui.Panel({
   style: {width: '380px', padding: '12px', backgroundColor: '#fafafa', border: '1px solid #e0e0e0'}
@@ -227,7 +214,7 @@ var titleLabel = ui.Label({
 });
 
 var descLabel = ui.Label({
-  value: 'Live Server-Side smileRandomForest trained on Sentinel-1/2, SoilGrids, and WRIS Hydrology. Masked for 36,902 permanent waterbodies (Talabs).',
+  value: 'Live Server-Side smileRandomForest in REGRESSION mode trained on Sentinel-1 SAR, Sentinel-2, and SRTM Topography. Masked for permanent waterbodies (Talabs).',
   style: {fontSize: '11px', color: '#424242', margin: '0 0 10px 0'}
 });
 
@@ -277,11 +264,11 @@ Map.onClick(function(coords) {
     predictedMethaneFlux,
     seasonCh4KgHa,
     awdMitigationTco2e,
-    featureStack.select(['NDVI', 'LSWI', 's1_vv', 'clay', 'inundation_freq'])
+    featureStack.select(['NDVI', 'LSWI', 's1_vv', 'inundation_freq'])
   ]).reduceRegion({
     reducer: ee.Reducer.first(),
     geometry: point,
-    scale: 20
+    scale: 30
   });
 
   sampleVal.evaluate(function(result) {
@@ -295,20 +282,19 @@ Map.onClick(function(coords) {
     var seasonFlux = result.season_ch4_kg_ha.toFixed(1);
     var awd = result.awd_tco2e_ha.toFixed(2);
     var ndviVal = result.NDVI ? result.NDVI.toFixed(2) : 'N/A';
-    var clayVal = result.clay ? result.clay.toFixed(1) : 'N/A';
     var inundVal = result.inundation_freq ? (result.inundation_freq * 100).toFixed(0) : 'N/A';
 
     inspectResults.add(ui.Label('Lat: ' + coords.lat.toFixed(4) + '°, Lon: ' + coords.lon.toFixed(4) + '°', {fontSize: '9.5px', color: '#90a4ae'}));
     inspectResults.add(ui.Label('• Daily CH4 Flux: ' + flux + ' kg CH4 / ha / day', {fontSize: '11px', fontWeight: 'bold', color: '#b71c1c'}));
     inspectResults.add(ui.Label('• Seasonal Cumulative: ' + seasonFlux + ' kg CH4 / ha', {fontSize: '10.5px', color: '#d84315'}));
     inspectResults.add(ui.Label('• AWD Credit Potential: ' + awd + ' t CO2e / ha / season', {fontSize: '10.5px', fontWeight: 'bold', color: '#2e7d32'}));
-    inspectResults.add(ui.Label('• Peak NDVI: ' + ndviVal + ' | Soil Clay: ' + clayVal + '% | Inundation: ' + inundVal + '%', {fontSize: '10px', color: '#455a64'}));
+    inspectResults.add(ui.Label('• Peak NDVI: ' + ndviVal + ' | Inundation Freq: ' + inundVal + '%', {fontSize: '10px', color: '#455a64'}));
 
     // Render multi-year NDVI phenology chart at clicked field
     chartContainer.clear();
     var s2TS = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED')
       .filterBounds(point)
-      .filterDate('2021-01-01', '2024-11-30')
+      .filterDate('2022-01-01', '2024-11-30')
       .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 40))
       .map(maskS2Clouds)
       .map(function(img) {
@@ -316,9 +302,9 @@ Map.onClick(function(coords) {
           .set('system:time_start', img.get('system:time_start'));
       });
 
-    var chart = ui.Chart.image.series(s2TS, point, ee.Reducer.mean(), 20)
+    var chart = ui.Chart.image.series(s2TS, point, ee.Reducer.mean(), 30)
       .setOptions({
-        title: 'Multi-Year Sentinel-2 NDVI Phenology (2021–2024)',
+        title: 'Sentinel-2 NDVI Phenology (2022–2024)',
         vAxis: {title: 'NDVI', minValue: 0, maxValue: 1},
         hAxis: {title: 'Date', format: 'MM-yyyy'},
         colors: ['#2e7d32'],
