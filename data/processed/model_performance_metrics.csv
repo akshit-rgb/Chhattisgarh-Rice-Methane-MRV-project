@@ -1,0 +1,5 @@
+validation_scheme,r2_score,rmse_tonnes,description
+5-Fold Spatial GroupKFold CV (by District),0.9794,303.7,Tests spatial generalizability to unseen geographical districts
+Out-of-Time Horizon (2023-2024 Test Set),0.9898,249.64,"Trained on 2019-2022, tested strictly on future 2023-2024 observations"
+Out-of-Time MAE,,170.04,Mean Absolute Error in tonnes CH4 on 2023-2024
+Out-of-Time MAPE (%),,4.16,Mean Absolute Percentage Error on test horizon

@@ -1,0 +1,36 @@
+# Byte-compiled / optimized / cache files
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+*.log
+
+# Environment & config
+.env
+.env.local
+.ipynb_checkpoints/
+.Rhistory
+
+# IDE & agent local files
+.vscode/
+.idea/
+.agents/
+scratch/
+chhattisgarh_rice_methane all in one/
+IndiaHouse_Akshit_Vaishnav_Resume.docx
+
+# Large raw archives & binaries
+*.zip
+*.tar.gz
+*.7z
+*.rar
+*.tif
+*.tiff
+
+# Track deliverables explicitly
+!data/processed/*.csv
+!data/processed/*.geojson
+!data/raw/boundaries/*.geojson
+!outputs/figures/*.png
+!models/*
