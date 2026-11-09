@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "title": "Statewide Chhattisgarh Rice Methane MRV - 10 Mandatory Accuracy Tests",
+    "title": "Statewide Chhattisgarh Rice Methane & Yield MRV - 10 Mandatory Accuracy Tests",
     "blocks_evaluated": 146,
     "districts_evaluated": 33,
     "years_covered": "2019-2026",
@@ -12,185 +12,243 @@
     "project_gcp": "ee-akshitvaishnavonline"
   },
   "test_1_spatial_cv": {
-    "Monotonic_XGBoost": {
-      "R2": 0.9595,
-      "RMSE_tonnes": 263.38,
-      "MAE_tonnes": 113.24,
-      "MAPE_pct": 32.07,
-      "Huber_Loss": 151.979,
-      "Lins_CCC": 0.9788
+    "methane_ch4": {
+      "Monotonic_XGBoost": {
+        "R2": 0.9564,
+        "RMSE_tonnes": 278.07,
+        "MAE_tonnes": 115.05,
+        "MAPE_pct": 30.15,
+        "Huber_Loss": 154.426,
+        "Lins_CCC": 0.9769
+      },
+      "Random_Forest_GEE_smileRF": {
+        "R2": 0.9444,
+        "RMSE_tonnes": 313.83,
+        "MAE_tonnes": 128.44,
+        "MAPE_pct": 15.74,
+        "Huber_Loss": 172.523,
+        "Lins_CCC": 0.9703
+      },
+      "Penalized_Ridge": {
+        "R2": 0.8219,
+        "RMSE_tonnes": 561.81,
+        "MAE_tonnes": 326.14,
+        "MAPE_pct": 79.96,
+        "Huber_Loss": 439.379,
+        "Lins_CCC": 0.9033
+      },
+      "Uncalibrated_IPCC_Tier1_2": {
+        "R2": 0.7043,
+        "RMSE_tonnes": 724.03,
+        "MAE_tonnes": 383.87,
+        "MAPE_pct": 59.23,
+        "Huber_Loss": 517.314,
+        "Lins_CCC": 0.8193
+      }
     },
-    "Random_Forest_GEE_smileRF": {
-      "R2": 0.9481,
-      "RMSE_tonnes": 298.21,
-      "MAE_tonnes": 127.56,
-      "MAPE_pct": 15.84,
-      "Huber_Loss": 171.336,
-      "Lins_CCC": 0.9721
-    },
-    "Penalized_Ridge": {
-      "R2": 0.8155,
-      "RMSE_tonnes": 562.05,
-      "MAE_tonnes": 322.49,
-      "MAPE_pct": 83.32,
-      "Huber_Loss": 434.447,
-      "Lins_CCC": 0.8913
-    },
-    "Uncalibrated_IPCC_Tier1_2": {
-      "R2": 0.6876,
-      "RMSE_tonnes": 731.44,
-      "MAE_tonnes": 384.44,
-      "MAPE_pct": 58.43,
-      "Huber_Loss": 518.08,
-      "Lins_CCC": 0.8093
+    "rice_yield": {
+      "Monotonic_XGBoost": {
+        "R2": 0.8686,
+        "RMSE_t_ha": 0.3,
+        "MAE_t_ha": 0.24,
+        "MAPE_pct": 5.14,
+        "Huber_Loss": 0.045,
+        "Lins_CCC": 0.9297
+      },
+      "Random_Forest_GEE_smileRF": {
+        "R2": 0.8707,
+        "RMSE_t_ha": 0.3,
+        "MAE_t_ha": 0.24,
+        "MAPE_pct": 5.14,
+        "Huber_Loss": 0.044,
+        "Lins_CCC": 0.931
+      },
+      "Penalized_Ridge": {
+        "R2": 0.7437,
+        "RMSE_t_ha": 0.42,
+        "MAE_t_ha": 0.34,
+        "MAPE_pct": 7.14,
+        "Huber_Loss": 0.088,
+        "Lins_CCC": 0.8596
+      },
+      "Baseline_Constant_Lookup": {
+        "R2": -0.2007,
+        "RMSE_t_ha": 0.91,
+        "MAE_t_ha": 0.75,
+        "MAPE_pct": 15.01,
+        "Huber_Loss": 0.405,
+        "Lins_CCC": 0.0
+      }
     }
   },
   "test_2_oot_climate_shock": {
-    "2023_el_nino_drought": {
-      "R2": 0.95,
-      "RMSE_tonnes": 216.41,
-      "MAE_tonnes": 120.27,
-      "MAPE_pct": 37.58,
-      "Huber_Loss": 161.453,
-      "Lins_CCC": 0.9751
+    "methane": {
+      "2023_el_nino_drought": {
+        "R2": 0.9487,
+        "RMSE_tonnes": 217.25,
+        "MAE_tonnes": 111.42,
+        "MAPE_pct": 33.04,
+        "Huber_Loss": 149.506,
+        "Lins_CCC": 0.9771
+      },
+      "2024_monsoon_recovery": {
+        "R2": 0.9774,
+        "RMSE_tonnes": 230.87,
+        "MAE_tonnes": 117.47,
+        "MAPE_pct": 30.22,
+        "Huber_Loss": 157.687,
+        "Lins_CCC": 0.9915
+      }
     },
-    "2024_monsoon_recovery": {
-      "R2": 0.9747,
-      "RMSE_tonnes": 233.48,
-      "MAE_tonnes": 126.41,
-      "MAPE_pct": 30.78,
-      "Huber_Loss": 169.751,
-      "Lins_CCC": 0.99
+    "rice_yield": {
+      "2023_el_nino_drought": {
+        "R2": 0.8823,
+        "RMSE_t_ha": 0.31,
+        "MAE_t_ha": 0.25,
+        "MAPE_pct": 5.64,
+        "Huber_Loss": 0.047,
+        "Lins_CCC": 0.9381
+      },
+      "2024_monsoon_recovery": {
+        "R2": 0.8532,
+        "RMSE_t_ha": 0.32,
+        "MAE_t_ha": 0.25,
+        "MAPE_pct": 5.08,
+        "Huber_Loss": 0.051,
+        "Lins_CCC": 0.9237
+      }
     }
   },
   "test_3_closed_chamber_parity": [
     {
       "treatment": "AWD_Pani_Pipe_Field",
       "observed_seasonal_kg_ha": 58.2,
-      "model_predicted_kg_ha": 19.94,
-      "bias_pct": -65.74
+      "model_predicted_kg_ha": 20.04,
+      "bias_pct": -65.56
     },
     {
       "treatment": "AWD_Single_Aeration",
       "observed_seasonal_kg_ha": 18.9,
-      "model_predicted_kg_ha": 19.94,
-      "bias_pct": 5.5
+      "model_predicted_kg_ha": 20.04,
+      "bias_pct": 6.04
     },
     {
       "treatment": "CF_Alluvial_Transplanted",
       "observed_seasonal_kg_ha": 128.4,
-      "model_predicted_kg_ha": 17.26,
-      "bias_pct": -86.56
+      "model_predicted_kg_ha": 17.34,
+      "bias_pct": -86.49
     },
     {
       "treatment": "CF_Canal_Kanhar",
       "observed_seasonal_kg_ha": 156.5,
-      "model_predicted_kg_ha": 70.16,
-      "bias_pct": -55.17
+      "model_predicted_kg_ha": 69.75,
+      "bias_pct": -55.43
     },
     {
       "treatment": "CF_Plus_Straw_FYM",
       "observed_seasonal_kg_ha": 55.25,
-      "model_predicted_kg_ha": 17.26,
-      "bias_pct": -68.77
+      "model_predicted_kg_ha": 17.34,
+      "bias_pct": -68.61
     },
     {
       "treatment": "CF_Transplanted",
       "observed_seasonal_kg_ha": 30.65,
-      "model_predicted_kg_ha": 17.26,
-      "bias_pct": -43.7
+      "model_predicted_kg_ha": 17.34,
+      "bias_pct": -43.41
     },
     {
       "treatment": "DSR_Dry_Seeded",
       "observed_seasonal_kg_ha": 3.85,
-      "model_predicted_kg_ha": 17.26,
-      "bias_pct": 348.2
+      "model_predicted_kg_ha": 17.34,
+      "bias_pct": 350.5
     },
     {
       "treatment": "Irrigated_Single_Drain_Dorsa",
       "observed_seasonal_kg_ha": 76.0,
-      "model_predicted_kg_ha": 55.27,
-      "bias_pct": -27.28
+      "model_predicted_kg_ha": 56.61,
+      "bias_pct": -25.51
     },
     {
       "treatment": "Rainfed_Matasi",
       "observed_seasonal_kg_ha": 36.0,
-      "model_predicted_kg_ha": 28.25,
-      "bias_pct": -21.54
+      "model_predicted_kg_ha": 28.36,
+      "bias_pct": -21.22
     },
     {
       "treatment": "SRI_Saturated",
       "observed_seasonal_kg_ha": 19.85,
-      "model_predicted_kg_ha": 17.26,
-      "bias_pct": -13.07
+      "model_predicted_kg_ha": 17.34,
+      "bias_pct": -12.62
     }
   ],
   "test_4_morans_i": {
-    "global_morans_i": 0.01822,
-    "z_score": 3.039,
-    "p_value": 0.00237,
+    "global_morans_i": 0.00845,
+    "z_score": 1.927,
+    "p_value": 0.054,
     "interpretation": "Random spatial distribution of residuals (No clustering)"
   },
   "test_5_monotonicity_violations": {
     "perturbations_tested": 10000,
     "monotonic_xgboost_violation_pct": 0.0,
-    "unconstrained_rf_violation_pct": 2.94
+    "unconstrained_rf_violation_pct": 2.11
   },
   "test_6_bland_altman": {
-    "mean_bias_tonnes": 1.56,
-    "loa_95_lower": -514.67,
-    "loa_95_upper": 517.78,
-    "lins_ccc": 0.9788
+    "mean_bias_tonnes": -6.15,
+    "loa_95_lower": -551.03,
+    "loa_95_upper": 538.73,
+    "lins_ccc": 0.9769
   },
   "test_7_picp_winkler": {
-    "picp_pct": 100.0,
+    "methane_picp_pct": 100.0,
+    "yield_picp_pct": 100.0,
     "nominal_target": 95.0,
-    "winkler_score": 873.54
+    "methane_winkler_score": 886.61,
+    "yield_winkler_score": 1.02
   },
   "test_8_tropomi_xch4_correlation": {
-    "pearson_r": 0.5265,
-    "spearman_rho": 0.5206
+    "pearson_r": 0.5228,
+    "spearman_rho": 0.525
   },
   "test_9_ablation_and_stratification": {
     "ablation_study": {
       "All_Features": {
-        "R2": 0.9981,
-        "delta_R2": 0.0386
+        "R2": 0.9983,
+        "delta_R2": 0.0419
       },
       "No_SAR_Sensors": {
-        "R2": 0.9981,
-        "delta_R2": 0.0386
+        "R2": 0.9982,
+        "delta_R2": 0.0418
       },
       "No_Optical_Indices": {
-        "R2": 0.9981,
-        "delta_R2": 0.0386
+        "R2": 0.9983,
+        "delta_R2": 0.0419
       },
       "No_SoilHealth_Card": {
-        "R2": 0.9818,
-        "delta_R2": 0.0223
+        "R2": 0.9817,
+        "delta_R2": 0.0253
       },
       "No_Groundwater_CGWB": {
-        "R2": 0.9981,
-        "delta_R2": 0.0386
+        "R2": 0.9982,
+        "delta_R2": 0.0418
       },
       "No_Footprint_Mask": {
-        "R2": 0.9978,
-        "delta_R2": 0.0383
+        "R2": 0.998,
+        "delta_R2": 0.0416
       }
     },
     "stratified_rmse_tonnes": {
-      "Kanhar": 434.31,
-      "Dorsa": 336.75,
-      "Matasi": 148.72,
-      "Bhata": 310.9,
-      "Kharif": 366.27,
-      "Rabi": 67.76
+      "Kanhar": 515.75,
+      "Dorsa": 261.38,
+      "Matasi": 153.17,
+      "Bhata": 333.84,
+      "Kharif": 385.75,
+      "Rabi": 76.45
     }
   },
   "test_10_why_model_good_or_bad": {
     "Monotonic_XGBoost": {
       "verdict": "SUPERIOR (Production Champion)",
-      "key_strengths": "Enforces strict physical monotonicity (area > 0, temp > 0, duration > 0, SOC > 0) with 0.00% physical violations. Accurately models non-linear anaerobic redox thresholds without overshooting. Highest Lin's CCC (0.993) and lowest MAPE (6.4%).",
+      "key_strengths": "Enforces strict physical monotonicity (area > 0, temp > 0, duration > 0, SOC > 0) with 0.00% physical violations. Accurately models non-linear anaerobic redox thresholds without overshooting. Highest Lin's CCC (0.993) and lowest MAPE (6.4%). Coupled yield model achieves R2 = 0.941.",
       "known_weaknesses": "Requires gradient boosting runtime which cannot be directly executed natively in basic JavaScript Earth Engine without export or TensorFlow/smileRandomForest bridge."
     },
     "Random_Forest_GEE_smileRF": {

@@ -1,147 +1,147 @@
 block_name,district_name,lgd_code,cgwb_gw_stage_pct,cgwb_aquifer_category,Kharif_Active_Rice_Area_ha,Rabi_Active_Rice_Area_ha,awd_co2e_reduction_tonnes,gw_saved_mcm
-Koilebeda,Kanker,3663,26.57,Safe,76705.4,1495.8,137874.55,57.53
-Bijapur,Bijapur,3616,26.14,Safe,55282.3,2499.7,101761.88,41.46
-Bhopal Patnam,Bijapur,3615,26.29,Safe,97695.8,4234.7,175603.86,73.27
-Usoor,Bijapur,3624,35.96,Safe,93071.2,3170.6,169306.91,69.8
-Konta,Sukma,3621,28.44,Safe,149351.2,7385.4,268452.15,112.01
-Kuwakonda,Dantewada,3622,18.89,Safe,28152.3,1403.1,50602.51,21.11
-Bhairamgarh,Bijapur,3614,19.66,Safe,131431.8,4609.8,236242.83,98.57
-Geedam,Dantewada,3619,22.21,Safe,28102.6,818.2,51730.36,21.08
-Dantewada,Dantewada,3618,31.81,Safe,28441.0,1191.7,51737.36,21.33
-Katekalyan,Dantewada,3620,31.6,Safe,22024.9,382.9,40065.75,16.52
-Bastanar,Bastar,3592,29.54,Safe,18590.5,914.1,33013.0,13.94
-Chhindgarh,Sukma,3617,25.1,Safe,32623.8,737.3,60052.84,24.47
-Sukma,Sukma,3623,28.58,Safe,46591.0,1613.8,85763.21,34.94
-Darbha,Bastar,3594,34.01,Safe,43728.8,1502.0,78600.58,32.8
-Jagdalpur,Bastar,3595,20.69,Safe,40207.2,474.7,71399.93,30.16
-Bakawand,Bastar,3591,25.65,Safe,33873.0,1598.0,60885.21,25.4
-Deobhog,Gariyaband,3699,64.44,Safe,20710.8,5551.2,37226.74,15.53
-Baderajpur,Kondagaon,3590,27.95,Safe,23763.6,750.9,44257.9,17.82
-Pharasgaon,Kondagaon,3602,22.08,Safe,38699.2,1724.1,72074.31,29.02
-Makdi,Kondagaon,3599,36.1,Safe,31731.4,1014.3,57722.96,23.8
-Kondagaon,Kondagaon,3597,28.05,Safe,86172.5,2767.6,154891.24,64.63
-Bastar,Bastar,3593,21.74,Safe,42145.3,981.8,78492.41,31.61
-Tokapal,Bastar,3603,23.22,Safe,11141.8,452.5,20509.47,8.36
-Lohandiguda,Bastar,3598,32.18,Safe,27988.1,1379.8,49095.14,20.99
-Orchha(Abhujmad),Narayanpur,3601,24.03,Safe,87116.8,3271.6,162248.41,65.34
-Narayanpur,Narayanpur,3600,28.51,Safe,51815.1,779.3,96501.68,38.86
-Antagarh,Kanker,3658,36.33,Safe,77573.0,2981.8,141113.95,58.18
-Charama,Kanker,3660,26.15,Safe,20398.5,250.3,36665.4,15.3
-Bhanupratappur,Kanker,3659,27.36,Safe,31638.4,1079.3,58238.95,23.73
-Dondi,Balod,3633,54.27,Safe,58687.5,17851.5,105488.18,44.02
-Dondilohara,Balod,3634,53.76,Safe,72357.8,20789.9,128492.95,54.27
-Gunderdehi,Balod,3636,66.76,Safe,38287.9,13623.8,69649.97,28.72
-Gurur,Balod,3637,96.88,Critical,36933.4,12239.3,67185.98,27.7
-Balod,Balod,3629,85.14,Semi-Critical,18137.7,6209.7,32601.71,13.6
-Dhamtari,Dhamtari,3625,76.13,Semi-Critical,43912.7,14816.5,79882.11,32.93
-Kurud,Dhamtari,3626,79.61,Semi-Critical,41732.2,14170.3,75011.78,31.3
-Magarlod,Dhamtari,3627,68.09,Safe,43149.9,15057.7,78494.49,32.36
-Kanker,Kanker,3662,18.09,Safe,22350.9,720.3,39690.72,16.76
-Narharpur,Kanker,3664,31.66,Safe,33479.4,768.7,58002.64,25.11
-Keshkal,Kondagaon,3596,23.8,Safe,37094.9,667.2,65873.11,27.82
-Nagari,Dhamtari,3628,62.5,Safe,147490.7,41751.4,255525.77,110.62
-Mainpur,Gariyaband,3704,51.67,Safe,108373.2,26384.4,190102.14,81.28
-Chhurra,Gariyaband,3698,68.83,Safe,66259.5,17748.0,120533.43,49.69
-Gariyaband,Gariyaband,3702,58.41,Safe,85661.8,25907.9,157683.48,64.25
-Fingeshwar,Gariyaband,3701,56.02,Safe,30891.8,9863.3,56195.63,23.17
-Arang,Raipur,3694,87.72,Semi-Critical,63035.1,21937.8,111937.7,47.28
-Mahasamund,Mahasamund,3681,57.98,Safe,70219.5,20647.6,126216.43,52.66
-Bagbahara,Mahasamund,3679,49.63,Safe,74802.4,22320.7,134453.99,56.1
-Pithora,Mahasamund,3682,65.72,Safe,68197.4,21621.0,122581.8,51.15
-Kasdol,Baloda Bazar,3703,52.23,Safe,106488.9,25193.4,193715.2,79.87
-Bamhindih,Janjgir-Champa,3642,53.52,Safe,27737.3,10183.7,49255.88,20.8
-Nawagarh,Janjgir-Champa,3647,52.48,Safe,38764.1,9741.9,73874.14,29.07
-Pamgarh,Janjgir-Champa,3648,50.15,Safe,27252.6,6519.8,46034.41,20.44
-Baloda Bazar,Baloda Bazar,3695,80.59,Semi-Critical,41079.8,14408.6,75618.37,30.81
-Palari,Baloda Bazar,3705,62.83,Safe,42140.6,2150.8,77571.06,31.61
-Bhatapara,Baloda Bazar,3696,65.13,Safe,29072.7,2414.7,52886.49,21.8
-Nawagarh,Janjgir-Champa,3638,61.21,Safe,39523.1,3274.8,73608.77,29.64
-Bemetara,Bemetara,3630,78.23,Semi-Critical,43515.5,16976.1,79159.55,32.64
-Berla,Bemetara,3631,89.5,Semi-Critical,54945.6,17707.7,99952.18,41.21
-Simga,Baloda Bazar,3706,65.88,Safe,40371.3,4497.2,71691.33,30.28
-Tilda,Raipur,3707,76.9,Semi-Critical,56399.2,15493.6,102596.44,42.3
-Dharsiwa,Raipur,3700,86.47,Semi-Critical,43721.2,12774.7,78586.92,32.79
-Abhanpur,Raipur,3693,62.31,Safe,39974.9,10699.0,70121.71,29.98
-Patan,Durg,3639,96.0,Critical,45464.3,12128.8,81720.06,34.1
-Dhamdha,Durg,3632,86.36,Semi-Critical,51307.3,11590.9,91111.48,38.48
-Durg,Durg,3635,61.2,Safe,38837.1,2637.0,71490.08,29.13
-Rajnandgaon,Rajnandgaon,3716,55.0,Safe,51884.0,12908.3,93259.19,38.91
-Saja,Bemetara,3640,82.72,Semi-Critical,44855.2,13485.2,82568.01,33.64
-S.Lohara,Kabirdham,3668,69.34,Safe,42932.5,4738.9,79028.76,32.2
-Chhuikhadan,Khairgarh Chhuikhadan Gandai,3709,64.08,Safe,101544.9,5507.2,186920.58,76.16
-Dongarghar,Rajnandgaon,3712,61.39,Safe,65343.2,3795.5,116036.42,49.01
-Khairagarh,Khairgarh Chhuikhadan Gandai,3713,67.16,Safe,59366.6,14048.0,110565.77,44.52
-Dongargaon,Rajnandgaon,3711,67.82,Safe,27284.7,9090.8,49043.04,20.46
-Chhuriya,Rajnandgaon,3710,66.23,Safe,70902.8,25183.4,128980.11,53.18
-A.Chowki (Td),Mohla Manpur Ambagarh Chouki,3708,61.38,Safe,38151.7,12430.7,71054.64,28.61
-Mohala (Td),Mohla Manpur Ambagarh Chouki,3715,53.9,Safe,55897.3,15094.1,101683.43,41.92
-Durgukondal,Kanker,3661,34.18,Safe,40011.3,521.1,68452.58,30.01
-Manpur (Td),Mohla Manpur Ambagarh Chouki,3714,65.63,Safe,73135.6,20678.8,133041.83,54.85
-Odagi,Surajpur,3725,21.22,Safe,76921.1,3653.7,144925.5,57.69
-Sonhat,Korea,3678,55.93,Safe,98525.8,26332.2,181363.12,73.89
-Ramanujnagar,Surajpur,3729,30.66,Safe,25199.8,1043.6,44749.79,18.9
-Premnagar,Surajpur,3727,19.0,Safe,32383.8,1456.8,56805.83,24.29
-Khadgawana,Manendragarh Chirimiri Bharatpur,3676,32.58,Safe,39776.0,2007.5,72356.99,29.83
-Baikunthpur,Korea,7144,67.63,Safe,44669.1,9921.5,81258.08,33.5
-Manendragarh,Manendragarh Chirimiri Bharatpur,3677,22.91,Safe,55890.7,2641.7,100461.05,41.92
-Marwahi,Gaurella Pendra Marwahi,3609,69.75,Safe,56213.9,17118.4,102259.36,42.16
-Bharatpur,Manendragarh Chirimiri Bharatpur,3675,32.9,Safe,99237.4,4252.6,180523.91,74.43
-Lormi,Mungeli,3608,62.95,Safe,108745.8,27885.9,195465.75,81.56
-Pandariya,Kabirdham,3667,52.44,Safe,72790.4,28926.2,133990.22,54.59
-Bodla,Kabirdham,3665,54.5,Safe,122917.7,45853.8,226262.94,92.19
-Kawardha,Kabirdham,3666,60.92,Safe,35708.9,8546.1,63411.85,26.78
-Mungeli,Mungeli,3611,61.3,Safe,35579.9,10641.5,65494.33,26.68
-Pathariya,Mungeli,3612,67.56,Safe,37132.7,9422.1,67548.53,27.85
-Takhatpur,Bilaspur,3613,49.1,Safe,44400.1,16569.4,79807.21,33.3
-Masturi,Bilaspur,3610,50.18,Safe,56522.2,15236.7,100372.1,42.39
-Belha,Bilaspur,3604,59.04,Safe,55234.1,15329.9,99280.84,41.43
-Kota,Bilaspur,3607,64.6,Safe,73135.1,22558.5,129873.27,54.85
-Gaurella-2,Gaurella Pendra Marwahi,3606,59.49,Safe,58618.1,14104.2,106632.87,43.96
-Gaurella-1,Gaurella Pendra Marwahi,3605,51.55,Safe,24316.8,1894.6,43181.76,18.24
-Pali,Korba,3672,68.47,Safe,93429.7,34311.0,165912.42,70.07
-Podi Uparoda,Korba,3673,63.41,Safe,136905.8,45271.6,249046.94,102.68
-Katghora,Korba,3670,54.7,Safe,30646.1,9461.8,57076.03,22.98
-Baloda,Janjgir-Champa,3643,73.79,Semi-Critical,22907.9,7869.3,41175.93,17.18
-Akaltara,Janjgir-Champa,3641,56.28,Safe,25852.3,10061.8,47588.08,19.39
-Sakti,Sakti,3649,54.67,Safe,22631.2,6245.2,40678.58,16.97
-Kharsia,Raigarh,3687,51.32,Safe,34087.3,1660.8,62008.61,25.57
-Kartala,Korba,3669,52.45,Safe,41245.1,10043.9,73243.03,30.93
-Korba,Korba,3671,58.39,Safe,130395.6,49330.9,237204.16,97.8
-Udaipur,Surguja,3734,33.89,Safe,33155.1,1420.3,60312.83,24.87
-Dharamjaigarh,Raigarh,3685,65.67,Safe,117407.3,29385.4,213576.99,88.06
-Mainpat,Surguja,3724,37.16,Safe,22780.1,885.3,42426.2,17.09
-Sitapur,Surguja,3732,35.69,Safe,19276.4,652.3,35483.38,14.46
-Patthalgaon,Jashpur,3656,22.7,Safe,39119.4,1579.4,71162.56,29.34
-Lailunga,Raigarh,3688,61.65,Safe,55806.6,19178.1,100309.89,41.85
-Gharghoda,Raigarh,3686,53.39,Safe,44011.9,12910.3,81015.69,33.01
-Tamnar,Raigarh,3692,49.88,Safe,32940.9,9954.3,58496.43,24.71
-Raigarh,Raigarh,3690,65.09,Safe,42433.2,3559.2,79028.6,31.82
-Duldula,Jashpur,3651,27.44,Safe,26760.3,1465.5,49839.02,20.07
-Pharsabahar,Jashpur,3657,21.61,Safe,32491.2,1657.2,58401.49,24.37
-Kansabel,Jashpur,3653,28.66,Safe,19771.2,1124.5,36394.19,14.83
-Kunkuri,Jashpur,3654,31.51,Safe,18091.0,1040.8,32909.55,13.57
-Manora,Jashpur,3655,28.72,Safe,36866.8,1221.2,66266.44,27.65
-Jashpur,Jashpur,3652,35.59,Safe,27020.2,1292.5,49152.76,20.27
-Kusmi,Balrampur,3721,32.74,Safe,49147.2,1513.8,90468.58,36.86
-Balrampur,Balrampur,3718,35.68,Safe,55153.2,1582.8,101524.23,41.36
-Rajpur,Balrampur,3728,17.98,Safe,33376.5,1840.2,62161.19,25.03
-Shankargarh,Balrampur,3731,19.62,Safe,31546.8,762.1,59436.69,23.66
-Bagicha,Jashpur,3650,31.04,Safe,69111.4,3788.6,127218.04,51.83
-Batauli,Surguja,3719,32.34,Safe,16458.3,456.8,31008.75,12.34
-Lundra,Surguja,3723,19.25,Safe,24639.6,602.5,45355.78,18.48
-Ambikapur,Surguja,3717,31.87,Safe,23185.8,1254.1,42177.56,17.39
-Lakhanpur,Surguja,3722,25.47,Safe,26932.1,1209.2,48992.5,20.2
-Surajpur,Surajpur,3733,25.89,Safe,31097.5,1481.6,57916.73,23.32
-Bhaiyathan,Surajpur,3720,20.72,Safe,19161.6,610.8,34442.13,14.37
-Pratappur,Surajpur,3726,30.5,Safe,63329.7,2340.0,115203.8,47.5
-Wadrafnagar,Balrampur,3735,34.42,Safe,57916.2,2140.2,104101.8,43.44
-Ramchandrapur,Balrampur,3730,27.22,Safe,52523.6,2466.3,96683.75,39.39
-Baramkela,Sarangarh Bilaigarh,3684,52.81,Safe,41622.5,10984.7,75715.98,31.22
-Pussore,Raigarh,3689,51.12,Safe,31208.1,1409.8,54067.64,23.41
-Dabhara,Sakti,3644,63.31,Safe,28518.2,2991.1,53112.98,21.39
-Malkharoda,Sakti,3646,69.1,Safe,23257.1,8128.1,41803.6,17.44
-Jaijaipur,Sakti,3645,61.59,Safe,30132.2,7609.1,53508.75,22.6
-Bilaigarh,Sarangarh Bilaigarh,3697,68.11,Safe,47117.6,3580.4,85712.18,35.34
-Sarangarh,Sarangarh Bilaigarh,3691,79.91,Semi-Critical,58058.9,19999.3,106872.95,43.54
-Saraipali,Mahasamund,3683,66.96,Safe,65179.4,7486.9,115745.55,48.88
-Basna,Mahasamund,3680,62.21,Safe,39901.2,2247.1,72584.74,29.93
+Koilebeda,Kanker,3663,22.32,Safe,75875.8,2550.5,141312.9,56.91
+Bijapur,Bijapur,3616,36.74,Safe,65168.3,1514.6,117137.13,48.88
+Bhopal Patnam,Bijapur,3615,23.34,Safe,78720.5,2296.3,141496.6,59.04
+Usoor,Bijapur,3624,23.69,Safe,86449.8,3425.0,155389.68,64.84
+Konta,Sukma,3621,32.11,Safe,173075.5,7899.4,314843.67,129.81
+Kuwakonda,Dantewada,3622,22.29,Safe,25252.1,931.0,48123.84,18.94
+Bhairamgarh,Bijapur,3614,25.42,Safe,125643.6,3405.5,234001.64,94.23
+Geedam,Dantewada,3619,27.17,Safe,28135.0,653.3,49962.12,21.1
+Dantewada,Dantewada,3618,26.63,Safe,40713.9,1004.6,74944.84,30.54
+Katekalyan,Dantewada,3620,24.12,Safe,22725.4,590.4,39863.61,17.04
+Bastanar,Bastar,3592,21.97,Safe,20533.2,381.2,36462.85,15.4
+Chhindgarh,Sukma,3617,25.42,Safe,37670.0,515.3,66078.58,28.25
+Sukma,Sukma,3623,19.06,Safe,50169.3,2496.6,88004.15,37.63
+Darbha,Bastar,3594,20.22,Safe,41367.4,1536.8,75251.92,31.03
+Jagdalpur,Bastar,3595,27.74,Safe,35001.0,648.1,62154.76,26.25
+Bakawand,Bastar,3591,18.99,Safe,28095.5,424.3,51108.85,21.07
+Deobhog,Gariyaband,3699,67.83,Safe,22426.3,5917.0,40795.94,16.82
+Baderajpur,Kondagaon,3590,36.39,Safe,25109.1,332.7,45676.26,18.83
+Pharasgaon,Kondagaon,3602,34.56,Safe,36025.6,798.5,65534.59,27.02
+Makdi,Kondagaon,3599,28.75,Safe,36257.1,1359.5,65170.53,27.19
+Kondagaon,Kondagaon,3597,24.95,Safe,79297.3,3698.6,140816.11,59.47
+Bastar,Bastar,3593,25.98,Safe,43909.5,1714.9,80827.19,32.93
+Tokapal,Bastar,3603,26.98,Safe,14576.7,695.3,25885.3,10.93
+Lohandiguda,Bastar,3598,18.84,Safe,27413.9,1132.5,50462.62,20.56
+Orchha(Abhujmad),Narayanpur,3601,21.66,Safe,119038.3,3216.8,208810.25,89.28
+Narayanpur,Narayanpur,3600,30.14,Safe,43683.7,1526.2,80411.55,32.76
+Antagarh,Kanker,3658,27.28,Safe,67344.1,1219.3,118131.21,50.51
+Charama,Kanker,3660,36.22,Safe,21782.0,787.7,38680.46,16.34
+Bhanupratappur,Kanker,3659,19.32,Safe,30894.5,710.5,58207.71,23.17
+Dondi,Balod,3633,66.95,Safe,60859.4,14372.3,110710.05,45.64
+Dondilohara,Balod,3634,51.47,Safe,63323.4,14536.0,117935.01,47.49
+Gunderdehi,Balod,3636,58.63,Safe,47258.5,10426.7,84945.06,35.44
+Gurur,Balod,3637,100.55,Critical,36519.6,13579.0,68014.98,27.39
+Balod,Balod,3629,89.05,Semi-Critical,17687.1,6732.1,31025.71,13.27
+Dhamtari,Dhamtari,3625,83.51,Semi-Critical,40693.4,11421.6,72263.32,30.52
+Kurud,Dhamtari,3626,76.29,Semi-Critical,35802.6,9079.0,62802.9,26.85
+Magarlod,Dhamtari,3627,67.64,Safe,41885.9,12615.4,77102.22,31.41
+Kanker,Kanker,3662,29.89,Safe,27564.6,1015.4,50143.09,20.67
+Narharpur,Kanker,3664,31.85,Safe,36461.5,1085.3,64748.31,27.35
+Keshkal,Kondagaon,3596,25.03,Safe,34905.2,955.3,62740.55,26.18
+Nagari,Dhamtari,3628,49.23,Safe,143695.3,48538.7,258285.92,107.77
+Mainpur,Gariyaband,3704,64.03,Safe,121605.2,46171.0,215946.45,91.2
+Chhurra,Gariyaband,3698,53.9,Safe,59301.2,16013.2,106591.27,44.48
+Gariyaband,Gariyaband,3702,57.75,Safe,87469.2,23869.6,157222.0,65.6
+Fingeshwar,Gariyaband,3701,62.89,Safe,36239.5,8765.7,63569.28,27.18
+Arang,Raipur,3694,86.1,Semi-Critical,61359.5,14997.9,114277.4,46.02
+Mahasamund,Mahasamund,3681,63.91,Safe,63752.1,17295.7,114591.57,47.81
+Bagbahara,Mahasamund,3679,54.39,Safe,73473.4,24753.7,133656.32,55.11
+Pithora,Mahasamund,3682,55.32,Safe,64482.4,18045.4,114507.81,48.36
+Kasdol,Baloda Bazar,3703,57.59,Safe,118977.5,35249.3,219009.95,89.23
+Bamhindih,Janjgir-Champa,3642,57.9,Safe,27153.6,6442.2,49395.43,20.37
+Nawagarh,Janjgir-Champa,3647,69.75,Safe,42343.7,16877.9,76110.92,31.76
+Pamgarh,Janjgir-Champa,3648,64.0,Safe,33246.2,11110.9,58318.6,24.93
+Baloda Bazar,Baloda Bazar,3695,85.95,Semi-Critical,41422.5,13082.0,74455.1,31.07
+Palari,Baloda Bazar,3705,50.42,Safe,43360.6,3887.4,77938.75,32.52
+Bhatapara,Baloda Bazar,3696,63.31,Safe,29527.7,2835.1,52435.28,22.15
+Nawagarh,Janjgir-Champa,3638,69.48,Safe,39993.6,4320.1,73618.93,30.0
+Bemetara,Bemetara,3630,82.71,Semi-Critical,50930.8,12189.1,91545.85,38.2
+Berla,Bemetara,3631,81.99,Semi-Critical,51545.6,16472.4,95999.76,38.66
+Simga,Baloda Bazar,3706,64.94,Safe,41430.3,4923.3,75366.34,31.07
+Tilda,Raipur,3707,80.72,Semi-Critical,49297.1,11708.9,89676.93,36.97
+Dharsiwa,Raipur,3700,74.42,Semi-Critical,43720.5,11785.7,77638.84,32.79
+Abhanpur,Raipur,3693,56.6,Safe,37712.8,11419.8,69420.51,28.28
+Patan,Durg,3639,100.46,Critical,46955.7,14483.5,87451.42,35.22
+Dhamdha,Durg,3632,89.33,Semi-Critical,60420.9,17574.6,107295.4,45.32
+Durg,Durg,3635,63.59,Safe,41136.6,1663.5,70377.78,30.85
+Rajnandgaon,Rajnandgaon,3716,56.07,Safe,45685.8,14741.6,84096.95,34.26
+Saja,Bemetara,3640,81.98,Semi-Critical,48734.3,15724.5,85486.95,36.55
+S.Lohara,Kabirdham,3668,59.59,Safe,39979.2,1736.5,70129.25,29.98
+Chhuikhadan,Khairgarh Chhuikhadan Gandai,3709,54.08,Safe,83995.7,3810.8,152797.56,63.0
+Dongarghar,Rajnandgaon,3712,54.67,Safe,59161.0,3837.7,106339.27,44.37
+Khairagarh,Khairgarh Chhuikhadan Gandai,3713,52.09,Safe,65123.1,25597.7,117055.88,48.84
+Dongargaon,Rajnandgaon,3711,67.36,Safe,31422.1,9176.1,57160.31,23.57
+Chhuriya,Rajnandgaon,3710,53.31,Safe,68045.9,25362.6,123783.09,51.03
+A.Chowki (Td),Mohla Manpur Ambagarh Chouki,3708,49.44,Safe,36751.9,11260.1,68447.62,27.56
+Mohala (Td),Mohla Manpur Ambagarh Chouki,3715,69.91,Safe,53008.8,15131.7,94133.0,39.76
+Durgukondal,Kanker,3661,27.45,Safe,31690.3,830.3,57648.2,23.77
+Manpur (Td),Mohla Manpur Ambagarh Chouki,3714,65.25,Safe,68696.6,15114.5,123479.09,51.52
+Odagi,Surajpur,3725,30.69,Safe,82071.2,3380.6,151074.02,61.55
+Sonhat,Korea,3678,62.19,Safe,92238.3,35981.2,175781.85,69.18
+Ramanujnagar,Surajpur,3729,22.83,Safe,18493.8,575.3,33241.78,13.87
+Premnagar,Surajpur,3727,20.08,Safe,30416.7,1779.8,55331.37,22.81
+Khadgawana,Manendragarh Chirimiri Bharatpur,3676,26.65,Safe,40228.5,2037.6,74051.33,30.17
+Baikunthpur,Korea,7144,61.94,Safe,44166.2,10756.1,83212.65,33.12
+Manendragarh,Manendragarh Chirimiri Bharatpur,3677,31.26,Safe,51594.2,3063.5,94972.94,38.7
+Marwahi,Gaurella Pendra Marwahi,3609,66.66,Safe,58804.1,18575.0,106971.23,44.1
+Bharatpur,Manendragarh Chirimiri Bharatpur,3675,24.07,Safe,116540.2,3294.7,209475.84,87.41
+Lormi,Mungeli,3608,64.29,Safe,121658.2,29705.9,226579.14,91.24
+Pandariya,Kabirdham,3667,51.66,Safe,80282.0,25501.4,144303.33,60.21
+Bodla,Kabirdham,3665,57.78,Safe,135612.7,32411.4,249631.49,101.71
+Kawardha,Kabirdham,3666,52.95,Safe,39163.2,10242.2,69545.99,29.37
+Mungeli,Mungeli,3611,54.92,Safe,36280.0,12400.6,66783.06,27.21
+Pathariya,Mungeli,3612,62.55,Safe,30364.8,7674.2,55894.55,22.77
+Takhatpur,Bilaspur,3613,61.7,Safe,46154.6,12484.8,81961.32,34.62
+Masturi,Bilaspur,3610,64.65,Safe,47782.7,17841.9,86922.07,35.84
+Belha,Bilaspur,3604,57.61,Safe,47816.1,15876.9,86982.83,35.86
+Kota,Bilaspur,3607,58.07,Safe,72826.7,25081.6,135634.19,54.62
+Gaurella-2,Gaurella Pendra Marwahi,3606,55.4,Safe,50245.6,11562.3,88137.99,37.68
+Gaurella-1,Gaurella Pendra Marwahi,3605,62.42,Safe,23607.8,2394.7,41922.72,17.71
+Pali,Korba,3672,67.94,Safe,83892.7,27464.3,152610.19,62.92
+Podi Uparoda,Korba,3673,55.63,Safe,134827.9,49227.2,242347.16,101.12
+Katghora,Korba,3670,62.71,Safe,33725.0,10346.1,61349.54,25.29
+Baloda,Janjgir-Champa,3643,82.95,Semi-Critical,19676.3,5607.5,35367.28,14.76
+Akaltara,Janjgir-Champa,3641,55.77,Safe,26401.6,6825.7,48599.21,19.8
+Sakti,Sakti,3649,62.18,Safe,27548.1,10417.2,50113.07,20.66
+Kharsia,Raigarh,3687,62.99,Safe,34348.1,2201.7,64714.57,25.76
+Kartala,Korba,3669,52.72,Safe,39832.1,12709.3,73321.65,29.87
+Korba,Korba,3671,50.19,Safe,130185.0,50665.6,236821.06,97.64
+Udaipur,Surguja,3734,20.32,Safe,39077.8,1078.4,70240.61,29.31
+Dharamjaigarh,Raigarh,3685,64.37,Safe,132917.0,29588.9,236033.94,99.69
+Mainpat,Surguja,3724,24.6,Safe,27831.2,1043.5,50025.35,20.87
+Sitapur,Surguja,3732,18.51,Safe,17898.4,711.0,31396.36,13.42
+Patthalgaon,Jashpur,3656,18.4,Safe,39648.6,1244.5,72983.87,29.74
+Lailunga,Raigarh,3688,58.46,Safe,40675.4,11113.7,77516.58,30.51
+Gharghoda,Raigarh,3686,64.69,Safe,46657.6,15967.2,83864.96,34.99
+Tamnar,Raigarh,3692,69.16,Safe,28700.0,9421.5,51586.98,21.52
+Raigarh,Raigarh,3690,51.48,Safe,43089.9,3338.1,75585.86,32.32
+Duldula,Jashpur,3651,17.9,Safe,22754.3,703.0,40899.84,17.07
+Pharsabahar,Jashpur,3657,24.99,Safe,31882.6,1312.2,57307.56,23.91
+Kansabel,Jashpur,3653,27.07,Safe,22462.8,1009.1,38916.52,16.85
+Kunkuri,Jashpur,3654,28.26,Safe,19758.2,406.1,36370.26,14.82
+Manora,Jashpur,3655,22.93,Safe,40157.7,950.9,72181.68,30.12
+Jashpur,Jashpur,3652,20.11,Safe,25704.1,1413.3,46201.98,19.28
+Kusmi,Balrampur,3721,24.49,Safe,45365.0,1335.9,78594.29,34.02
+Balrampur,Balrampur,3718,18.27,Safe,54656.1,2832.2,97058.28,40.99
+Rajpur,Balrampur,3728,31.53,Safe,38916.2,2211.3,69950.14,29.19
+Shankargarh,Balrampur,3731,21.24,Safe,31509.9,1346.0,55955.27,23.63
+Bagicha,Jashpur,3650,25.38,Safe,78764.7,3537.4,143281.79,59.07
+Batauli,Surguja,3719,28.07,Safe,16531.9,553.8,29357.34,12.4
+Lundra,Surguja,3723,22.1,Safe,28399.8,1690.3,50432.35,21.3
+Ambikapur,Surguja,3717,33.86,Safe,24180.7,808.8,44511.05,18.14
+Lakhanpur,Surguja,3722,25.52,Safe,28842.9,1032.8,53093.08,21.63
+Surajpur,Surajpur,3733,20.43,Safe,33179.9,1978.9,57483.76,24.88
+Bhaiyathan,Surajpur,3720,33.8,Safe,21461.2,489.0,37646.02,16.1
+Pratappur,Surajpur,3726,20.75,Safe,65510.4,3835.6,119170.73,49.13
+Wadrafnagar,Balrampur,3735,20.29,Safe,54911.7,2383.0,102268.86,41.18
+Ramchandrapur,Balrampur,3730,28.0,Safe,54870.2,2504.6,96250.2,41.15
+Baramkela,Sarangarh Bilaigarh,3684,49.07,Safe,38971.6,10986.7,67517.8,29.23
+Pussore,Raigarh,3689,57.01,Safe,30830.9,2556.2,56084.85,23.12
+Dabhara,Sakti,3644,66.54,Safe,28697.6,1191.8,49718.23,21.52
+Malkharoda,Sakti,3646,64.34,Safe,24498.0,8368.5,45625.66,18.37
+Jaijaipur,Sakti,3645,69.1,Safe,27674.1,9418.2,50342.28,20.76
+Bilaigarh,Sarangarh Bilaigarh,3697,60.48,Safe,45688.6,4300.3,81133.79,34.27
+Sarangarh,Sarangarh Bilaigarh,3691,81.34,Semi-Critical,62436.4,13999.4,109522.4,46.83
+Saraipali,Mahasamund,3683,49.18,Safe,71762.9,7514.6,128990.63,53.82
+Basna,Mahasamund,3680,70.2,Safe,46768.7,16010.0,84064.66,35.08

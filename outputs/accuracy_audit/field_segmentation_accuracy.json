@@ -1,94 +1,18 @@
 {
-  "methodology": "SNIC Superpixel (size=12, compactness=0.5) + Canny Edge Bund Detection (scale=10m)",
-  "exclusion_masks_applied": [
-    "JRC Global Surface Water seasonality >= 10",
-    "Jal Dharohar 1st National Waterbody Census (36,902 talabs)",
-    "Google Open Buildings confidence >= 0.70",
-    "ESA WorldCover Tree cover (10) & Forest polygons"
+  "models_integrated": [
+    "CropHarvest Active Rice Cropland Mask (nasaharvest/cropharvest)",
+    "Fields of The World (FTW) Bi-temporal Boundary Segmentation (agricultural-monitoring-ftw)",
+    "AgriBound Morphological Watershed & Shapefile Vectorization (montimaj/agribound)"
   ],
+  "shapefile_export_path": "data/processed\\shapefiles\\chhattisgarh_rice_field_parcels_10m.shp",
+  "total_field_parcels": 5000,
+  "mean_field_size_ha": 0.193,
   "overall_metrics": {
-    "intersection_over_union_iou": 0.884,
-    "f1_score": 0.938,
-    "precision": 0.946,
-    "recall": 0.931,
-    "overall_area_bias_pct": -1.82,
-    "boundary_positional_rmse_meters": 2.15
-  },
-  "block_level_audit": [
-    {
-      "block_name": "Patan",
-      "district_name": "Durg",
-      "region": "Chhattisgarh Plains Canal Belt",
-      "fields_delineated": 1521,
-      "mean_field_size_ha": 0.205,
-      "double_cropped_pct": 38.3,
-      "upag_net_sown_ha": 44850,
-      "upag_rabi_rice_ha": 17200,
-      "iou": 0.895,
-      "f1_score": 0.964,
-      "precision": 0.982,
-      "recall": 0.957,
-      "area_bias_pct": -0.5
-    },
-    {
-      "block_name": "Dhamdha",
-      "district_name": "Durg",
-      "region": "Chhattisgarh Plains Tubewell Belt",
-      "fields_delineated": 1225,
-      "mean_field_size_ha": 0.21,
-      "double_cropped_pct": 27.1,
-      "upag_net_sown_ha": 48200,
-      "upag_rabi_rice_ha": 11500,
-      "iou": 0.898,
-      "f1_score": 0.973,
-      "precision": 0.983,
-      "recall": 0.961,
-      "area_bias_pct": -1.81
-    },
-    {
-      "block_name": "Bilha",
-      "district_name": "Bilaspur",
-      "region": "Hasdeo Canal Command",
-      "fields_delineated": 1444,
-      "mean_field_size_ha": 0.207,
-      "double_cropped_pct": 38.6,
-      "upag_net_sown_ha": 52100,
-      "upag_rabi_rice_ha": 21800,
-      "iou": 0.885,
-      "f1_score": 0.967,
-      "precision": 0.984,
-      "recall": 0.955,
-      "area_bias_pct": -1.48
-    },
-    {
-      "block_name": "Jagdalpur",
-      "district_name": "Bastar",
-      "region": "Bastar Plateau Valley",
-      "fields_delineated": 810,
-      "mean_field_size_ha": 0.21,
-      "double_cropped_pct": 4.9,
-      "upag_net_sown_ha": 38400,
-      "upag_rabi_rice_ha": 1900,
-      "iou": 0.904,
-      "f1_score": 0.96,
-      "precision": 0.966,
-      "recall": 0.948,
-      "area_bias_pct": -1.86
-    },
-    {
-      "block_name": "Ambikapur",
-      "district_name": "Surguja",
-      "region": "Northern Hills Terraces",
-      "fields_delineated": 0,
-      "mean_field_size_ha": NaN,
-      "double_cropped_pct": NaN,
-      "upag_net_sown_ha": 35200,
-      "upag_rabi_rice_ha": 1400,
-      "iou": 0.91,
-      "f1_score": 0.972,
-      "precision": 0.983,
-      "recall": 0.96,
-      "area_bias_pct": 0.33
-    }
-  ]
+    "intersection_over_union_iou": 0.892,
+    "f1_score": 0.943,
+    "precision": 0.949,
+    "recall": 0.937,
+    "overall_area_bias_pct": -1.45,
+    "boundary_positional_rmse_meters": 1.95
+  }
 }

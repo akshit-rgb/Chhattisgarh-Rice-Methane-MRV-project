@@ -1,31 +1,31 @@
 block_name,district_name,aez_region,soil_indigenous_type,cgwb_aquifer_category,cgwb_gw_stage_pct,Kharif_Active_Rice_Area_ha,Rabi_Active_Rice_Area_ha,awd_co2e_reduction_tonnes,gw_saved_mcm,priority_score
-Nagari,Dhamtari,Chhattisgarh Plains,Kanhar,Safe,62.5,147490.7,41751.4,255525.77,110.62,159.7
-Podi Uparoda,Korba,Chhattisgarh Plains,Matasi,Safe,63.41,136905.8,45271.6,249046.94,102.68,157.92
-Dharamjaigarh,Raigarh,Chhattisgarh Plains,Dorsa,Safe,65.67,117407.3,29385.4,213576.99,88.06,140.26
-Korba,Korba,Chhattisgarh Plains,Matasi,Safe,58.39,130395.6,49330.9,237204.16,97.8,138.5
-Bodla,Kabirdham,Chhattisgarh Plains,Matasi,Safe,54.5,122917.7,45853.8,226262.94,92.19,123.31
-Lormi,Mungeli,Chhattisgarh Plains,Matasi,Safe,62.95,108745.8,27885.9,195465.75,81.56,123.05
-Chhuikhadan,Khairgarh Chhuikhadan Gandai,Chhattisgarh Plains,Matasi,Safe,64.08,101544.9,5507.2,186920.58,76.16,119.78
-Pali,Korba,Chhattisgarh Plains,Matasi,Safe,68.47,93429.7,34311.0,165912.42,70.07,113.6
-Sonhat,Korea,Chhattisgarh Plains,Matasi,Safe,55.93,98525.8,26332.2,181363.12,73.89,101.44
-Kasdol,Baloda Bazar,Chhattisgarh Plains,Kanhar,Safe,52.23,106488.9,25193.4,193715.2,79.87,101.18
-Mainpur,Gariyaband,Chhattisgarh Plains,Matasi,Safe,51.67,108373.2,26384.4,190102.14,81.28,98.23
-Arang,Raipur,Chhattisgarh Plains,Kanhar,Semi-Critical,87.72,63035.1,21937.8,111937.7,47.28,98.19
-Gariyaband,Gariyaband,Chhattisgarh Plains,Matasi,Safe,58.41,85661.8,25907.9,157683.48,64.25,92.1
-Berla,Bemetara,Chhattisgarh Plains,Kanhar,Semi-Critical,89.5,54945.6,17707.7,99952.18,41.21,89.46
-Manpur (Td),Mohla Manpur Ambagarh Chouki,Chhattisgarh Plains,Matasi,Safe,65.63,73135.6,20678.8,133041.83,54.85,87.32
-Chhuriya,Rajnandgaon,Chhattisgarh Plains,Matasi,Safe,66.23,70902.8,25183.4,128980.11,53.18,85.42
-Sarangarh,Sarangarh Bilaigarh,Chhattisgarh Plains,Matasi,Semi-Critical,79.91,58058.9,19999.3,106872.95,43.54,85.4
-Kota,Bilaspur,Chhattisgarh Plains,Dorsa,Safe,64.6,73135.1,22558.5,129873.27,54.85,83.9
-Chhurra,Gariyaband,Chhattisgarh Plains,Matasi,Safe,68.83,66259.5,17748.0,120533.43,49.69,82.96
-Pithora,Mahasamund,Chhattisgarh Plains,Dorsa,Safe,65.72,68197.4,21621.0,122581.8,51.15,80.56
-Tilda,Raipur,Chhattisgarh Plains,Kanhar,Semi-Critical,76.9,56399.2,15493.6,102596.44,42.3,78.9
-Dhamdha,Durg,Chhattisgarh Plains,Kanhar,Semi-Critical,86.36,51307.3,11590.9,91111.48,38.48,78.68
-Patan,Durg,Chhattisgarh Plains,Kanhar,Critical,96.0,45464.3,12128.8,81720.06,34.1,78.45
-Saraipali,Mahasamund,Chhattisgarh Plains,Dorsa,Safe,66.96,65179.4,7486.9,115745.55,48.88,77.5
-Konta,Sukma,Bastar Plateau,Bhata,Safe,28.44,149351.2,7385.4,268452.15,112.01,76.35
-Khairagarh,Khairgarh Chhuikhadan Gandai,Chhattisgarh Plains,Matasi,Safe,67.16,59366.6,14048.0,110565.77,44.52,74.26
-Mahasamund,Mahasamund,Chhattisgarh Plains,Dorsa,Safe,57.98,70219.5,20647.6,126216.43,52.66,73.18
-Marwahi,Gaurella Pendra Marwahi,Chhattisgarh Plains,Matasi,Safe,69.75,56213.9,17118.4,102259.36,42.16,71.33
-Dongarghar,Rajnandgaon,Chhattisgarh Plains,Matasi,Safe,61.39,65343.2,3795.5,116036.42,49.01,71.23
-Pandariya,Kabirdham,Chhattisgarh Plains,Matasi,Safe,52.44,72790.4,28926.2,133990.22,54.59,70.26
+Dharamjaigarh,Raigarh,Chhattisgarh Plains,Dorsa,Safe,64.37,132917.0,29588.9,236033.94,99.69,151.94
+Lormi,Mungeli,Chhattisgarh Plains,Matasi,Safe,64.29,121658.2,29705.9,226579.14,91.24,145.67
+Bodla,Kabirdham,Chhattisgarh Plains,Matasi,Safe,57.78,135612.7,32411.4,249631.49,101.71,144.24
+Mainpur,Gariyaband,Chhattisgarh Plains,Matasi,Safe,64.03,121605.2,46171.0,215946.45,91.2,138.27
+Podi Uparoda,Korba,Chhattisgarh Plains,Matasi,Safe,55.63,134827.9,49227.2,242347.16,101.12,134.82
+Nagari,Dhamtari,Chhattisgarh Plains,Kanhar,Safe,49.23,143695.3,48538.7,258285.92,107.77,127.15
+Kasdol,Baloda Bazar,Chhattisgarh Plains,Kanhar,Safe,57.59,118977.5,35249.3,219009.95,89.23,126.13
+Korba,Korba,Chhattisgarh Plains,Matasi,Safe,50.19,130185.0,50665.6,236821.06,97.64,118.86
+Sonhat,Korea,Chhattisgarh Plains,Matasi,Safe,62.19,92238.3,35981.2,175781.85,69.18,109.32
+Pali,Korba,Chhattisgarh Plains,Matasi,Safe,67.94,83892.7,27464.3,152610.19,62.92,103.68
+Konta,Sukma,Bastar Plateau,Bhata,Safe,32.11,173075.5,7899.4,314843.67,129.81,101.1
+Arang,Raipur,Chhattisgarh Plains,Kanhar,Semi-Critical,86.1,61359.5,14997.9,114277.4,46.02,98.39
+Dhamdha,Durg,Chhattisgarh Plains,Kanhar,Semi-Critical,89.33,60420.9,17574.6,107295.4,45.32,95.85
+Gariyaband,Gariyaband,Chhattisgarh Plains,Matasi,Safe,57.75,87469.2,23869.6,157222.0,65.6,90.8
+Sarangarh,Sarangarh Bilaigarh,Chhattisgarh Plains,Matasi,Semi-Critical,81.34,62436.4,13999.4,109522.4,46.83,89.09
+Patan,Durg,Chhattisgarh Plains,Kanhar,Critical,100.46,46955.7,14483.5,87451.42,35.22,87.85
+Chhuikhadan,Khairgarh Chhuikhadan Gandai,Chhattisgarh Plains,Matasi,Safe,54.08,83995.7,3810.8,152797.56,63.0,82.63
+Manpur (Td),Mohla Manpur Ambagarh Chouki,Chhattisgarh Plains,Matasi,Safe,65.25,68696.6,15114.5,123479.09,51.52,80.57
+Kota,Bilaspur,Chhattisgarh Plains,Dorsa,Safe,58.07,72826.7,25081.6,135634.19,54.62,78.76
+Berla,Bemetara,Chhattisgarh Plains,Kanhar,Semi-Critical,81.99,51545.6,16472.4,95999.76,38.66,78.71
+Bemetara,Bemetara,Chhattisgarh Plains,Kanhar,Semi-Critical,82.71,50930.8,12189.1,91545.85,38.2,75.72
+Pandariya,Kabirdham,Chhattisgarh Plains,Matasi,Safe,51.66,80282.0,25501.4,144303.33,60.21,74.55
+Dondi,Balod,Chhattisgarh Plains,Kanhar,Safe,66.95,60859.4,14372.3,110710.05,45.64,74.12
+Mahasamund,Mahasamund,Chhattisgarh Plains,Dorsa,Safe,63.91,63752.1,17295.7,114591.57,47.81,73.24
+Bagbahara,Mahasamund,Chhattisgarh Plains,Dorsa,Safe,54.39,73473.4,24753.7,133656.32,55.11,72.7
+Tilda,Raipur,Chhattisgarh Plains,Kanhar,Semi-Critical,80.72,49297.1,11708.9,89676.93,36.97,72.39
+Marwahi,Gaurella Pendra Marwahi,Chhattisgarh Plains,Matasi,Safe,66.66,58804.1,18575.0,106971.23,44.1,71.31
+Saja,Bemetara,Chhattisgarh Plains,Kanhar,Semi-Critical,81.98,48734.3,15724.5,85486.95,36.55,70.08
+Gurur,Balod,Chhattisgarh Plains,Kanhar,Critical,100.55,36519.6,13579.0,68014.98,27.39,68.39
+Chhuriya,Rajnandgaon,Chhattisgarh Plains,Matasi,Safe,53.31,68045.9,25362.6,123783.09,51.03,65.99

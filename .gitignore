@@ -29,11 +29,13 @@ IndiaHouse_Akshit_Vaishnav_Resume.docx
 *.tiff
 data/raw/india_geodata/*_india.parquet
 data/raw/india_geodata/cg_waterbodies.geojson
+data/raw/field_models/**/raw_data/
 
 # Track deliverables explicitly
 !data/processed/*.csv
 !data/processed/*.geojson
 !data/processed/*.gpkg
+!data/processed/shapefiles/*
 !data/processed/yearly/*.csv
 !data/raw/boundaries/*.geojson
 !data/raw/benchmarks/*.csv

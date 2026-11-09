@@ -1,0 +1,4 @@
+-e .
+torch
+pytorch-lightning==0.7.1
+dill

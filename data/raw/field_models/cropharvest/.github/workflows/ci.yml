@@ -1,0 +1,119 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+    tags:
+      - '*'
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  mypy:
+    name: black, flake8 & mypy
+    runs-on: ubuntu-latest
+    steps:
+    - name: Clone repo
+      uses: actions/checkout@v3
+    - name: Set up python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.7
+    - name: Cache pip
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('requirements-dev.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+          ${{ runner.os }}-
+    - name: Install dependencies
+      run: pip install -r requirements-dev.txt -r requirements-benchmarks.txt
+    - name: Black & mypy
+      run: |
+        python -m black --check --diff .
+        python -m flake8 .
+        python -m mypy cropharvest process_labels test
+  test:
+    runs-on: ${{ matrix.os }}
+    env:
+      MPLBACKEND: Agg
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ['3.7', '3.8', '3.9', '3.10']
+        exclude:
+        - os: macos-latest
+          python-version: 3.7
+        - os: windows-latest
+          python-version: 3.7
+        include:
+          - os: ubuntu-20.04
+            python-version: 3.6
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install conda (Windows)
+      uses: conda-incubator/setup-miniconda@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+        channels: conda-forge
+        channel-priority: strict
+      if: ${{ runner.os == 'Windows' }}
+    - name: Install conda dependencies (Windows)
+      run: |
+        conda install 'fiona>=1.5' 'rasterio>=1.2.6' 'h5py>3.7.0'
+      if: ${{ runner.os == 'Windows' }}
+    - name: Cache pip
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('requirements-dev.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+          ${{ runner.os }}-
+    - name: Install dependencies
+      run: pip install -r requirements-dev.txt -r requirements-benchmarks.txt
+    - name: Run tests (Windows)
+      if: ${{ runner.os == 'Windows' }}
+      env:
+        PROJ_LIB: C:\Miniconda\envs\test\Library\share\proj
+        GDAL_DATA: C:\Miniconda\envs\test\Library\share\gdal
+      run: |
+        python -m pytest
+    - name: Run tests
+      if: ${{ runner.os != 'Windows' }}
+      run: python -m pytest
+
+  publish-to-pypi:
+    needs: [mypy, test]
+    if: startsWith(github.ref, 'refs/tags')
+    name: Publish to PyPI (if tagged)
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.9
+    - name: Install pypa/build
+      run: >-
+        python -m
+        pip install
+        build
+        --user
+    - name: Build a binary wheel and a source tarball
+      run: >-
+        python -m
+        build
+        --sdist
+        --wheel
+        --outdir dist/
+        .
+    - name: Publish distribution 📦 to PyPI
+      uses: pypa/gh-action-pypi-publish@master
+      with:
+        password: ${{ secrets.PYPI_API_TOKEN }}
