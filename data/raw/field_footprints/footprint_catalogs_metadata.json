@@ -1,0 +1,52 @@
+{
+  "fused_sources": [
+    {
+      "dataset": "ESA WorldCover 10m v200",
+      "band": "Map",
+      "cropland_class": 40,
+      "resolution": "10m"
+    },
+    {
+      "dataset": "Google Dynamic World V1",
+      "band": "crops",
+      "threshold": "> 0.45",
+      "resolution": "10m"
+    },
+    {
+      "dataset": "NASA GFSAD30 / LGRIP30",
+      "classes": [
+        "Irrigated (1)",
+        "Rainfed (2)"
+      ],
+      "resolution": "30m"
+    },
+    {
+      "dataset": "UMD GLAD Cropland Map v1",
+      "class": "cropland_extent",
+      "resolution": "30m"
+    },
+    {
+      "dataset": "Fields of The World (FTW) / SAMGeo",
+      "task": "10m Sentinel-2 parcel instance segmentation"
+    }
+  ],
+  "exclusion_masks": [
+    {
+      "mask": "JRC Global Surface Water v1.4",
+      "rule": "seasonality >= 10 (permanent open water)"
+    },
+    {
+      "mask": "Jal Dharohar 1st National Waterbody Census",
+      "features": 36902,
+      "description": "Village Talabs & Tanks"
+    },
+    {
+      "mask": "Google Open Buildings v3",
+      "rule": "building footprint confidence >= 0.70"
+    },
+    {
+      "mask": "Forest / Protected Areas",
+      "rule": "ESA WorldCover Tree cover (10) & Forest polygons"
+    }
+  ]
+}

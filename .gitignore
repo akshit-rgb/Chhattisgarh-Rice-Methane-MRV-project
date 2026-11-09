@@ -33,7 +33,11 @@ data/raw/india_geodata/cg_waterbodies.geojson
 # Track deliverables explicitly
 !data/processed/*.csv
 !data/processed/*.geojson
+!data/processed/*.gpkg
+!data/processed/yearly/*.csv
 !data/raw/boundaries/*.geojson
+!data/raw/benchmarks/*.csv
+!data/raw/field_footprints/*.json
 !data/raw/india_geodata/cg_lgd_blocks.geojson
 !data/raw/india_geodata/cg_rivers.geojson
 !data/raw/india_geodata/cg_*.parquet
