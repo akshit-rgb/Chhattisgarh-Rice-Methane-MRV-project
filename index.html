@@ -29,6 +29,11 @@
     .control-group { background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 12px; margin-bottom: 14px; }
     .control-item { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; font-size: 12px; }
     .control-item:last-child { margin-bottom: 0; }
+    .slider-row { margin-bottom: 10px; }
+    .slider-label { display: flex; justify-content: space-between; font-size: 11.5px; color: #cbd5e1; margin-bottom: 4px; }
+    .slider-val { font-weight: 700; color: #38bdf8; }
+    input[type=range] { -webkit-appearance: none; width: 100%; background: #334155; height: 6px; border-radius: 3px; outline: none; }
+    input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 15px; height: 15px; border-radius: 50%; background: #38bdf8; cursor: pointer; border: 2px solid #0f172a; }
     select, button { background: #1e293b; color: #f8fafc; border: 1px solid #475569; padding: 6px 10px; border-radius: 6px; font-size: 11.5px; outline: none; cursor: pointer; width: 100%; }
     select:focus { border-color: #38bdf8; }
     .btn-gee { width: 100%; background: #0284c7; color: white; border: none; font-weight: 600; padding: 9px; border-radius: 6px; margin-top: 6px; display: flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; font-size: 12px; transition: background 0.2s; }
@@ -44,6 +49,8 @@
     .badge.critical { background: rgba(248, 113, 113, 0.2); color: #f87171; }
     .legend-box { position: absolute; bottom: 24px; right: 24px; background: rgba(15, 23, 42, 0.92); border: 1px solid #334155; padding: 10px 14px; border-radius: 8px; z-index: 1000; font-size: 11px; backdrop-filter: blur(4px); }
     .legend-gradient { height: 10px; width: 160px; border-radius: 4px; margin: 4px 0; }
+    .toggle-row { display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: #cbd5e1; margin-top: 8px; cursor: pointer; }
+    .toggle-row input { cursor: pointer; accent-color: #38bdf8; }
   </style>
 </head>
 <body>
@@ -55,26 +62,51 @@
     <div class="scrollable">
       <div class="metric-grid">
         <div class="metric-card">
-          <div class="title">2024 Kharif Methane</div>
-          <div class="value">1.06 Mt</div>
+          <div class="title">Active CH4 Emissions</div>
+          <div class="value" id="card-tot-ch4">1.23 Mt</div>
         </div>
         <div class="metric-card warning">
-          <div class="title">2024 Rabi Summer Methane</div>
-          <div class="value">0.17 Mt</div>
+          <div class="title">Rabi Summer CH4</div>
+          <div class="value" id="card-rabi-ch4">0.17 Mt</div>
         </div>
         <div class="metric-card accent">
-          <div class="title">2035 Avoided $\mathrm{CO_2e}$</div>
-          <div class="value">9.35 Mt</div>
+          <div class="title">Avoided CO2e</div>
+          <div class="value" id="card-co2e">9.35 Mt</div>
         </div>
         <div class="metric-card danger">
-          <div class="title">2035 GW Saved (DSR)</div>
-          <div class="value">4,417 MCM</div>
+          <div class="title">GW Saved (AWD/DSR)</div>
+          <div class="value" id="card-gw">4,417 MCM</div>
         </div>
       </div>
 
-      <div class="section-title">Statewide Layer Controls</div>
+      <div class="section-title">Scenario Simulation Engine</div>
       <div class="control-group">
-        <div style="margin-bottom: 6px; font-size: 11.5px; color: #cbd5e1; font-weight: 600;">Active Metric Visualized:</div>
+        <div class="slider-row">
+          <div class="slider-label">
+            <span>Simulation Horizon Year:</span>
+            <span class="slider-val" id="lbl-year">2024</span>
+          </div>
+          <input type="range" id="sim-year" min="2024" max="2035" value="2024" step="1" oninput="updateSimulation()">
+        </div>
+        <div class="slider-row">
+          <div class="slider-label">
+            <span>AWD Pani-Pipe Adoption:</span>
+            <span class="slider-val" id="lbl-awd">40%</span>
+          </div>
+          <input type="range" id="sim-awd" min="0" max="100" value="40" step="5" oninput="updateSimulation()">
+        </div>
+        <div class="slider-row" style="margin-bottom: 4px;">
+          <div class="slider-label">
+            <span>Rainfall Anomaly:</span>
+            <span class="slider-val" id="lbl-rain">0%</span>
+          </div>
+          <input type="range" id="sim-rain" min="-30" max="30" value="0" step="5" oninput="updateSimulation()">
+        </div>
+      </div>
+
+      <div class="section-title">Statewide Layer & District Controls</div>
+      <div class="control-group">
+        <div style="margin-bottom: 5px; font-size: 11.5px; color: #cbd5e1; font-weight: 600;">Active Metric Visualized:</div>
         <select id="metric-select" onchange="updateChoropleth()">
           <option value="tot_ch4_t">Total Annual Methane (Tonnes CH4)</option>
           <option value="k_ch4_t">Season 1: Kharif Monsoon Methane (Tonnes CH4)</option>
@@ -85,8 +117,28 @@
           <option value="avoided_co2e_2035">2035 Policy Avoided CO2e (Tonnes)</option>
           <option value="gw_saved_mcm">2035 Annual GW Savings (Million m3)</option>
         </select>
+
+        <div style="margin: 8px 0 5px 0; font-size: 11.5px; color: #cbd5e1; font-weight: 600;">District / Territory Focus:</div>
+        <select id="district-filter" onchange="zoomToDistrict()">
+          <option value="ALL">ALL CHHATTISGARH (146 Blocks)</option>
+          <option value="Durg">Durg (High Pumping Hotspot)</option>
+          <option value="Raipur">Raipur (Central Plains)</option>
+          <option value="Balod">Balod (Over-Exploited)</option>
+          <option value="Bemetara">Bemetara (High Extraction)</option>
+          <option value="Dhamtari">Dhamtari (Canal Irrigated)</option>
+          <option value="Bilaspur">Bilaspur (Central Plains)</option>
+          <option value="Janjgir-Champa">Janjgir-Champa (Highest Paddy Area)</option>
+          <option value="Rajnandgaon">Rajnandgaon (Western Plains)</option>
+          <option value="Bastar">Bastar (Bastar Plateau)</option>
+        </select>
+
+        <label class="toggle-row">
+          <input type="checkbox" id="toggle-parcels" checked onchange="toggleParcelsLayer()">
+          <span>Show 10m Field-Parcel Overlay (Zoom &ge; 11)</span>
+        </label>
+
         <a class="btn-gee" href="https://code.earthengine.google.com/?scriptPath=users/akshitvaishnavonline:chhattisgarh_statewide_kharif_rabi_future_dashboard" target="_blank">
-          🛰️ Open Statewide GEE Dashboard
+          🛰️ Open Statewide GEE Cloud Dashboard
         </a>
       </div>
 
@@ -764,6 +816,51 @@
       `;
     }
 
+    function updateSimulation() {
+      const yr = parseInt(document.getElementById('sim-year').value);
+      const awd = parseInt(document.getElementById('sim-awd').value);
+      const rain = parseInt(document.getElementById('sim-rain').value);
+
+      document.getElementById('lbl-year').innerText = yr;
+      document.getElementById('lbl-awd').innerText = awd + '%';
+      document.getElementById('lbl-rain').innerText = (rain > 0 ? '+' : '') + rain + '%';
+
+      const baseMethaneMt = 1.23 * (1.0 + 0.012 * (yr - 2024)) * (1.0 + 0.012 * rain / 100.0);
+      const abatedMethaneMt = baseMethaneMt * (awd / 100.0) * 0.44;
+      const netMethaneMt = baseMethaneMt - abatedMethaneMt;
+      const avoidedCO2eMt = abatedMethaneMt * 27.9;
+      const gwSavedMCM = Math.round(1420 * (awd / 100.0) * 0.28 * (1.0 + (yr - 2024) * 0.05));
+      const rabiMethaneMt = 0.17 * (1.0 - (awd / 100.0) * 0.42);
+
+      document.getElementById('card-tot-ch4').innerText = netMethaneMt.toFixed(2) + ' Mt';
+      document.getElementById('card-rabi-ch4').innerText = rabiMethaneMt.toFixed(2) + ' Mt';
+      document.getElementById('card-co2e').innerText = avoidedCO2eMt.toFixed(2) + ' Mt';
+      document.getElementById('card-gw').innerText = Number(gwSavedMCM).toLocaleString() + ' MCM';
+    }
+
+    function zoomToDistrict() {
+      const dist = document.getElementById('district-filter').value;
+      if (dist === 'ALL') {
+        map.setView([21.2787, 81.8661], 7);
+        return;
+      }
+      const matched = blocksData.features.filter(f => f.properties.district_name.toLowerCase() === dist.toLowerCase());
+      if (matched.length > 0) {
+        const bounds = L.geoJSON({ type: 'FeatureCollection', features: matched }).getBounds();
+        map.fitBounds(bounds, { padding: [20, 20] });
+      }
+    }
+
+    function toggleParcelsLayer() {
+      const isChecked = document.getElementById('toggle-parcels').checked;
+      if (!parcelsLayer) return;
+      if (isChecked) {
+        if (!map.hasLayer(parcelsLayer)) map.addLayer(parcelsLayer);
+      } else {
+        if (map.hasLayer(parcelsLayer)) map.removeLayer(parcelsLayer);
+      }
+    }
+
     function updateChoropleth() {
       currentMetric = document.getElementById('metric-select').value;
       const cfg = metricConfigs[currentMetric];
@@ -782,10 +879,11 @@
 
     if (parcelsData && parcelsData.features.length > 0) {
       parcelsLayer = L.geoJSON(parcelsData, {
-        style: { color: '#f59e0b', weight: 1, fillColor: '#fbbf24', fillOpacity: 0.6 }
+        style: { color: '#f59e0b', weight: 1.2, fillColor: '#fbbf24', fillOpacity: 0.65 }
       });
       map.on('zoomend', () => {
-        if (map.getZoom() >= 11) {
+        const isChecked = document.getElementById('toggle-parcels').checked;
+        if (map.getZoom() >= 11 && isChecked) {
           if (!map.hasLayer(parcelsLayer)) map.addLayer(parcelsLayer);
         } else {
           if (map.hasLayer(parcelsLayer)) map.removeLayer(parcelsLayer);
@@ -817,6 +915,9 @@
         }
       }
     });
+
+    // Run initial simulation calculation
+    updateSimulation();
   </script>
 </body>
 </html>

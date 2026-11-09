@@ -100,7 +100,7 @@
   },
   "test_5_monotonicity": {
     "xgb_violation_pct": 0.0,
-    "rf_violation_pct": 58.940000000000005
+    "rf_violation_pct": 58.269999999999996
   },
   "test_6_bland_altman": {
     "mean_bias": -2.815552007543712,

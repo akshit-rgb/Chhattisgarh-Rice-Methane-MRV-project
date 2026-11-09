@@ -33,10 +33,36 @@ Spanning historical observation (**Kharif + Rabi 2019–2026**) and CMIP6 climat
 
 ---
 
-## 📊 Key Publication Figures & Findings
+## 🗺️ Spatial Cartography Map Plates
+
+### Plate 1: Statewide Kharif vs. Rabi Rice Methane Atlas (All 146 Blocks)
+Two-panel high-resolution choropleth atlas comparing Season 1 (Kharif Monsoon) flood-fed methane flux with Season 2 (Rabi Summer *Garma Dhan*) tube-well pumping emissions across all 146 blocks in Chhattisgarh.
+![Statewide Dual-Season Methane Map](outputs/figures/06_statewide_kharif_vs_rabi_methane_map.png)
+
+---
+
+### Plate 2: 10m Agricultural Field Footprints & Bunded Parcels (*Medh*)
+Statewide agricultural cropland footprint overlaid with WRIS/SOI irrigation canals and primary drainage networks, featuring high-resolution insets of 10m field parcels classified by crop phenology and parcel geometry.
+![10m Field-Parcel Map](outputs/figures/07_agribound_ftw_10m_field_parcels_map.png)
+
+---
+
+### Plate 3: Coupled Rice Grain Yield vs. Methane Intensity Map
+Two-panel spatial assessment comparing satellite & rainfall-driven rice grain yield (t/ha) against yield-scaled methane intensity (kg CH4 / tonne grain harvested).
+![Rice Grain Yield vs Methane Intensity Map](outputs/figures/09_rainfall_driven_rice_yield_vs_methane_intensity_map.png)
+
+---
+
+### Plate 4: Statewide Groundwater Overdraft Stress & Rabi Summer Rice Map
+Spatial bivariate cartography correlating CGWB Groundwater Extraction Stage (%) with Rabi summer rice methane emissions, identifying the critical overdraft corridor in the central plains command area (Patan, Dhamdha, Gurur, Balod, Bemetara).
+![Groundwater Stress & Rabi Rice Map](outputs/figures/08_statewide_groundwater_stress_and_rabi_methane_map.png)
+
+---
+
+## 📊 Analytical Statistical Plots & Verification Suite
 
 ### Figure 1: Statewide Dual-Season Methane Trajectories (2019–2026)
-Multi-line panel comparing Kharif monsoon flood-fed flux against Rabi summer tube-well pumping (*Garma Dhan*), isolating the 2023 severe El Niño drought depression and 2024 recovery re-flooding spike.
+Multi-line ribbon panel comparing Kharif monsoon flood-fed flux against Rabi summer tube-well pumping (*Garma Dhan*), isolating the 2023 severe El Niño drought depression and 2024 recovery re-flooding spike.
 ![Dual-Season Methane Trends](outputs/figures/01_chag_dual_season_methane_trends_2019_2026.png)
 
 ---
@@ -48,13 +74,13 @@ Coupled dual-axis agronomic-biogeochemical sensitivity curve quantifying the non
 ---
 
 ### Figure 3: Rabi Groundwater Stress vs. Methane Intensity Quadrant Scatter
-Quadrant scatter plot mapping block-level Rabi methane flux against CGWB extraction stage and GLDAS 100–200cm root-zone drawdown, identifying **Critical Double-Burden Policy Intervention Zones** (e.g., Patan, Dhamdha, Gurur, Balod, Bemetara).
+Quadrant scatter plot mapping block-level Rabi methane flux against CGWB extraction stage and GLDAS root-zone drawdown, identifying **Critical Double-Burden Policy Intervention Zones**.
 ![Groundwater Stress vs Rabi Methane](outputs/figures/03_groundwater_stress_vs_rabi_methane_scatter.png)
 
 ---
 
 ### Figure 4: Future Methane Projections & Mitigation Pathways (2027–2035)
-Grouped bar chart projecting Business-As-Usual (BAU SSP5-8.5) against AWD Pani-Pipe (Alternate Wetting and Drying) and Rabi Direct-Seeded Rice (DSR) diversification pathways through 2035, highlighting cumulative tCO2e carbon abatement revenue.
+Grouped bar chart projecting Business-As-Usual (BAU SSP5-8.5) against AWD Pani-Pipe and Rabi Direct-Seeded Rice (DSR) diversification pathways through 2035, highlighting cumulative tCO2e carbon abatement revenue.
 ![Future Methane Projections](outputs/figures/04_future_methane_projections_2027_2035_bar.png)
 
 ---
@@ -62,6 +88,32 @@ Grouped bar chart projecting Business-As-Usual (BAU SSP5-8.5) against AWD Pani-P
 ### Figure 5: Model Accuracy Parity & Closed-Chamber Empirical Validation
 1:1 Parity scatter plot with 95% confidence intervals comparing Monotonic XGBoost predictions directly against empirical closed-chamber measurements from IARI New Delhi, IGKV Raipur, and NRRI Cuttack.
 ![Model Accuracy Parity](outputs/figures/05_model_accuracy_parity_and_chamber_validation.png)
+
+---
+
+## 💻 Interactive Dashboards
+
+### 1. Standalone Interactive Web GIS Dashboard (`index.html`)
+A zero-dependency, ultra-fast Web GIS dashboard built with Leaflet and Chart.js, covering all 146 Blocks and 10m Field Parcels:
+- **Choropleth Visualizer**: Toggle between 8 core metrics (Total CH4, Kharif CH4, Rabi CH4, GW Stage, Co-Benefit Index, Soil Organic Carbon, 2035 Avoided CO2e, GW Saved).
+- **Interactive Scenario Simulation**: Sliders for **AWD Adoption (0–100%)**, **Rainfall Anomaly (-30% to +30%)**, and **Simulation Year (2024–2035)** with real-time recalculation of statewide carbon credits and aquifer head savings.
+- **District Zoom & 10m Parcel Inspector**: Instant boundary zoom and high-resolution parcel layer toggle.
+
+**One-Click Launcher:**
+```bash
+python run_dashboard.py
+# Automatically opens http://localhost:8000/index.html in your default web browser
+```
+
+### 2. Google Earth Engine Interactive Web Dashboard
+Located in [`gee_app/chhattisgarh_essential_mrv_dashboard.js`](gee_app/chhattisgarh_essential_mrv_dashboard.js):
+- **Real Earth Engine Layers**: Sentinel-1 SAR inundation composite, Sentinel-2 MSI NDVI/SAVI composite, Dynamic World 10m active cropland mask, JRC permanent water exclusion (talabs/reservoirs), and SNIC 10m field bund superpixels.
+- **Interactive Sliders**: Rainfall Anomaly (-30% to +30%), AWD Pani-Pipe Adoption Rate (0% to 100%), Year Selector (2019–2035).
+- **4 Action Buttons**:
+  1. `⚡ Predict Future Methane Reduction`: Calculates chamber-calibrated CH4, tCO2e avoided, and Verra VM0042 credit revenue.
+  2. `🌾 Predict Rice Yield & Carbon Intensity`: Maps predicted grain yield (t/ha) and yield-scaled emission intensity.
+  3. `💧 Check Kharif/Rabi Groundwater Balance`: Highlights summer pumping hotspots and calculates aquifer volume preserved.
+  4. `📥 Export Essential Field Shapefile (.shp)`: Prepares simplified 10m agricultural parcel geometries for GIS download.
 
 ---
 
@@ -90,19 +142,6 @@ All models were evaluated across 12 essential satellite and edaphic predictors u
 
 ---
 
-## 🗺️ Google Earth Engine Interactive Web Dashboard
-
-Located in [`gee_app/chhattisgarh_essential_mrv_dashboard.js`](gee_app/chhattisgarh_essential_mrv_dashboard.js):
-- **Dynamic Selectors**: District filter, Kharif/Rabi/Combined season toggle, Year selection (2019–2035).
-- **Interactive Sliders**: Rainfall Anomaly (-30% to +30%), AWD Pani-Pipe Adoption Rate (0% to 100%).
-- **4 Action Buttons**:
-  1. `⚡ Predict Future Methane Reduction`: Calculates chamber-calibrated CH4, tCO2e avoided, and Verra VM0042 credit revenue.
-  2. `🌾 Predict Rice Yield from Rainfall & All Data`: Maps predicted grain yield (t/ha) and yield-scaled emission intensity.
-  3. `💧 Check Kharif/Rabi Groundwater Balance`: Highlights summer pumping hotspots and calculates aquifer volume preserved.
-  4. `📥 Export Essential Field Shapefile (.shp)`: Prepares simplified 10m agricultural parcel geometries for GIS download.
-
----
-
 ## 🚀 Quickstart & Pipeline Execution
 
 ### 1. Environment Setup
@@ -120,7 +159,12 @@ pip install -r requirements.txt
 earthengine authenticate --auth_mode=notebook
 ```
 
-### 3. End-to-End Orchestrated Pipeline
+### 3. Launch the Interactive Web GIS Dashboard
+```bash
+python run_dashboard.py
+```
+
+### 4. End-to-End Orchestrated Pipeline
 Execute all 7 sequential stages with automatic verification and timing:
 ```bash
 python run_all.py
@@ -143,7 +187,7 @@ python src/04_essential_chamber_calibration.py
 # Stage 5: Train ML Benchmark Suite, 10 Tests & Future Simulator
 python src/05_essential_ml_accuracy_future.py
 
-# Stage 6: Generate 5 Publication Figures & GEE App
+# Stage 6: Generate 5 Publication Figures, 4 Spatial Maps & GEE App
 python src/06_generate_essential_graphs.py
 
 # Stage 7: Synchronize Publication Documentation
@@ -169,7 +213,8 @@ Chhattisgarh-Rice-Methane-MRV-project/
 │       └── benchmarks/
 │           └── essential_chamber_benchmarks.csv
 ├── gee_app/
-│   └── chhattisgarh_essential_mrv_dashboard.js
+│   ├── chhattisgarh_essential_mrv_dashboard.js
+│   └── chhattisgarh_mrv_dashboard.js
 ├── models/
 │   ├── xgboost_essential_ch4.joblib
 │   ├── xgboost_essential_yield.joblib
@@ -184,7 +229,11 @@ Chhattisgarh-Rice-Methane-MRV-project/
 │       ├── 02_rainfall_vs_rice_yield_sensitivity_curve.png
 │       ├── 03_groundwater_stress_vs_rabi_methane_scatter.png
 │       ├── 04_future_methane_projections_2027_2035_bar.png
-│       └── 05_model_accuracy_parity_and_chamber_validation.png
+│       ├── 05_model_accuracy_parity_and_chamber_validation.png
+│       ├── 06_statewide_kharif_vs_rabi_methane_map.png
+│       ├── 07_agribound_ftw_10m_field_parcels_map.png
+│       ├── 08_statewide_groundwater_stress_and_rabi_methane_map.png
+│       └── 09_rainfall_driven_rice_yield_vs_methane_intensity_map.png
 ├── src/
 │   ├── 01_ingest_essential_geodata.py
 │   ├── 02_essential_field_shapefiles.py
@@ -196,8 +245,10 @@ Chhattisgarh-Rice-Methane-MRV-project/
 ├── AGENTS.md
 ├── MODEL_DIAGNOSTICS.md
 ├── README.md
+├── index.html
 ├── requirements.txt
-└── run_all.py
+├── run_all.py
+└── run_dashboard.py
 ```
 
 ---
