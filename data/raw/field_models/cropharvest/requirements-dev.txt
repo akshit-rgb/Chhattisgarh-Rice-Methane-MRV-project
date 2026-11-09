@@ -1,7 +1,0 @@
--e .
-black
-earthengine-api>=0.1.271
-mypy<=0.982
-flake8
-jupyter
-pytest-mock

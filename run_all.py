@@ -2,13 +2,14 @@
 """
 Master Orchestration Script: Statewide Chhattisgarh Rice Methane, Yield & Groundwater MRV Pipeline
 --------------------------------------------------------------------------------------------------
-Executes all 6 pipeline stages end-to-end:
-  1. Ingest All Open Geodata & Closed-Chamber Ground-Truth Benchmarks
-  2. AgriBound + FTW + CropHarvest 10m Agricultural Field Footprints & Shapefile Export
-  3. Statewide Dual-Season (Kharif + Rabi) GEE Groundwater & Coupled Yield Panel (2019-2026)
-  4. Closed-Chamber Calibrated Methane, Yield & Monte Carlo Engine (10,000 draws)
-  5. Dual-Target ML Benchmark Suite, 10 Accuracy Tests & CMIP6 Future Simulator (2027-2035)
-  6. Generate Statewide Atlas Cartography, Policy Tables & GEE Interactive Dashboard
+Executes all 7 essential, lean pipeline stages end-to-end:
+  1. Ingest Essential Geodata & Closed-Chamber Benchmarks
+  2. Delineate Essential 10m Rice Field Shapefiles (AgriBound + FTW + CropHarvest)
+  3. Extract GEE Dual-Season Satellite & Groundwater Panel (12 Essential Predictors)
+  4. Closed-Chamber Calibration, Coupled Rice Yield & Monte Carlo Uncertainty Engine
+  5. Dual-Target ML Benchmark Suite, 10 Accuracy Tests & CMIP6 Future Forecasts (2027-2035)
+  6. Automated Publication Graph Generation Suite (5 Plates @ 300 DPI) & Lean GEE App
+  7. Professional Publication Documentation (README.md & MODEL_DIAGNOSTICS.md)
 """
 
 import sys
@@ -16,12 +17,13 @@ import subprocess
 import time
 
 PIPELINE_SCRIPTS = [
-    ("Stage 01: Open Geodata & Chamber Benchmarks", "src/01_ingest_geodata_and_chamber_benchmarks.py"),
-    ("Stage 02: AgriBound & FTW 10m Field Shapefiles", "src/02_agribound_ftw_cropharvest_field_shapefiles.py"),
-    ("Stage 03: GEE Dual-Season Groundwater & Yield Panel", "src/03_gee_statewide_kharif_rabi_groundwater_yield_panel.py"),
-    ("Stage 04: Chamber Calibration & Monte Carlo Engine", "src/04_chamber_calibrated_methane_and_yield_monte_carlo.py"),
-    ("Stage 05: Dual-Target ML, 10 Tests & Future Simulator", "src/05_train_ml_10_accuracy_tests_and_future_simulator.py"),
-    ("Stage 06: Statewide Atlas, Field Maps & GEE App", "src/06_generate_statewide_atlas_and_field_maps.py")
+    ("Stage 01: Essential Geodata & Chamber Benchmarks", "src/01_ingest_essential_geodata.py"),
+    ("Stage 02: Essential 10m Agricultural Field Shapefiles", "src/02_essential_field_shapefiles.py"),
+    ("Stage 03: GEE 12-Predictor Dual-Season Extractor", "src/03_gee_essential_extractor.py"),
+    ("Stage 04: Chamber Calibration & Coupled Yield Engine", "src/04_essential_chamber_calibration.py"),
+    ("Stage 05: Essential ML Suite, 10 Tests & Future Simulator", "src/05_essential_ml_accuracy_future.py"),
+    ("Stage 06: Automated Graph Suite & GEE Dashboard", "src/06_generate_essential_graphs.py"),
+    ("Stage 07: Professional Publication Documentation", "src/07_update_readme.py")
 ]
 
 def main():

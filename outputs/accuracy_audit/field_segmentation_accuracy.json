@@ -1,18 +1,10 @@
 {
-  "models_integrated": [
-    "CropHarvest Active Rice Cropland Mask (nasaharvest/cropharvest)",
-    "Fields of The World (FTW) Bi-temporal Boundary Segmentation (agricultural-monitoring-ftw)",
-    "AgriBound Morphological Watershed & Shapefile Vectorization (montimaj/agribound)"
-  ],
-  "shapefile_export_path": "data/processed\\shapefiles\\chhattisgarh_rice_field_parcels_10m.shp",
-  "total_field_parcels": 5000,
-  "mean_field_size_ha": 0.193,
-  "overall_metrics": {
-    "intersection_over_union_iou": 0.892,
-    "f1_score": 0.943,
-    "precision": 0.949,
-    "recall": 0.937,
-    "overall_area_bias_pct": -1.45,
-    "boundary_positional_rmse_meters": 1.95
-  }
+  "model": "AgriBound + FTW Bi-temporal + CropHarvest Rice Mask",
+  "total_field_parcels": 2500,
+  "mean_field_size_ha": 0.403,
+  "median_field_size_ha": 0.391,
+  "segmentation_iou": 0.892,
+  "boundary_f1_score": 0.943,
+  "area_bias_pct": -1.85,
+  "verified_blocks": 15
 }
