@@ -211,7 +211,66 @@ def run_biogeochemical_engine(n_simulations=10000):
         mean_flux_s = s_df["CH4_Flux_kg_ha_day"].mean()
         print(f"  • {s:6s}: {mean_yr_ch4_kt:.2f} kt CH4/yr ({mean_yr_co2e_mt:.3f} Mt CO2e/yr) | Mean Flux: {mean_flux_s:.3f} kg/ha/day")
 
-    # Step B: Also score the parcel-level benchmarks
+    # Step B: Score individual unsegregated field parcels from the user's shapefile
+    agri_benchmarks = os.path.join(PROCESSED_DIR, "cg_agriculture_field_parcel_benchmarks.csv")
+    if os.path.exists(agri_benchmarks):
+        print(f"\n[INFO] Scoring user's agriculture_field.shp parcel benchmarks ({agri_benchmarks})...")
+        df_agri = pd.read_csv(agri_benchmarks)
+        agri_records = []
+        for _, p_row in df_agri.iterrows():
+            f_id = str(p_row.get("agriculture_field_id", "FIELD_UNKNOWN"))
+            p_area = float(p_row["area_ha"])
+            p_conf = float(p_row.get("confidence", 0.45))
+            p_dist = str(p_row["district"])
+            p_utm_area = float(p_row.get("area_ha_utm44n", p_area))
+            p_perim = float(p_row.get("perimeter_m", 0.0))
+
+            dist_rows = df_calibrated[df_calibrated["District"] == p_dist]
+            if len(dist_rows) > 0:
+                sample_k = dist_rows[dist_rows["Season"] == "Kharif"].iloc[0]
+                flux_k = float(sample_k["CH4_Flux_kg_ha_day"])
+                days_k = float(sample_k["Inundation_Days"])
+                sample_r = dist_rows[dist_rows["Season"] == "Rabi"].iloc[0]
+                flux_r = float(sample_r["CH4_Flux_kg_ha_day"])
+                days_r = float(sample_r["Inundation_Days"])
+            else:
+                flux_k, days_k = 1.35, 85.0
+                flux_r, days_r = 1.28, 80.0
+
+            # Dual-season emission mass (kg CH4)
+            k_ch4_kg = flux_k * days_k * p_area
+            k_co2e_kg = k_ch4_kg * GWP_CH4
+            r_ch4_kg = flux_r * days_r * (p_area * 0.28) # Rabi intensity
+            r_co2e_kg = r_ch4_kg * GWP_CH4
+
+            awd_saved_ch4_kg = (k_ch4_kg + r_ch4_kg) * 0.44
+            awd_carbon_offsets_kg = awd_saved_ch4_kg * GWP_CH4
+
+            agri_records.append({
+                "agriculture_field_id": f_id,
+                "district": p_dist,
+                "area_ha": p_area,
+                "area_ha_utm44n": p_utm_area,
+                "perimeter_m": p_perim,
+                "confidence": p_conf,
+                "Kharif_Flux_kg_ha_day": round(flux_k, 4),
+                "Kharif_Seasonal_CH4_kg": round(k_ch4_kg, 2),
+                "Kharif_CO2e_kg": round(k_co2e_kg, 2),
+                "Rabi_Flux_kg_ha_day": round(flux_r, 4),
+                "Rabi_Seasonal_CH4_kg": round(r_ch4_kg, 2),
+                "Rabi_CO2e_kg": round(r_co2e_kg, 2),
+                "Annual_Total_CH4_kg": round(k_ch4_kg + r_ch4_kg, 2),
+                "Annual_Total_CO2e_kg": round(k_co2e_kg + r_co2e_kg, 2),
+                "AWD_Mitigation_CH4_Saved_kg": round(awd_saved_ch4_kg, 2),
+                "AWD_Carbon_Offset_kgCO2e": round(awd_carbon_offsets_kg, 2)
+            })
+
+        df_agri_preds = pd.DataFrame(agri_records)
+        agri_preds_path = os.path.join(PROCESSED_DIR, "cg_agriculture_field_parcel_methane_predictions.csv")
+        df_agri_preds.to_csv(agri_preds_path, index=False)
+        print(f"[OK] Saved unsegregated agriculture_field methane predictions: {agri_preds_path} ({len(df_agri_preds):,} parcels)")
+
+    # Step C: Also score the parcel-level benchmarks
     if os.path.exists(PARCEL_BENCHMARKS):
         print(f"\n[INFO] Applying chamber model to individual field parcels ({PARCEL_BENCHMARKS})...")
         df_parcels = pd.read_csv(PARCEL_BENCHMARKS)
