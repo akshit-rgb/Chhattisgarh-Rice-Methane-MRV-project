@@ -1,0 +1,662 @@
+{
+  "Balod": {
+    "centroid": [
+      81.1884,
+      20.7416
+    ],
+    "bounds": [
+      80.8032,
+      20.377,
+      81.517,
+      21.0786
+    ],
+    "ftw_fields": 559309,
+    "ftw_area_ha": 62989.2,
+    "kharif_ch4_tonnes": 35807.3,
+    "rabi_ch4_tonnes": 2261.4,
+    "mean_yield": 4.64,
+    "soil_class": "Dorsa",
+    "soc_g_kg": 8.9,
+    "clay_pct": 30.2
+  },
+  "Baloda Bazar": {
+    "centroid": [
+      82.2446,
+      21.5755
+    ],
+    "bounds": [
+      81.6574,
+      21.2623,
+      82.7029,
+      21.8838
+    ],
+    "ftw_fields": 671456,
+    "ftw_area_ha": 77028.0,
+    "kharif_ch4_tonnes": 7021.8,
+    "rabi_ch4_tonnes": 138.7,
+    "mean_yield": 4.34,
+    "soil_class": "Dorsa",
+    "soc_g_kg": 10.4,
+    "clay_pct": 32.8
+  },
+  "Balrampur": {
+    "centroid": [
+      83.5006,
+      23.5921
+    ],
+    "bounds": [
+      82.6927,
+      23.1506,
+      84.0747,
+      24.1063
+    ],
+    "ftw_fields": 465357,
+    "ftw_area_ha": 39624.3,
+    "kharif_ch4_tonnes": 8672.9,
+    "rabi_ch4_tonnes": 233.7,
+    "mean_yield": 4.41,
+    "soil_class": "Bhata",
+    "soc_g_kg": 5.4,
+    "clay_pct": 17.3
+  },
+  "Bastar": {
+    "centroid": [
+      81.8708,
+      19.1103
+    ],
+    "bounds": [
+      81.3439,
+      18.6964,
+      82.2461,
+      19.5524
+    ],
+    "ftw_fields": 603422,
+    "ftw_area_ha": 78848.4,
+    "kharif_ch4_tonnes": 7162.8,
+    "rabi_ch4_tonnes": 133.6,
+    "mean_yield": 4.21,
+    "soil_class": "Matasi",
+    "soc_g_kg": 7.0,
+    "clay_pct": 21.7
+  },
+  "Bemetara": {
+    "centroid": [
+      81.4699,
+      21.6609
+    ],
+    "bounds": [
+      81.1388,
+      21.3319,
+      81.7683,
+      22.0189
+    ],
+    "ftw_fields": 502525,
+    "ftw_area_ha": 88368.6,
+    "kharif_ch4_tonnes": 20200.4,
+    "rabi_ch4_tonnes": 1365.6,
+    "mean_yield": 4.72,
+    "soil_class": "Kanhar",
+    "soc_g_kg": 13.7,
+    "clay_pct": 42.1
+  },
+  "Bijapur": {
+    "centroid": [
+      80.8015,
+      18.8612
+    ],
+    "bounds": [
+      80.2444,
+      18.136,
+      81.5021,
+      19.4025
+    ],
+    "ftw_fields": 242666,
+    "ftw_area_ha": 12942.4,
+    "kharif_ch4_tonnes": 5101.0,
+    "rabi_ch4_tonnes": 148.3,
+    "mean_yield": 4.21,
+    "soil_class": "Bhata",
+    "soc_g_kg": 4.5,
+    "clay_pct": 14.3
+  },
+  "Bilaspur": {
+    "centroid": [
+      82.1159,
+      22.18
+    ],
+    "bounds": [
+      81.7307,
+      21.7115,
+      82.4729,
+      22.6158
+    ],
+    "ftw_fields": 566405,
+    "ftw_area_ha": 75262.3,
+    "kharif_ch4_tonnes": 28143.3,
+    "rabi_ch4_tonnes": 1646.7,
+    "mean_yield": 4.71,
+    "soil_class": "Dorsa",
+    "soc_g_kg": 9.1,
+    "clay_pct": 31.9
+  },
+  "Dantewada": {
+    "centroid": [
+      81.3927,
+      18.8031
+    ],
+    "bounds": [
+      81.1464,
+      18.3926,
+      81.7773,
+      19.2175
+    ],
+    "ftw_fields": 181944,
+    "ftw_area_ha": 7912.1,
+    "kharif_ch4_tonnes": 5592.8,
+    "rabi_ch4_tonnes": 56.1,
+    "mean_yield": 4.37,
+    "soil_class": "Bhata",
+    "soc_g_kg": 4.2,
+    "clay_pct": 13.8
+  },
+  "Dhamtari": {
+    "centroid": [
+      81.8089,
+      20.5552
+    ],
+    "bounds": [
+      81.4101,
+      20.044,
+      82.1802,
+      21.0269
+    ],
+    "ftw_fields": 408586,
+    "ftw_area_ha": 52659.2,
+    "kharif_ch4_tonnes": 12530.4,
+    "rabi_ch4_tonnes": 817.9,
+    "mean_yield": 4.56,
+    "soil_class": "Matasi",
+    "soc_g_kg": 7.2,
+    "clay_pct": 20.8
+  },
+  "Durg": {
+    "centroid": [
+      81.3833,
+      21.2204
+    ],
+    "bounds": [
+      81.1484,
+      20.8491,
+      81.6252,
+      21.5445
+    ],
+    "ftw_fields": 480861,
+    "ftw_area_ha": 73542.3,
+    "kharif_ch4_tonnes": 23430.7,
+    "rabi_ch4_tonnes": 692.1,
+    "mean_yield": 4.84,
+    "soil_class": "Kanhar",
+    "soc_g_kg": 13.5,
+    "clay_pct": 44.8
+  },
+  "Gariyaband": {
+    "centroid": [
+      82.2352,
+      20.4481
+    ],
+    "bounds": [
+      81.8732,
+      19.7753,
+      82.7246,
+      21.0833
+    ],
+    "ftw_fields": 376699,
+    "ftw_area_ha": 36528.8,
+    "kharif_ch4_tonnes": 7028.7,
+    "rabi_ch4_tonnes": 214.3,
+    "mean_yield": 4.28,
+    "soil_class": "Dorsa",
+    "soc_g_kg": 10.5,
+    "clay_pct": 31.4
+  },
+  "Gaurella Pendra Marwahi": {
+    "centroid": [
+      81.9989,
+      22.805
+    ],
+    "bounds": [
+      81.7264,
+      22.5442,
+      82.2398,
+      23.1183
+    ],
+    "ftw_fields": 210539,
+    "ftw_area_ha": 13303.3,
+    "kharif_ch4_tonnes": 3465.8,
+    "rabi_ch4_tonnes": 110.5,
+    "mean_yield": 4.41,
+    "soil_class": "Matasi",
+    "soc_g_kg": 7.2,
+    "clay_pct": 22.1
+  },
+  "Janjgir-Champa": {
+    "centroid": [
+      82.3746,
+      21.9387
+    ],
+    "bounds": [
+      81.5039,
+      21.7095,
+      82.8421,
+      22.2634
+    ],
+    "ftw_fields": 589337,
+    "ftw_area_ha": 68651.8,
+    "kharif_ch4_tonnes": 41938.3,
+    "rabi_ch4_tonnes": 2963.8,
+    "mean_yield": 4.66,
+    "soil_class": "Kanhar",
+    "soc_g_kg": 10.0,
+    "clay_pct": 33.4
+  },
+  "Jashpur": {
+    "centroid": [
+      83.8625,
+      22.8011
+    ],
+    "bounds": [
+      83.3798,
+      22.289,
+      84.3951,
+      23.2516
+    ],
+    "ftw_fields": 654892,
+    "ftw_area_ha": 55275.5,
+    "kharif_ch4_tonnes": 11616.7,
+    "rabi_ch4_tonnes": 335.7,
+    "mean_yield": 4.36,
+    "soil_class": "Matasi",
+    "soc_g_kg": 7.3,
+    "clay_pct": 22.0
+  },
+  "Kabirdham": {
+    "centroid": [
+      81.2225,
+      22.0926
+    ],
+    "bounds": [
+      80.8255,
+      21.7036,
+      81.5554,
+      22.5261
+    ],
+    "ftw_fields": 599597,
+    "ftw_area_ha": 82017.5,
+    "kharif_ch4_tonnes": 4879.8,
+    "rabi_ch4_tonnes": 132.9,
+    "mean_yield": 4.35,
+    "soil_class": "Dorsa",
+    "soc_g_kg": 9.9,
+    "clay_pct": 33.3
+  },
+  "Kanker": {
+    "centroid": [
+      81.1227,
+      20.1376
+    ],
+    "bounds": [
+      80.4016,
+      19.7021,
+      81.8142,
+      20.5627
+    ],
+    "ftw_fields": 656423,
+    "ftw_area_ha": 44827.3,
+    "kharif_ch4_tonnes": 7386.2,
+    "rabi_ch4_tonnes": 148.8,
+    "mean_yield": 4.04,
+    "soil_class": "Matasi",
+    "soc_g_kg": 7.2,
+    "clay_pct": 22.8
+  },
+  "Khairgarh Chhuikhadan Gandai": {
+    "centroid": [
+      80.9399,
+      21.5327
+    ],
+    "bounds": [
+      80.6712,
+      21.223,
+      81.1954,
+      21.8351
+    ],
+    "ftw_fields": 366804,
+    "ftw_area_ha": 38461.6,
+    "kharif_ch4_tonnes": 3620.4,
+    "rabi_ch4_tonnes": 106.1,
+    "mean_yield": 4.29,
+    "soil_class": "Dorsa",
+    "soc_g_kg": 10.1,
+    "clay_pct": 34.6
+  },
+  "Kondagaon": {
+    "centroid": [
+      81.6649,
+      19.7457
+    ],
+    "bounds": [
+      81.2917,
+      19.2227,
+      82.0662,
+      20.1955
+    ],
+    "ftw_fields": 580551,
+    "ftw_area_ha": 39388.1,
+    "kharif_ch4_tonnes": 6026.0,
+    "rabi_ch4_tonnes": 125.6,
+    "mean_yield": 4.4,
+    "soil_class": "Matasi",
+    "soc_g_kg": 7.3,
+    "clay_pct": 21.5
+  },
+  "Korba": {
+    "centroid": [
+      82.6082,
+      22.5347
+    ],
+    "bounds": [
+      82.1343,
+      22.0394,
+      83.123,
+      23.0004
+    ],
+    "ftw_fields": 375283,
+    "ftw_area_ha": 24725.7,
+    "kharif_ch4_tonnes": 7091.5,
+    "rabi_ch4_tonnes": 165.2,
+    "mean_yield": 4.34,
+    "soil_class": "Matasi",
+    "soc_g_kg": 6.6,
+    "clay_pct": 23.1
+  },
+  "Korea": {
+    "centroid": [
+      82.4952,
+      23.466
+    ],
+    "bounds": [
+      82.2485,
+      23.1409,
+      82.7722,
+      23.8118
+    ],
+    "ftw_fields": 94772,
+    "ftw_area_ha": 5954.8,
+    "kharif_ch4_tonnes": 2632.4,
+    "rabi_ch4_tonnes": 69.9,
+    "mean_yield": 4.36,
+    "soil_class": "Matasi",
+    "soc_g_kg": 6.9,
+    "clay_pct": 21.9
+  },
+  "Mahasamund": {
+    "centroid": [
+      82.6083,
+      21.208
+    ],
+    "bounds": [
+      81.9882,
+      20.8276,
+      83.2793,
+      21.5565
+    ],
+    "ftw_fields": 800230,
+    "ftw_area_ha": 72197.2,
+    "kharif_ch4_tonnes": 31145.4,
+    "rabi_ch4_tonnes": 2299.4,
+    "mean_yield": 4.78,
+    "soil_class": "Dorsa",
+    "soc_g_kg": 10.0,
+    "clay_pct": 33.6
+  },
+  "Manendragarh Chirimiri Bharatpur": {
+    "centroid": [
+      82.1114,
+      23.4716
+    ],
+    "bounds": [
+      81.5767,
+      22.938,
+      82.6077,
+      23.9254
+    ],
+    "ftw_fields": 187466,
+    "ftw_area_ha": 12517.2,
+    "kharif_ch4_tonnes": 3780.7,
+    "rabi_ch4_tonnes": 103.8,
+    "mean_yield": 4.27,
+    "soil_class": "Bhata",
+    "soc_g_kg": 5.3,
+    "clay_pct": 18.3
+  },
+  "Mohla Manpur Ambagarh Chouki": {
+    "centroid": [
+      80.7109,
+      20.5113
+    ],
+    "bounds": [
+      80.3885,
+      20.118,
+      81.0066,
+      20.8709
+    ],
+    "ftw_fields": 261139,
+    "ftw_area_ha": 18795.8,
+    "kharif_ch4_tonnes": 3708.3,
+    "rabi_ch4_tonnes": 109.8,
+    "mean_yield": 4.34,
+    "soil_class": "Bhata",
+    "soc_g_kg": 4.3,
+    "clay_pct": 14.1
+  },
+  "Mungeli": {
+    "centroid": [
+      81.7306,
+      22.2404
+    ],
+    "bounds": [
+      81.4699,
+      21.8139,
+      82.037,
+      22.6741
+    ],
+    "ftw_fields": 385525,
+    "ftw_area_ha": 61675.0,
+    "kharif_ch4_tonnes": 4557.4,
+    "rabi_ch4_tonnes": 99.5,
+    "mean_yield": 4.36,
+    "soil_class": "Dorsa",
+    "soc_g_kg": 9.6,
+    "clay_pct": 30.5
+  },
+  "Narayanpur": {
+    "centroid": [
+      81.0851,
+      19.5702
+    ],
+    "bounds": [
+      80.6626,
+      19.2278,
+      81.5167,
+      19.9473
+    ],
+    "ftw_fields": 113202,
+    "ftw_area_ha": 6164.6,
+    "kharif_ch4_tonnes": 2649.8,
+    "rabi_ch4_tonnes": 41.1,
+    "mean_yield": 4.33,
+    "soil_class": "Bhata",
+    "soc_g_kg": 4.6,
+    "clay_pct": 13.2
+  },
+  "Raigarh": {
+    "centroid": [
+      83.3361,
+      22.2267
+    ],
+    "bounds": [
+      82.9367,
+      21.6798,
+      83.8036,
+      22.7912
+    ],
+    "ftw_fields": 472314,
+    "ftw_area_ha": 36532.3,
+    "kharif_ch4_tonnes": 9954.6,
+    "rabi_ch4_tonnes": 244.8,
+    "mean_yield": 4.35,
+    "soil_class": "Dorsa",
+    "soc_g_kg": 9.5,
+    "clay_pct": 32.5
+  },
+  "Raipur": {
+    "centroid": [
+      81.8201,
+      21.2858
+    ],
+    "bounds": [
+      81.5341,
+      20.9403,
+      82.1935,
+      21.6261
+    ],
+    "ftw_fields": 602695,
+    "ftw_area_ha": 76471.9,
+    "kharif_ch4_tonnes": 24765.4,
+    "rabi_ch4_tonnes": 1331.9,
+    "mean_yield": 4.8,
+    "soil_class": "Kanhar",
+    "soc_g_kg": 11.8,
+    "clay_pct": 42.6
+  },
+  "Rajnandgaon": {
+    "centroid": [
+      80.8176,
+      21.0891
+    ],
+    "bounds": [
+      80.4242,
+      20.7646,
+      81.2166,
+      21.3718
+    ],
+    "ftw_fields": 609649,
+    "ftw_area_ha": 59891.4,
+    "kharif_ch4_tonnes": 24433.7,
+    "rabi_ch4_tonnes": 1965.0,
+    "mean_yield": 4.79,
+    "soil_class": "Dorsa",
+    "soc_g_kg": 10.1,
+    "clay_pct": 30.8
+  },
+  "Sakti": {
+    "centroid": [
+      82.9719,
+      21.891
+    ],
+    "bounds": [
+      82.7445,
+      21.6814,
+      83.3171,
+      22.1719
+    ],
+    "ftw_fields": 314454,
+    "ftw_area_ha": 26172.0,
+    "kharif_ch4_tonnes": 5404.5,
+    "rabi_ch4_tonnes": 120.1,
+    "mean_yield": 4.31,
+    "soil_class": "Dorsa",
+    "soc_g_kg": 9.9,
+    "clay_pct": 33.0
+  },
+  "Sarangarh Bilaigarh": {
+    "centroid": [
+      83.0569,
+      21.5772
+    ],
+    "bounds": [
+      82.6112,
+      21.3428,
+      83.4919,
+      21.7431
+    ],
+    "ftw_fields": 308050,
+    "ftw_area_ha": 27234.1,
+    "kharif_ch4_tonnes": 4144.6,
+    "rabi_ch4_tonnes": 116.4,
+    "mean_yield": 4.4,
+    "soil_class": "Dorsa",
+    "soc_g_kg": 9.6,
+    "clay_pct": 31.0
+  },
+  "Sukma": {
+    "centroid": [
+      81.3785,
+      18.2841
+    ],
+    "bounds": [
+      80.9115,
+      17.7824,
+      81.9691,
+      18.7773
+    ],
+    "ftw_fields": 307324,
+    "ftw_area_ha": 13918.4,
+    "kharif_ch4_tonnes": 1924.7,
+    "rabi_ch4_tonnes": 81.1,
+    "mean_yield": 3.95,
+    "soil_class": "Bhata",
+    "soc_g_kg": 4.4,
+    "clay_pct": 13.7
+  },
+  "Surajpur": {
+    "centroid": [
+      82.8816,
+      23.402
+    ],
+    "bounds": [
+      82.4974,
+      22.7955,
+      83.3582,
+      23.9189
+    ],
+    "ftw_fields": 400106,
+    "ftw_area_ha": 25901.8,
+    "kharif_ch4_tonnes": 7788.4,
+    "rabi_ch4_tonnes": 161.7,
+    "mean_yield": 4.33,
+    "soil_class": "Matasi",
+    "soc_g_kg": 6.9,
+    "clay_pct": 20.7
+  },
+  "Surguja": {
+    "centroid": [
+      83.2269,
+      22.9286
+    ],
+    "bounds": [
+      82.7558,
+      22.6229,
+      83.6906,
+      23.2699
+    ],
+    "ftw_fields": 455814,
+    "ftw_area_ha": 32526.3,
+    "kharif_ch4_tonnes": 9561.9,
+    "rabi_ch4_tonnes": 256.7,
+    "mean_yield": 4.39,
+    "soil_class": "Matasi",
+    "soc_g_kg": 7.1,
+    "clay_pct": 22.4
+  }
+}
