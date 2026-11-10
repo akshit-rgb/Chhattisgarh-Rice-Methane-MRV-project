@@ -76,9 +76,17 @@ def load_datasets():
     bench_path = "data/raw/benchmarks/essential_chamber_benchmarks.csv"
     audit_path = os.path.join(AUDIT_DIR, "accuracy_summary.json")
 
-    b_shp = os.path.join(PROCESSED_DIR, "shapefiles", "chhattisgarh_blocks_essential.shp")
-    r_geo = os.path.join(PROCESSED_DIR, "cg_essential_rivers.geojson")
-    f_shp = os.path.join(PROCESSED_DIR, "shapefiles", "chhattisgarh_rice_fields_essential.shp")
+    b_shp = os.path.join(PROCESSED_DIR, "shapefiles", "chhattisgarh_blocks_mrv.shp")
+    if not os.path.exists(b_shp):
+        b_shp = os.path.join(PROCESSED_DIR, "shapefiles", "chhattisgarh_blocks_essential.shp")
+
+    r_geo = os.path.join(PROCESSED_DIR, "shapefiles", "cg_essential_rivers.shp")
+    if not os.path.exists(r_geo):
+        r_geo = os.path.join(PROCESSED_DIR, "cg_essential_rivers.geojson")
+
+    f_shp = os.path.join(PROCESSED_DIR, "shapefiles", "chhattisgarh_agribound_ftw_agriculture_field.shp")
+    if not os.path.exists(f_shp):
+        f_shp = os.path.join(PROCESSED_DIR, "shapefiles", "chhattisgarh_rice_fields_essential.shp")
 
     if not os.path.exists(panel_path):
         raise FileNotFoundError(f"Missing master panel: {panel_path}")

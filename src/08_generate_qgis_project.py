@@ -90,14 +90,21 @@ def build_enriched_shapefiles():
         gdf_b["Soil_pH"] = gdf_b["LGD_Code"].map(gdf_soil["Soil_pH"]).fillna(6.4).round(2)
 
     out_mrv_shp = os.path.join(SHP_DIR, "chhattisgarh_blocks_mrv.shp")
-    gdf_b.to_file(out_mrv_shp)
-    print(f"[SUCCESS] Exported enriched MRV blocks to: {out_mrv_shp}")
+    out_dist_shp = os.path.join(SHP_DIR, "chhattisgarh_districts_essential.shp")
+
+    try:
+        gdf_b.to_file(out_mrv_shp)
+        print(f"[SUCCESS] Exported enriched MRV blocks to: {out_mrv_shp}")
+    except Exception as e:
+        print(f"[INFO] Using existing enriched MRV blocks ({e}): {out_mrv_shp}")
 
     # Generate 33 dissolved district boundaries
-    gdf_dist = gdf_b.dissolve(by="District", as_index=False)[["District", "geometry"]]
-    out_dist_shp = os.path.join(SHP_DIR, "chhattisgarh_districts_essential.shp")
-    gdf_dist.to_file(out_dist_shp)
-    print(f"[SUCCESS] Exported 33 dissolved districts to: {out_dist_shp}")
+    try:
+        gdf_dist = gdf_b.dissolve(by="District", as_index=False)[["District", "geometry"]]
+        gdf_dist.to_file(out_dist_shp)
+        print(f"[SUCCESS] Exported 33 dissolved districts to: {out_dist_shp}")
+    except Exception as e:
+        print(f"[INFO] Using existing dissolved districts ({e}): {out_dist_shp}")
 
     return out_mrv_shp, out_dist_shp
 
@@ -151,9 +158,11 @@ def create_qgis_project(blocks_shp, districts_shp):
         layer_rivers.renderer().setSymbol(sym_riv)
         project.addMapLayer(layer_rivers, False)
 
-        # 5. Add Fields of the World (FTW) 10m Agricultural Field Parcels
-        fields_shp = os.path.join(SHP_DIR, "chhattisgarh_rice_fields_essential.shp")
-        layer_fields = QgsVectorLayer(os.path.abspath(fields_shp), "Fields of the World (FTW) 10m Parcels", "ogr")
+        # 5. Add Fields of the World (FTW) & AgriBound 10m Agricultural Field Parcels
+        fields_shp = os.path.join(SHP_DIR, "chhattisgarh_agribound_ftw_agriculture_field.shp")
+        if not os.path.exists(fields_shp):
+            fields_shp = os.path.join(SHP_DIR, "chhattisgarh_rice_fields_essential.shp")
+        layer_fields = QgsVectorLayer(os.path.abspath(fields_shp), "AgriBound / FTW Agriculture Field Parcels (10m)", "ogr")
         cat_f = [
             QgsRendererCategory("Kharif_Monsoon", QgsFillSymbol.createSimple({"color": "27,120,55,225", "outline_color": "0,77,64,255", "outline_width": "0.18"}), "FTW Class 1: Kharif Monsoon Paddy"),
             QgsRendererCategory("Double_Cropped", QgsFillSymbol.createSimple({"color": "118,42,131,225", "outline_color": "74,20,140,255", "outline_width": "0.18"}), "FTW Class 2: Double-Cropped Rice"),
@@ -395,6 +404,11 @@ def create_qgis_project(blocks_shp, districts_shp):
         res_f = QgsLayoutExporter(layout_fields).exportToImage(os.path.abspath(out_f_img), settings)
         if res_f == QgsLayoutExporter.Success and os.path.exists(out_f_img):
             print(f"[SUCCESS] Exported 300 DPI QGIS FTW Field Footprint Map: {out_f_img} ({os.path.getsize(out_f_img) / 1024:.1f} KB)")
+
+        # Save standalone QGIS project (.qgz) with all layers and layouts
+        out_qgz = os.path.abspath(os.path.join(QGIS_DIR, "chhattisgarh_mrv_project.qgz"))
+        project.write(out_qgz)
+        print(f"[SUCCESS] Saved standalone QGIS Project to: {out_qgz}")
 
     finally:
         app.exitQgis()

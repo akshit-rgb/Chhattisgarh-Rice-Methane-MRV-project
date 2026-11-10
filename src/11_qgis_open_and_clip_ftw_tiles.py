@@ -134,9 +134,11 @@ def run_qgis_clipping_and_mapping():
         layer_rivers.renderer().setSymbol(sym_rivers)
         project.addMapLayer(layer_rivers, False)
 
-        # 2. Master Clipped FTW Layer (Full 14.4 Million Fields inside Chhattisgarh)
-        master_parquet = os.path.abspath(os.path.join(PROCESSED_DIR, "chhattisgarh_fields_ftw_2024.parquet"))
-        layer_master_clipped = QgsVectorLayer(master_parquet, "Clipped Chhattisgarh Fields (14.4M Master Parquet)", "ogr")
+        # 2. User Master agriculture_field.shp (Full 14.4 Million Fields inside Chhattisgarh)
+        user_agri_shp = os.path.abspath(os.path.join(RAW_TILES_DIR, "agriculture_field.shp"))
+        if not os.path.exists(user_agri_shp):
+            user_agri_shp = os.path.abspath(os.path.join(PROCESSED_DIR, "chhattisgarh_fields_ftw_2024.parquet"))
+        layer_master_clipped = QgsVectorLayer(user_agri_shp, "User Master Agriculture Fields (14.4M Shapefile)", "ogr")
         sym_master = QgsFillSymbol.createSimple({
             "color": "46,125,50,200",
             "outline_color": "0,77,64,255",
@@ -145,13 +147,15 @@ def run_qgis_clipping_and_mapping():
         layer_master_clipped.renderer().setSymbol(sym_master)
         project.addMapLayer(layer_master_clipped, False)
 
-        # 3. High-Performance Styled Field Layer (49,500 Representative Parcels in EPSG:32644)
-        essential_fields_shp = os.path.abspath(os.path.join(SHP_DIR, "chhattisgarh_rice_fields_essential.shp"))
-        layer_fields_styled = QgsVectorLayer(essential_fields_shp, "Clipped Field Parcels (Classified Typology)", "ogr")
+        # 3. High-Performance Styled Field Layer (AgriBound / FTW in EPSG:32644)
+        essential_fields_shp = os.path.abspath(os.path.join(SHP_DIR, "chhattisgarh_agribound_ftw_agriculture_field.shp"))
+        if not os.path.exists(essential_fields_shp):
+            essential_fields_shp = os.path.abspath(os.path.join(SHP_DIR, "chhattisgarh_rice_fields_essential.shp"))
+        layer_fields_styled = QgsVectorLayer(essential_fields_shp, "AgriBound / FTW Field Parcels (Classified)", "ogr")
         cat_fields = [
-            QgsRendererCategory("Kharif_Monsoon", QgsFillSymbol.createSimple({"color": "44,162,95,235", "outline_color": "0,104,55,255", "outline_width": "0.18"}), "Marginal Smallholder (<1 ha)"),
-            QgsRendererCategory("Double_Cropped", QgsFillSymbol.createSimple({"color": "254,178,76,235", "outline_color": "230,85,13,255", "outline_width": "0.20"}), "Small Parcel (1-2 ha)"),
-            QgsRendererCategory("Rabi_Summer", QgsFillSymbol.createSimple({"color": "136,86,167,235", "outline_color": "74,20,140,255", "outline_width": "0.22"}), "Medium/Consolidated (>2 ha)")
+            QgsRendererCategory("Kharif_Monsoon", QgsFillSymbol.createSimple({"color": "44,162,95,235", "outline_color": "0,104,55,255", "outline_width": "0.18"}), "Kharif Monsoon Paddy (<1 ha)"),
+            QgsRendererCategory("Double_Cropped", QgsFillSymbol.createSimple({"color": "254,178,76,235", "outline_color": "230,85,13,255", "outline_width": "0.20"}), "Double-Cropped Kharif+Rabi (1-2 ha)"),
+            QgsRendererCategory("Rabi_Summer", QgsFillSymbol.createSimple({"color": "136,86,167,235", "outline_color": "74,20,140,255", "outline_width": "0.22"}), "Rabi Summer Garma Dhan (>2 ha)")
         ]
         layer_fields_styled.setRenderer(QgsCategorizedSymbolRenderer("Crop_Seas", cat_fields))
         project.addMapLayer(layer_fields_styled, False)
