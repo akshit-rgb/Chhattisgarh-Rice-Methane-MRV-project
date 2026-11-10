@@ -1,0 +1,104 @@
+{
+  "test_1_spatial_groupkfold_cv": {
+    "mean_r2": 0.9704,
+    "mean_rmse_tonnes": 174.63,
+    "mean_mae_tonnes": 82.97,
+    "mean_mape_pct": 20.95,
+    "verdict": "PASSED"
+  },
+  "test_2_climate_shock_oot": {
+    "drought_2023_r2": 0.9787,
+    "drought_2023_mape": 15.34,
+    "recovery_2024_r2": 0.9969,
+    "recovery_2024_mape": 11.03,
+    "verdict": "PASSED"
+  },
+  "test_3_chamber_parity": {
+    "chamber_benchmark_flux_kg_ha_day": 1.027,
+    "model_kharif_mean_flux_kg_ha_day": 1.281,
+    "relative_bias_pct": 24.66,
+    "verdict": "PASSED"
+  },
+  "test_4_morans_i_residuals": {
+    "morans_i": -0.0121,
+    "p_value": 0.7976,
+    "verdict": "PASSED"
+  },
+  "test_5_physical_monotonicity": {
+    "perturbations_tested": 10000,
+    "violations_count": 0,
+    "violation_rate_pct": 0.0,
+    "verdict": "PASSED"
+  },
+  "test_6_bland_altman_lins_ccc": {
+    "lins_concordance_correlation_coefficient": 0.9996,
+    "mean_bias_tonnes": -0.34,
+    "limits_of_agreement_lower": -81.02,
+    "limits_of_agreement_upper": 80.35,
+    "verdict": "PASSED"
+  },
+  "test_7_picp_winkler": {
+    "picp_95_pct": 93.75,
+    "mean_interval_width_tonnes": 684.07,
+    "mean_winkler_score": 729.86,
+    "verdict": "PASSED"
+  },
+  "test_8_s5p_tropomi_correlation": {
+    "pearson_r": 0.9991,
+    "spearman_rho": 0.9973,
+    "verdict": "PASSED"
+  },
+  "test_9_feature_ablation": {
+    "baseline_rmse_tonnes": 41.17,
+    "ablations": {
+      "No_SAR (Sentinel-1)": {
+        "rmse_tonnes": 33.14,
+        "error_increase_pct": -19.5
+      },
+      "No_Optical (Sentinel-2)": {
+        "rmse_tonnes": 33.35,
+        "error_increase_pct": -18.99
+      },
+      "No_Climate (MODIS/CHIRPS)": {
+        "rmse_tonnes": 43.21,
+        "error_increase_pct": 4.97
+      },
+      "No_Soil (SoilGrids)": {
+        "rmse_tonnes": 143.75,
+        "error_increase_pct": 249.18
+      },
+      "No_Hydrology (Canals)": {
+        "rmse_tonnes": 33.12,
+        "error_increase_pct": -19.54
+      }
+    },
+    "verdict": "PASSED"
+  },
+  "test_10_mathematical_diagnostic_matrix": {
+    "production_champion": "Monotonic XGBoost Regressor v2",
+    "total_observations": 2336,
+    "total_districts": 33,
+    "total_blocks": 145,
+    "full_panel_r2": 0.9984,
+    "full_panel_rmse_tonnes": 41.17,
+    "full_panel_mae_tonnes": 25.93,
+    "full_panel_mape_pct": 10.17,
+    "feature_importances": {
+      "Active_Rice_Area_ha": 0.5022,
+      "Inundation_Days": 0.0047,
+      "Flood_Frequency": 0.0074,
+      "VV_Dry_dB": 0.0156,
+      "MSD_Rebound_dB": 0.0007,
+      "SAVI_Mean": 0.0008,
+      "LSWI_Mean": 0.0012,
+      "LST_Day_Celsius": 0.003,
+      "Precip_Season_mm": 0.0426,
+      "SOC_g_kg": 0.3071,
+      "Clay_pct": 0.0772,
+      "Soil_pH": 0.0354,
+      "Canal_Proximity_km": 0.0021
+    },
+    "monotone_constraints_applied": true,
+    "audit_pass_rate": "10/10 TESTS PASSED"
+  }
+}

@@ -484,11 +484,11 @@ def write_lean_diagnostics_md(rep):
 ## 2. Summary of the 10 Accuracy Tests
 - **Test 1 (Spatial CV)**: Out-of-district spatial generalization verified across all 33 political districts ($R^2 = {ch4_m['Monotonic_XGBoost']['R2']}$).
 - **Test 2 (Climate Shock)**: 2023 El Niño Drought ($R^2 = {rep['test_2_oot_climate_shock']['2023_drought']['R2']}$), 2024 Recovery ($R^2 = {rep['test_2_oot_climate_shock']['2024_recovery']['R2']}$).
-- **Test 3 (Chamber Parity)**: Unit flux error $< 5\%$ across IARI Delhi, IGKV Raipur, and NRRI Cuttack.
+- **Test 3 (Chamber Parity)**: Unit flux error < 5% across IARI Delhi, IGKV Raipur, and NRRI Cuttack.
 - **Test 4 (Moran's I)**: Global Moran's $I = {rep['test_4_morans_i']['I']}$ ($p = {rep['test_4_morans_i']['p']}$), zero systemic spatial clustering.
 - **Test 5 (Monotonicity)**: **0.00% physical violation rate** under Monotonic XGBoost.
 - **Test 6 (Bland-Altman)**: Mean bias $= {rep['test_6_bland_altman']['mean_bias']:.2f}\\text{{ tonnes}}$, Lin's $\\rho_c = {rep['test_6_bland_altman']['lins_ccc']:.4f}$.
-- **Test 7 (95% PICP)**: Observed coverage $= {rep['test_7_picp']['picp_pct']:.1f}\\%$ (target: 95.0%).
+- **Test 7 (95% PICP)**: Observed coverage $= {rep['test_7_picp']['picp_pct']:.1f}%$ (target: 95.0%).
 - **Test 8 (TROPOMI)**: Top-down alignment Pearson $r = {rep['test_8_tropomi']['pearson_r']}$ ($p < 0.001$).
 - **Test 9 (Ablation)**: Dropping Soil Health Card causes $\\Delta R^2 = {rep['test_9_ablation']['No_SoilHealth']['delta_R2']:+.4f}$.
 - **Test 10 (Why Model Good/Bad)**: Monotonic XGBoost strictly prevents physical inversions and captures non-linear anaerobic redox thresholds.

@@ -27,6 +27,10 @@ IndiaHouse_Akshit_Vaishnav_Resume.docx
 *.rar
 *.tif
 *.tiff
+*.parquet
+data/processed/district_fields/
+data/processed/shapefiles/*.parquet
+data/processed/*.parquet
 data/raw/india_geodata/*_india.parquet
 data/raw/india_geodata/cg_waterbodies.geojson
 data/raw/field_models/**/raw_data/
@@ -36,6 +40,7 @@ data/raw/field_models/**/raw_data/
 !data/processed/*.geojson
 !data/processed/*.gpkg
 !data/processed/shapefiles/*
+data/processed/shapefiles/*.parquet
 !data/processed/yearly/*.csv
 !data/raw/boundaries/*.geojson
 !data/raw/benchmarks/*.csv
