@@ -149,8 +149,8 @@ def render_single_block_field_map(block_info):
             if len(c_r) > 0:
                 clip_rivers = c_r
 
-        # Setup figure
-        fig, ax = plt.subplots(figsize=(8.5, 8.5), dpi=200)
+        # Setup figure with generous vertical proportions
+        fig, ax = plt.subplots(figsize=(9.0, 9.5), dpi=200)
         ax.set_facecolor("#f9fbf9")
 
         # 1. Block boundary polygon backdrop
@@ -173,31 +173,30 @@ def render_single_block_field_map(block_info):
         if clip_rivers is not None:
             clip_rivers.plot(ax=ax, color="#00acc1", linewidth=1.2, zorder=3)
 
-        # Set bounds to block boundary with 6% margin to ensure no clipping
+        # Set bounds to block boundary with generous 10% margin to prevent frame contact
         minx, miny, maxx, maxy = block_poly.bounds
         dx = maxx - minx
         dy = maxy - miny
-        pad_x = dx * 0.06
-        pad_y = dy * 0.06
+        pad_x = dx * 0.08
+        pad_y = dy * 0.10
         ax.set_xlim(minx - pad_x, maxx + pad_x)
         ax.set_ylim(miny - pad_y, maxy + pad_y)
 
         # Dynamic Scalebar length based on block width
         scale_len = 2 if dx < 15000 else (5 if dx < 35000 else 10)
         add_scalebar_utm(ax, length_km=scale_len, x_frac=0.06, y_frac=0.05)
-        add_north_arrow(ax, x_frac=0.92, y_frac=0.92)
+        add_north_arrow(ax, x_frac=0.92, y_frac=0.88)
 
-        # Subtitle at the top with full census metrics (Zero overlap on field geometries)
+        # Title at the top with generous clearance (Zero overlap on field geometries or frame)
         tot_cnt = len(df)
         tot_area = df["area_ha"].sum()
         mean_ha = df["area_ha"].mean()
         marg_pct = (df["area_ha"] < 1.0).mean() * 100
 
         ax.set_title(
-            f"{block_name.upper()} BLOCK (LGD: {lgd_code}) - AGRICULTURAL FIELD FOOTPRINT\n"
-            f"{district} District, Chhattisgarh | 10m Resolution (EPSG:32644)\n"
-            f"Parcels: {tot_cnt:,} | Rice Extent: {tot_area:,.1f} ha | Mean Field: {mean_ha:.3f} ha | Marginal (<1 ha): {marg_pct:.1f}%",
-            fontsize=8.5, fontweight="bold", color="#1b5e20", pad=12
+            f"{block_name.upper()} BLOCK (LGD: {lgd_code}) - 10m FIELD FOOTPRINT\n"
+            f"{district} District, Chhattisgarh | {tot_cnt:,} Parcels | {tot_area:,.1f} ha Rice | Marginal (<1 ha): {marg_pct:.1f}%",
+            fontsize=8.8, fontweight="bold", color="#1b5e20", pad=28
         )
         ax.set_xlabel("UTM Zone 44N Easting (m)", fontsize=8)
         ax.set_ylabel("UTM Zone 44N Northing (m)", fontsize=8)
@@ -298,9 +297,15 @@ def render_statewide_block_density_plate():
     gdf_blocks["parcel_density"] = gdf_blocks["Field_Count"] / np.clip(block_area_km2, 10.0, None)
 
     fig = plt.figure(figsize=(18, 12.5), dpi=250)
-    ax_main = fig.add_axes([0.05, 0.06, 0.53, 0.87])
-    ax_inset1 = fig.add_axes([0.63, 0.53, 0.32, 0.40])
-    ax_inset2 = fig.add_axes([0.63, 0.07, 0.32, 0.40])
+    fig.suptitle(
+        "CHHATTISGARH STATEWIDE 146-BLOCK AGRICULTURAL FIELD DENSITY ATLAS\n"
+        "Derived Directly from 14,405,396 Measured Field Parcels in agriculture_field.shp (UTM Zone 44N | EPSG:32644)",
+        fontsize=12.0, fontweight="bold", y=0.965, color="#1b5e20"
+    )
+
+    ax_main = fig.add_axes([0.05, 0.06, 0.53, 0.81])
+    ax_inset1 = fig.add_axes([0.63, 0.50, 0.33, 0.36])
+    ax_inset2 = fig.add_axes([0.63, 0.07, 0.33, 0.35])
 
     # 1. Main Canvas: Statewide 146 Blocks Choropleth (Rice Area in Hectares)
     gdf_blocks.plot(
@@ -326,9 +331,9 @@ def render_statewide_block_density_plate():
         gdf_rivers.plot(ax=ax_main, color="#00bcd4", linewidth=0.6, alpha=0.85, zorder=6)
 
     ax_main.set_title(
-        "CHHATTISGARH STATEWIDE AGRICULTURAL FIELD FOOTPRINT\n"
-        "Block-Wise Incorporation from agriculture_field.shp (14,405,396 Parcels | 146 Blocks | UTM Zone 44N)",
-        fontsize=10.5, fontweight="bold", pad=12, color="#1b5e20"
+        "PANEL A: STATEWIDE 146-BLOCK FIELD PARCEL FOOTPRINT & DENSITY\n"
+        "Complete Census of 14,405,396 Physical Parcels | 1,448,309.2 ha Statewide Paddy Extent",
+        fontsize=9.5, fontweight="bold", pad=8, color="#1b5e20"
     )
     ax_main.set_xlabel("UTM Zone 44N Easting (m)", fontsize=8)
     ax_main.set_ylabel("UTM Zone 44N Northing (m)", fontsize=8)
@@ -366,9 +371,9 @@ def render_statewide_block_density_plate():
             clip_rivers1.plot(ax=ax_inset1, color="#00bcd4", linewidth=1.2, zorder=3)
 
     ax_inset1.set_title(
-        "CADASTRAL INSET A: Patan Block (Durg District)\n"
-        "104,478 Real Field Parcels | 18,342.1 ha Rice Extent | Sheonath Command",
-        fontsize=8.0, fontweight="bold", pad=9, color="#1b5e20"
+        "PANEL B: CADASTRAL INSET 1 - Patan Block (Durg Command Area)\n"
+        "104,478 Real Field Parcels | 18,342.1 ha Rice Extent | Sheonath River Command",
+        fontsize=8.0, fontweight="bold", pad=8, color="#1b5e20"
     )
     ax_inset1.tick_params(labelsize=6.5)
     ax_inset1.grid(True, linestyle=":", alpha=0.4)
@@ -389,9 +394,9 @@ def render_statewide_block_density_plate():
             clip_rivers2.plot(ax=ax_inset2, color="#00bcd4", linewidth=1.2, zorder=3)
 
     ax_inset2.set_title(
-        "CADASTRAL INSET B: Jagdalpur Block (Bastar District)\n"
+        "PANEL C: CADASTRAL INSET 2 - Jagdalpur Block (Bastar Plateau Uplands)\n"
         "49,726 Real Field Parcels | 6,839.4 ha Rice Extent | Bastar Plateau Uplands",
-        fontsize=8.0, fontweight="bold", pad=9, color="#1b5e20"
+        fontsize=8.0, fontweight="bold", pad=8, color="#1b5e20"
     )
     ax_inset2.tick_params(labelsize=6.5)
     ax_inset2.grid(True, linestyle=":", alpha=0.4)
@@ -420,7 +425,7 @@ def render_key_blocks_cadastral_plate():
         {"lgd": 3717, "name": "ambikapur", "label": "Ambikapur (Surguja)", "zone": "Northern Undulating Hills", "color": "#558b2f"},
     ]
 
-    fig, axes = plt.subplots(2, 2, figsize=(17, 14), dpi=250)
+    fig, axes = plt.subplots(2, 2, figsize=(17, 14.5), dpi=250)
     axes_flat = axes.flatten()
 
     for idx, case in enumerate(BLOCK_CASES):
@@ -455,7 +460,7 @@ def render_key_blocks_cadastral_plate():
         ax.set_title(
             f"PANEL {chr(65+idx)}: {case['label'].upper()} ({case['zone']})\n"
             f"{tot_cnt:,} Parcels | {tot_area:,.1f} ha Rice | Mean: {mean_ha:.3f} ha | Marginal (<1 ha): {marg_pct:.1f}%",
-            fontsize=8.2, fontweight="bold", pad=9, color="#1b5e20"
+            fontsize=8.0, fontweight="bold", pad=8, color="#1b5e20"
         )
         ax.set_xlabel("Easting (m)", fontsize=7.5)
         ax.set_ylabel("Northing (m)", fontsize=7.5)
@@ -467,9 +472,9 @@ def render_key_blocks_cadastral_plate():
     fig.suptitle(
         "CHHATTISGARH REPRESENTATIVE BLOCK-WISE CADASTRAL ATLAS\n"
         "Derived Directly from User agriculture_field.shp (10m Resolution Parcels | EPSG:32644)",
-        fontsize=11.5, fontweight="bold", y=0.97, color="#004d40"
+        fontsize=11.5, fontweight="bold", y=0.965, color="#004d40"
     )
-    plt.subplots_adjust(top=0.91, bottom=0.06, left=0.06, right=0.96, hspace=0.22, wspace=0.18)
+    plt.subplots_adjust(top=0.86, bottom=0.06, left=0.06, right=0.96, hspace=0.22, wspace=0.18)
 
     out_fig2 = os.path.join(FIG_DIR, "11_key_blocks_cadastral_10m_field_maps.png")
     plt.savefig(out_fig2, bbox_inches="tight", pad_inches=0.35)
