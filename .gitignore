@@ -30,6 +30,9 @@ IndiaHouse_Akshit_Vaishnav_Resume.docx
 *.tif
 *.tiff
 *.parquet
+*.qgz
+outputs/qgis/
+outputs/figures/qgis_*
 data/processed/district_fields/
 data/processed/block_fields/
 data/processed/shapefiles/*.parquet
@@ -52,5 +55,6 @@ data/processed/shapefiles/*.parquet
 !data/raw/india_geodata/cg_rivers.geojson
 !data/raw/india_geodata/cg_*.parquet
 !outputs/figures/*.png
+!outputs/figures/block_field_maps/*.png
 !outputs/policy_tables/*.csv
 !models/*

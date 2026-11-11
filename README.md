@@ -258,34 +258,37 @@ Chhattisgarh-Rice-Methane-MRV-project/
 │   │   └── cg_essential_water_mask.geojson
 ├── outputs/
 │   ├── figures/
-│   │   ├── district_field_footprints/ (33 dedicated district map plates)
-│   │   │   ├── district_balod_field_footprint.png
-│   │   │   └── ... (33 district plates)
-│   │   ├── 06_statewide_kharif_vs_rabi_methane_map.png
+│   │   ├── block_field_maps/ (146 dedicated Community Development Block map plates)
+│   │   │   ├── block_3595_jagdalpur_field_map.png
+│   │   │   ├── block_3639_patan_field_map.png
+│   │   │   └── ... (all 146 block plates @ 10m parcel fidelity)
+│   │   ├── 01_agriculture_field_statewide_cartography_300dpi.png
+│   │   ├── 02_agribound_ftw_cropharvest_10m_field_shapefile_map.png
 │   │   ├── 07_agribound_ftw_10m_field_parcels_map.png
+│   │   ├── 10_statewide_block_field_density_and_parcels.png
+│   │   ├── 11_key_blocks_cadastral_10m_field_maps.png
+│   │   ├── 06_statewide_kharif_vs_rabi_methane_map.png
 │   │   ├── 08_statewide_groundwater_stress_and_rabi_methane_map.png
 │   │   ├── 09_rainfall_driven_rice_yield_vs_methane_intensity_map.png
 │   │   ├── 10_statewide_soil_typology_atlas.png
 │   │   ├── 11_statewide_soil_organic_carbon_soc_map.png
 │   │   ├── 12_statewide_soil_clay_and_drainage_percolation_map.png
 │   │   ├── 13_statewide_soil_ph_reaction_map.png
-│   │   ├── 14_multipanel_comprehensive_soil_mrv_atlas.png
-│   │   ├── qgis_statewide_mrv_composite.png
-│   │   ├── qgis_statewide_soil_cartography.png
-│   │   └── qgis_statewide_field_footprint_composite.png
-│   └── qgis/
-│       └── chhattisgarh_mrv_project.qgz (Standalone QGIS Project)
+│   │   └── 14_multipanel_comprehensive_soil_mrv_atlas.png
 ├── src/
 │   ├── 01_ingest_essential_geodata.py
-│   ├── 02_essential_field_shapefiles.py
-│   ├── 03_gee_essential_extractor.py
+│   ├── 01_incorporate_agriculture_field_blockwise.py
+│   ├── 01_extract_local_shapefile_kharif_rabi.py
+│   ├── 02_biogeochemical_methane_engine.py
+│   ├── 03_train_and_predict_ml_methane.py
 │   ├── 04_essential_chamber_calibration.py
 │   ├── 05_essential_ml_accuracy_future.py
 │   ├── 06_generate_essential_graphs.py
 │   ├── 07_update_readme.py
-│   ├── 08_generate_qgis_project.py
-│   ├── 09_generate_district_field_footprint_maps.py
-│   └── 10_generate_soil_maps_and_typology.py
+│   ├── 10_generate_soil_maps_and_typology.py
+│   ├── 12_create_maps_from_user_shapefile.py
+│   ├── 13_generate_block_field_maps.py
+│   └── 04_push_to_github.py
 ├── run_all.py
 ├── run_dashboard.py
 └── index.html

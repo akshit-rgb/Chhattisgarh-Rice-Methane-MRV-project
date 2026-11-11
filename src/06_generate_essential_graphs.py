@@ -66,7 +66,8 @@ plt.rcParams.update({
     "figure.titlesize": 13.5,
     "figure.dpi": 300,
     "savefig.dpi": 300,
-    "savefig.bbox": "tight"
+    "savefig.bbox": "tight",
+    "savefig.pad_inches": 0.3
 })
 
 

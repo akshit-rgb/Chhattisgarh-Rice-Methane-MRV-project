@@ -101,8 +101,7 @@ def push_to_remote():
     run_cmd("git add outputs/accuracy_audit/", "Staging accuracy audit results")
     run_cmd("git add data/processed/*.csv outputs/reports/*.csv", "Staging processed CSV datasets")
     run_cmd("git add data/processed/shapefiles/*.shp data/processed/shapefiles/*.dbf data/processed/shapefiles/*.shx data/processed/shapefiles/*.prj data/processed/shapefiles/*.cpg", "Staging vector shapefiles")
-    run_cmd("git add outputs/figures/*.png outputs/figures/*.pdf", "Staging cartography figures & vector PDFs")
-    run_cmd("git add outputs/qgis/", "Staging QGIS project")
+    run_cmd("git add outputs/figures/*.png outputs/figures/block_field_maps/*.png", "Staging cartography figures")
 
     # 3. Check what is staged
     success, staged_status, _ = run_cmd("git status --short", "Inspecting staged changes")
