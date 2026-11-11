@@ -3,7 +3,6 @@
 
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg?logo=python&logoColor=white)](https://www.python.org/)
 [![Google Earth Engine](https://img.shields.io/badge/GEE-ee--akshitvaishnavonline-2BAF2B.svg?logo=google-earth&logoColor=white)](https://earthengine.google.com/)
-[![QGIS 3.40 LTR](https://img.shields.io/badge/QGIS-3.40%20LTR%20PyQGIS-589632.svg?logo=qgis&logoColor=white)](https://qgis.org/)
 [![IPCC AR6 Compliant](https://img.shields.io/badge/IPCC%20AR6-GWP100%2027.9-orange.svg)](https://www.ipcc.ch/)
 [![Verra VM0042](https://img.shields.io/badge/Verra-VM0042%20AWD%20Methodology-success.svg)](https://verra.org/)
 [![Projected CRS](https://img.shields.io/badge/CRS-EPSG%3A32644%20(UTM%2044N)-blueviolet.svg)](https://epsg.io/32644)
@@ -128,22 +127,22 @@ Grounded in **IGKV Raipur** soil typology and **ISRIC SoilGrids 250m v2.0** benc
 
 ---
 
-## 🗺️ Standalone QGIS Master Project & Publication Layouts (300 DPI)
+## 🗺️ Statewide 146-Block Agricultural Field Cartography & Cadastral Insets (300 DPI)
 
-The project generates a standalone native QGIS 3.40 LTR Project (`outputs/qgis/chhattisgarh_mrv_project.qgz`) projected strictly in **`EPSG:32644` (UTM Zone 44N)** with 5 structured layer groups, complete styling (.qml), and 3 print layouts:
+The project generates high-resolution standalone cartography projected strictly in **`EPSG:32644` (UTM Zone 44N)** with block-level divisions, 10m agricultural parcel geometries (*Medh*), and non-overlapping typography:
 
-1. **Statewide Carbon MRV Composite** (1.35 MB @ 300 DPI):
-![QGIS Statewide MRV Composite](outputs/figures/qgis_statewide_mrv_composite.png)
+1. **Statewide 146-Block Agricultural Field Atlas (Plate 01)** (300 DPI):
+![Statewide 146-Block Field Cartography](outputs/figures/01_agriculture_field_statewide_cartography_300dpi.png)
+Features 3 high-resolution cadastral insets at 10m parcel fidelity (Patan Block, Jagdalpur Block, Masturi Block).
 
-2. **Statewide Soil Cartography Composite** (1.39 MB @ 300 DPI):
-![QGIS Statewide Soil Cartography](outputs/figures/qgis_statewide_soil_cartography.png)
+2. **Statewide 146-Block Agricultural Field Density & Parcels (Plate 10)** (250 DPI):
+![Statewide 146-Block Density Atlas](outputs/figures/10_statewide_block_field_density_and_parcels.png)
 
-3. **Statewide 10m Field Footprints Composite** (2.45 MB @ 300 DPI):
-![QGIS Statewide Field Footprint](outputs/figures/qgis_statewide_field_footprint_composite.png)
+3. **Representative 4-Panel Block Cadastral Atlas (Plate 11)** (250 DPI):
+![Representative Block Cadastral Atlas](outputs/figures/11_key_blocks_cadastral_10m_field_maps.png)
 
-4. **Statewide Clipped FTW Agricultural Field Atlas (A3 Landscape)** (3.62 MB @ 300 DPI):
-![QGIS Clipped FTW Field Map](outputs/figures/qgis_ftw_clipped_chhattisgarh_field_map.png)
-Download Full Vector PDF: [`qgis_ftw_clipped_chhattisgarh_field_map.pdf`](outputs/figures/qgis_ftw_clipped_chhattisgarh_field_map.pdf)
+4. **Complete 146 Community Development Block Field Parcel Maps Suite**:
+All 146 CD blocks across all 33 districts each receive a dedicated cadastral field map plate at 10m parcel resolution stored in [`outputs/figures/block_field_maps/`](outputs/figures/block_field_maps/).
 
 ---
 
