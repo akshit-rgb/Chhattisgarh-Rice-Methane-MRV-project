@@ -29,6 +29,7 @@ IndiaHouse_Akshit_Vaishnav_Resume.docx
 *.tiff
 *.parquet
 data/processed/district_fields/
+data/processed/block_fields/
 data/processed/shapefiles/*.parquet
 data/processed/*.parquet
 data/raw/india_geodata/*_india.parquet

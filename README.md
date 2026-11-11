@@ -62,6 +62,20 @@ Spatial bivariate cartography correlating CGWB Groundwater Extraction Stage (%) 
 
 ---
 
+### Plate 5: Statewide 146-Block Agricultural Field Density & Cadastral Insets (Block-Wise Census)
+Statewide 146-block field parcel density and measured rice extent directly derived from user `agriculture_field.shp` (14,405,396 parcels), featuring micro-scale 10m cadastral parcel insets for Patan (Durg command area) and Jagdalpur (Bastar plateau).
+![Block Field Density Plate](outputs/figures/10_statewide_block_field_density_and_parcels.png)
+
+---
+
+### Plate 6: 4-Panel Representative Block Cadastral Atlas (10m Resolution Parcels)
+High-resolution 300 DPI cadastral maps for 4 key agro-climatic blocks showing exact 10m earthen bund boundaries (*Medh*), WRIS irrigation canals, and census holding statistics:
+![Key Blocks Cadastral Atlas](outputs/figures/11_key_blocks_cadastral_10m_field_maps.png)
+
+Download Full Block Census: [`chhattisgarh_block_fields_summary.csv`](outputs/reports/chhattisgarh_block_fields_summary.csv)
+
+---
+
 ## 🌾 33 Individual District Agricultural Field Footprint Maps
 
 Each of the **33 districts of Chhattisgarh** has a dedicated 300 DPI high-resolution field parcel plate showing block subdivisions, real 10m FTW parcel boundaries (*Medh*), holding size typology (Marginal, Small, Medium), WRIS irrigation canals, and a full census diagnostics card.
@@ -278,43 +292,7 @@ Chhattisgarh-Rice-Methane-MRV-project/
 │   │   └── qgis_statewide_field_footprint_composite.png
 │   └── qgis/
 │       └── chhattisgarh_mrv_project.qgz (Standalone QGIS Project)
----
-
-## 🛡️ Base Shapefile Integrity & Zero-Bloat Execution
-
-The pipeline directly ingests the user-provided local ESRI Shapefile:
-`chhattisgarh_rice_methane all in one/agriculture_field.shp` (with `.dbf`, `.shx`, `.prj`, `.cpg` sidecars).
-
-### Critical Operational Guarantees:
-1. **Direct Local Shapefile Usage**:
-   - The **14,405,396 agricultural field polygons** ($1,448,309.2\text{ ha}$) are treated as the immutable ground-truth layer.
-   - Zero secondary/tertiary boundary fragmentation, zero superpixel splitting, and zero polygon segregation algorithms are run.
-2. **Dual-Season Multi-Sensor Extraction**:
-   - Multi-sensor predictors extracted directly over these exact boundaries for **Kharif (June 15 – November 15)** and **Rabi (January 15 – May 15)** across 2019–2026.
-   - **Sentinel-1 SAR (`COPERNICUS/S1_GRD`)**: `VV_Dry_dB`, `Flood_Frequency`, `MSD_Rebound_dB`.
-   - **Sentinel-2 Optical (`COPERNICUS/S2_SR_HARMONIZED`)**: `SAVI_Mean`, `LSWI_Mean`.
-   - **Climate & Soil**: `LST_Day_Celsius` (MODIS), `Precip_Season_mm` (CHIRPS), `SOC_g_kg`, `Clay_pct`, `Soil_Class` (*Kanhar, Dorsa, Matasi, Bhata*), `Soil_pH`, and `Canal_Proximity_km` in `EPSG:32644`.
-3. **Chamber Calibration & Monte Carlo (10,000 Draws)**:
-   - Calibrated against ICAR-IARI New Delhi, IGKV Raipur, and ICAR-NRRI Cuttack closed chambers.
-   - Arrhenius $Q_{10}=2.2$ thermal kinetic spike during summer Rabi.
-   - IPCC AR6 GWPs: $\text{CH}_4 = 27.9$, $\text{N}_2\text{O} = 273$.
-   - **Statewide Emissions**:
-     - **Kharif (Monsoon)**: $178.26\text{ kt }\text{CH}_4/\text{yr}$ ($4.974\text{ Mt }\text{CO}_2\text{e}/\text{yr}$) | Mean Flux: $1.281\text{ kg/ha/day}$
-     - **Rabi (Summer)**: $71.04\text{ kt }\text{CH}_4/\text{yr}$ ($1.982\text{ Mt }\text{CO}_2\text{e}/\text{yr}$) | Mean Flux: $1.304\text{ kg/ha/day}$
-     - **AWD Potential**: $109.7\text{ kt }\text{CH}_4/\text{yr}$ saved ($3.06\text{ Mt }\text{CO}_2\text{e}/\text{yr}$ carbon credits).
-4. **Machine Learning Champion (v2)**:
-   - Monotonic XGBoost v2 (`models/xgboost_chhattisgarh_methane_v2.json`) achieves Spatial CV $R^2 = 0.9704$ across all 33 districts, $0.0\%$ monotonicity violation rate, and $99.96\%$ Lin's CCC agreement.
-5. **Direct Field Parcel Predictions**:
-   - Individual field parcels scored directly in [`data/processed/cg_agriculture_field_parcel_methane_predictions.csv`](data/processed/cg_agriculture_field_parcel_methane_predictions.csv).
-
----
-
 ├── src/
-│   ├── 01_extract_local_shapefile_kharif_rabi.py (Direct local shapefile extraction)
-│   ├── 01_extract_master_fields_kharif_rabi.py (14.4M Master Parquet extraction)
-│   ├── 02_biogeochemical_methane_engine.py (IPCC Tier-2/3 & Chamber Monte Carlo)
-│   ├── 03_train_and_predict_ml_methane.py (Monotonic XGBoost v2 & 10 Tests)
-│   ├── 04_push_to_github.py (Automated Git & GitHub Remote Synchronization)
 │   ├── 01_ingest_essential_geodata.py
 │   ├── 02_essential_field_shapefiles.py
 │   ├── 03_gee_essential_extractor.py
@@ -324,12 +302,7 @@ The pipeline directly ingests the user-provided local ESRI Shapefile:
 │   ├── 07_update_readme.py
 │   ├── 08_generate_qgis_project.py
 │   ├── 09_generate_district_field_footprint_maps.py
-│   ├── 10_generate_soil_maps_and_typology.py
-│   └── 11_qgis_open_and_clip_ftw_tiles.py
-├── models/
-│   ├── xgboost_chhattisgarh_methane_v2.json (Official Production Model)
-│   ├── xgboost_chhattisgarh_methane_v2.joblib
-│   └── rf_chhattisgarh_methane_v2.joblib
+│   └── 10_generate_soil_maps_and_typology.py
 ├── run_all.py
 ├── run_dashboard.py
 └── index.html

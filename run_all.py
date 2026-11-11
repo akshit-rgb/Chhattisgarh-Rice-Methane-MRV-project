@@ -18,8 +18,8 @@ import time
 
 PIPELINE_SCRIPTS = [
     ("Stage 01: Essential Geodata & Chamber Benchmarks", "src/01_ingest_essential_geodata.py"),
-    ("Stage 02: Exact Local Shapefile Dual-Season Extraction", "src/01_extract_local_shapefile_kharif_rabi.py"),
-    ("Stage 03: 14.4M Master Parquet Dual-Season Extraction", "src/01_extract_master_fields_kharif_rabi.py"),
+    ("Stage 02: 146-Block Shapefile Incorporation & Census", "src/01_incorporate_agriculture_field_blockwise.py"),
+    ("Stage 03: Exact Local Shapefile Dual-Season Extraction", "src/01_extract_local_shapefile_kharif_rabi.py"),
     ("Stage 04: Chamber Biogeochemical Engine & Monte Carlo", "src/02_biogeochemical_methane_engine.py"),
     ("Stage 05: Monotonic XGBoost v2 & 10 Accuracy Tests", "src/03_train_and_predict_ml_methane.py"),
     ("Stage 06: Essential 10m Field Parcels (All 33 Districts)", "src/02_essential_field_shapefiles.py"),
@@ -27,11 +27,12 @@ PIPELINE_SCRIPTS = [
     ("Stage 08: Chamber Calibration & Coupled Yield Engine", "src/04_essential_chamber_calibration.py"),
     ("Stage 09: Essential ML Suite, 10 Tests & Future Simulator", "src/05_essential_ml_accuracy_future.py"),
     ("Stage 10: Automated Graph Suite & GEE Dashboard", "src/06_generate_essential_graphs.py"),
-    ("Stage 11: 33 Individual District Field Footprints", "src/09_generate_district_field_footprint_maps.py"),
-    ("Stage 12: Comprehensive Soil Science & Typology Suite", "src/10_generate_soil_maps_and_typology.py"),
-    ("Stage 13: Standalone QGIS Project & 300 DPI Cartography", "src/08_generate_qgis_project.py"),
-    ("Stage 14: Professional Publication Documentation", "src/07_update_readme.py"),
-    ("Stage 15: Automated Git & GitHub Remote Synchronization", "src/04_push_to_github.py")
+    ("Stage 11: Block-Wise 300 DPI Cadastral Maps Suite", "src/13_generate_block_field_maps.py"),
+    ("Stage 12: 33 Individual District Field Footprints", "src/09_generate_district_field_footprint_maps.py"),
+    ("Stage 13: Comprehensive Soil Science & Typology Suite", "src/10_generate_soil_maps_and_typology.py"),
+    ("Stage 14: Standalone QGIS Project & 300 DPI Cartography", "src/08_generate_qgis_project.py"),
+    ("Stage 15: Professional Publication Documentation", "src/07_update_readme.py"),
+    ("Stage 16: Automated Git & GitHub Remote Synchronization", "src/04_push_to_github.py")
 ]
 
 def main():

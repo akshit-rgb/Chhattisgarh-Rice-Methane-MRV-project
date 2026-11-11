@@ -81,6 +81,15 @@ def build_enriched_shapefiles():
     gdf_b["GW_Stress"] = gdf_b["LGD_Code"].map(df_k["GW_Stress_Index"]).fillna(25.0).round(1)
     gdf_b["Rice_ha"] = gdf_b["LGD_Code"].map(df_k["Active_Rice_Area_ha"]).fillna(0.0).round(0)
 
+    # Attach ground-truth block census from agriculture_field.shp
+    block_census_csv = os.path.join(PROCESSED_DIR, "cg_block_fields_summary.csv")
+    if os.path.exists(block_census_csv):
+        df_bc = pd.read_csv(block_census_csv).set_index("LGD_Code")
+        gdf_b["Rice_ha"] = gdf_b["LGD_Code"].map(df_bc["Rice_ha"]).fillna(gdf_b["Rice_ha"]).round(1)
+        gdf_b["Field_Count"] = gdf_b["LGD_Code"].map(df_bc["Field_Count"]).fillna(0).astype(int)
+        gdf_b["Mean_ha"] = gdf_b["LGD_Code"].map(df_bc["Mean_Field_ha"]).fillna(0.1).round(3)
+        gdf_b["Marginal_p"] = gdf_b["LGD_Code"].map(df_bc["Marginal_pct"]).fillna(70.0).round(1)
+
     # Attach soil attributes
     if os.path.exists(soil_shp):
         gdf_soil = gpd.read_file(soil_shp).set_index("LGD_Code")
@@ -212,6 +221,27 @@ def create_qgis_project(blocks_shp, districts_shp):
 
         grp_fields = root.addGroup("03. Fields of the World (FTW) 10m Parcels")
         grp_fields.addLayer(layer_fields)
+
+        # Add key block field shapefiles partitioned from agriculture_field.shp
+        block_shp_dir = os.path.join(PROCESSED_DIR, "block_fields", "shp")
+        key_block_shps = [
+            ("block_3639_patan.shp", "Block: Patan (Durg - 104k Parcels)"),
+            ("block_3693_abhanpur.shp", "Block: Abhanpur (Raipur - 80k Parcels)"),
+            ("block_3610_masturi.shp", "Block: Masturi (Bilaspur - 90k Parcels)"),
+            ("block_3595_jagdalpur.shp", "Block: Jagdalpur (Bastar - 50k Parcels)"),
+        ]
+        sym_block_field = QgsFillSymbol.createSimple({
+            "color": "44,162,95,220",
+            "outline_color": "0,104,55,255",
+            "outline_width": "0.15"
+        })
+        for shp_fname, title_layer in key_block_shps:
+            f_path = os.path.join(block_shp_dir, shp_fname)
+            if os.path.exists(f_path):
+                lyr_b = QgsVectorLayer(os.path.abspath(f_path), title_layer, "ogr")
+                lyr_b.renderer().setSymbol(sym_block_field.clone())
+                project.addMapLayer(lyr_b, False)
+                grp_fields.addLayer(lyr_b)
 
         grp_mrv = root.addGroup("04. Carbon MRV Flux (2024 Kharif)")
         grp_mrv.addLayer(layer_blocks_mrv)

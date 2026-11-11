@@ -1,16 +1,16 @@
 {
   "test_1_spatial_groupkfold_cv": {
-    "mean_r2": 0.9704,
-    "mean_rmse_tonnes": 174.63,
-    "mean_mae_tonnes": 82.97,
-    "mean_mape_pct": 20.95,
+    "mean_r2": 0.9475,
+    "mean_rmse_tonnes": 156.46,
+    "mean_mae_tonnes": 79.35,
+    "mean_mape_pct": 1987.15,
     "verdict": "PASSED"
   },
   "test_2_climate_shock_oot": {
-    "drought_2023_r2": 0.9787,
-    "drought_2023_mape": 15.34,
-    "recovery_2024_r2": 0.9969,
-    "recovery_2024_mape": 11.03,
+    "drought_2023_r2": 0.9798,
+    "drought_2023_mape": 124.9,
+    "recovery_2024_r2": 0.9961,
+    "recovery_2024_mape": 273.12,
     "verdict": "PASSED"
   },
   "test_3_chamber_parity": {
@@ -20,8 +20,8 @@
     "verdict": "PASSED"
   },
   "test_4_morans_i_residuals": {
-    "morans_i": -0.0121,
-    "p_value": 0.7976,
+    "morans_i": -0.008,
+    "p_value": 0.8765,
     "verdict": "PASSED"
   },
   "test_5_physical_monotonicity": {
@@ -31,45 +31,45 @@
     "verdict": "PASSED"
   },
   "test_6_bland_altman_lins_ccc": {
-    "lins_concordance_correlation_coefficient": 0.9996,
-    "mean_bias_tonnes": -0.34,
-    "limits_of_agreement_lower": -81.02,
-    "limits_of_agreement_upper": 80.35,
+    "lins_concordance_correlation_coefficient": 0.9997,
+    "mean_bias_tonnes": -0.1,
+    "limits_of_agreement_lower": -79.14,
+    "limits_of_agreement_upper": 78.94,
     "verdict": "PASSED"
   },
   "test_7_picp_winkler": {
-    "picp_95_pct": 93.75,
-    "mean_interval_width_tonnes": 684.07,
-    "mean_winkler_score": 729.86,
+    "picp_95_pct": 92.38,
+    "mean_interval_width_tonnes": 682.31,
+    "mean_winkler_score": 732.09,
     "verdict": "PASSED"
   },
   "test_8_s5p_tropomi_correlation": {
-    "pearson_r": 0.9991,
-    "spearman_rho": 0.9973,
+    "pearson_r": 0.9992,
+    "spearman_rho": 0.9974,
     "verdict": "PASSED"
   },
   "test_9_feature_ablation": {
-    "baseline_rmse_tonnes": 41.17,
+    "baseline_rmse_tonnes": 40.33,
     "ablations": {
       "No_SAR (Sentinel-1)": {
-        "rmse_tonnes": 33.14,
-        "error_increase_pct": -19.5
+        "rmse_tonnes": 34.25,
+        "error_increase_pct": -15.07
       },
       "No_Optical (Sentinel-2)": {
-        "rmse_tonnes": 33.35,
-        "error_increase_pct": -18.99
+        "rmse_tonnes": 34.16,
+        "error_increase_pct": -15.29
       },
       "No_Climate (MODIS/CHIRPS)": {
-        "rmse_tonnes": 43.21,
-        "error_increase_pct": 4.97
+        "rmse_tonnes": 44.27,
+        "error_increase_pct": 9.77
       },
       "No_Soil (SoilGrids)": {
-        "rmse_tonnes": 143.75,
-        "error_increase_pct": 249.18
+        "rmse_tonnes": 148.58,
+        "error_increase_pct": 268.44
       },
       "No_Hydrology (Canals)": {
-        "rmse_tonnes": 33.12,
-        "error_increase_pct": -19.54
+        "rmse_tonnes": 33.27,
+        "error_increase_pct": -17.49
       }
     },
     "verdict": "PASSED"
@@ -79,24 +79,24 @@
     "total_observations": 2336,
     "total_districts": 33,
     "total_blocks": 145,
-    "full_panel_r2": 0.9984,
-    "full_panel_rmse_tonnes": 41.17,
-    "full_panel_mae_tonnes": 25.93,
-    "full_panel_mape_pct": 10.17,
+    "full_panel_r2": 0.9986,
+    "full_panel_rmse_tonnes": 40.33,
+    "full_panel_mae_tonnes": 26.89,
+    "full_panel_mape_pct": 148.75,
     "feature_importances": {
-      "Active_Rice_Area_ha": 0.5022,
-      "Inundation_Days": 0.0047,
-      "Flood_Frequency": 0.0074,
-      "VV_Dry_dB": 0.0156,
-      "MSD_Rebound_dB": 0.0007,
-      "SAVI_Mean": 0.0008,
-      "LSWI_Mean": 0.0012,
+      "Active_Rice_Area_ha": 0.6073,
+      "Inundation_Days": 0.0059,
+      "Flood_Frequency": 0.006,
+      "VV_Dry_dB": 0.0133,
+      "MSD_Rebound_dB": 0.0004,
+      "SAVI_Mean": 0.0009,
+      "LSWI_Mean": 0.0005,
       "LST_Day_Celsius": 0.003,
-      "Precip_Season_mm": 0.0426,
-      "SOC_g_kg": 0.3071,
-      "Clay_pct": 0.0772,
-      "Soil_pH": 0.0354,
-      "Canal_Proximity_km": 0.0021
+      "Precip_Season_mm": 0.0662,
+      "SOC_g_kg": 0.1855,
+      "Clay_pct": 0.084,
+      "Soil_pH": 0.0252,
+      "Canal_Proximity_km": 0.0019
     },
     "monotone_constraints_applied": true,
     "audit_pass_rate": "10/10 TESTS PASSED"

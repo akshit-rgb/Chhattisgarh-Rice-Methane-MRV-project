@@ -164,13 +164,20 @@ def compute_canal_proximity(gdf_blocks):
 def build_dual_season_panel(df_dist_sum, gdf_blocks):
     """
     Builds the 2019-2026 dual-season multi-sensor panel across all 146 blocks (2,336 records).
-    Anchors rice cropland extent directly to the local shapefile district aggregates.
+    Anchors rice cropland extent directly to the local shapefile block & district aggregates.
     """
     print("=" * 80)
     print("STAGE 01 (Part B): Generating Statewide Dual-Season Multi-Sensor Feature Panel")
     print("=" * 80)
 
     np.random.seed(42)
+
+    block_sum_path = os.path.join(PROCESSED_DIR, "cg_block_fields_summary.csv")
+    block_map = {}
+    if os.path.exists(block_sum_path):
+        print(f"[INFO] Anchoring dual-season panel to exact block census: {block_sum_path}")
+        df_blk = pd.read_csv(block_sum_path)
+        block_map = {int(row["LGD_Code"]): row for _, row in df_blk.iterrows()}
 
     dist_map = {row["district"].strip().lower(): row for _, row in df_dist_sum.iterrows()}
 
@@ -192,19 +199,25 @@ def build_dual_season_panel(df_dist_sum, gdf_blocks):
             lgd_code = int(b_row["LGD_Code"])
             d_key = d_name.strip().lower()
 
-            d_info = dist_map.get(d_key, None)
-            if d_info is not None:
-                d_tot_fields = d_info["fields_count"]
-                d_tot_rice_ha = d_info["rice_area_ha"]
-                d_conf = d_info["confidence_mean"]
+            if lgd_code in block_map:
+                b_info = block_map[lgd_code]
+                b_master_fields = int(b_info["Field_Count"])
+                b_base_rice_ha = float(b_info["Rice_ha"])
+                d_conf = float(b_info["Mean_Confidence"])
             else:
-                d_tot_fields = 400000
-                d_tot_rice_ha = 45000.0
-                d_conf = 0.45
+                d_info = dist_map.get(d_key, None)
+                if d_info is not None:
+                    d_tot_fields = d_info["fields_count"]
+                    d_tot_rice_ha = d_info["rice_area_ha"]
+                    d_conf = d_info["confidence_mean"]
+                else:
+                    d_tot_fields = 400000
+                    d_tot_rice_ha = 45000.0
+                    d_conf = 0.45
 
-            b_weight = float(b_row.get("block_weight", 0.25))
-            b_master_fields = int(round(d_tot_fields * b_weight))
-            b_base_rice_ha = float(round(d_tot_rice_ha * b_weight, 1))
+                b_weight = float(b_row.get("block_weight", 0.25))
+                b_master_fields = int(round(d_tot_fields * b_weight))
+                b_base_rice_ha = float(round(d_tot_rice_ha * b_weight, 1))
 
             soil_class = str(b_row.get("Soil_Class", "Dorsa"))
             s_defaults = SOIL_DEFAULTS.get(soil_class, SOIL_DEFAULTS["Dorsa"])
