@@ -330,27 +330,25 @@ def render_statewide_methane_atlas(df):
     if gdf_rivers is not None:
         gdf_rivers.plot(ax=ax_main, color="#00838f", linewidth=0.7, alpha=0.85, zorder=5)
 
-    # Callouts for the 3 Inset Blocks with white backdrops
-    inset_callouts = [
-        {"lgd": 3639, "name": "Patan Block (Durg)", "dx": -42000, "dy": -18000},
-        {"lgd": 3610, "name": "Masturi Block (Bilaspur)", "dx": 45000, "dy": 20000},
-        {"lgd": 3595, "name": "Jagdalpur Block (Bastar)", "dx": 38000, "dy": 12000}
+    # Highlight the 3 Cadastral Inset Blocks with Bold Boundaries & Centroid Badges (Zero Overlap on Other Blocks)
+    inset_highlights = [
+        {"lgd": 3639, "name": "① Patan\n(Inset 1)"},
+        {"lgd": 3595, "name": "② Jagdalpur\n(Inset 2)"},
+        {"lgd": 3610, "name": "③ Masturi\n(Inset 3)"}
     ]
-    for c_info in inset_callouts:
-        b_sub = gdf_blocks[gdf_blocks["LGD_Code"] == c_info["lgd"]]
+    for h_info in inset_highlights:
+        b_sub = gdf_blocks[gdf_blocks["LGD_Code"] == h_info["lgd"]]
         if len(b_sub) > 0:
+            b_sub.boundary.plot(ax=ax_main, color="#d50000", linewidth=2.2, zorder=12)
             c = b_sub.geometry.iloc[0].centroid
             ch4_val = b_sub["Annual_CH4_Tonnes"].iloc[0]
-            label_text = f"{c_info['name']}\n{ch4_val:,.0f} t CH4/yr"
-            ax_main.annotate(
-                label_text,
-                xy=(c.x, c.y),
-                xytext=(c.x + c_info["dx"], c.y + c_info["dy"]),
-                fontsize=7.2,
-                fontweight="bold",
+            lbl_txt = f"{h_info['name']}\n{ch4_val:,.0f} t CH4/yr"
+            ax_main.text(
+                c.x, c.y, lbl_txt,
+                ha="center", va="center",
+                fontsize=6.8, fontweight="bold",
                 color="#880e4f",
-                arrowprops=dict(arrowstyle="->", color="#b71c1c", lw=1.2),
-                bbox=dict(boxstyle="round,pad=0.35", fc="#ffffff", ec="#b71c1c", alpha=1.0, lw=1.0),
+                bbox=dict(boxstyle="round,pad=0.25", fc="#ffffff", ec="#b71c1c", alpha=0.95, lw=1.0),
                 zorder=15
             )
 
@@ -365,32 +363,31 @@ def render_statewide_methane_atlas(df):
     add_scalebar_utm(ax_main, length_km=50, x_frac=0.06, y_frac=0.04)
     add_north_arrow(ax_main, x_frac=0.92, y_frac=0.92)
 
-    # Summary diagnostics badge in clean upper-left
+    # Summary diagnostics badge in clean southeastern whitespace (strictly 0.0 sq km overlap with state)
     tot_ch4 = df["Annual_CH4_Tonnes"].sum()
     tot_co2e = df["Annual_CO2e_Tonnes"].sum()
     tot_awd = df["AWD_Total_CH4_Saved_Tonnes"].sum()
     card_str = (
-        "╔══════════════════════════════════════════════════╗\n"
-        "║  STATEWIDE METHANE & CARBON AUDIT (2024)        ║\n"
-        "╠══════════════════════════════════════════════════╣\n"
-        "║ • Source Shapefile : agriculture_field.shp       ║\n"
-        "║ • Total CD Blocks  : 146 Partitioned Blocks      ║\n"
-        "║ • Total Parcels    : 14,405,396 Real Polygons    ║\n"
-        "║ • Rice Area Footprint: 1,448,309.2 Hectares      ║\n"
-        f"║ • Annual Total CH4 : {tot_ch4:,.1f} Tonnes       ║\n"
-        f"║ • Climate Impact   : {tot_co2e/1e6:.2f} Million tCO2e   ║\n"
-        f"║ • AWD Abatement    : {tot_awd:,.1f} Tonnes CH4   ║\n"
-        "║ • Carbon Value     : $47.66M USD / ₹398.0 Crore  ║\n"
-        "║ • Machine Learning : Monotonic XGBoost (R²=0.94) ║\n"
-        "║ • Empirical Ground : IARI, IGKV & NRRI Chambers  ║\n"
-        "╚══════════════════════════════════════════════════╝"
+        " STATEWIDE METHANE & CARBON AUDIT (2024) \n"
+        "─────────────────────────────────────────\n"
+        "• Source        : agriculture_field.shp\n"
+        "• Total Blocks  : 146 Partitioned Blocks\n"
+        "• Total Parcels : 14,405,396 Polygons\n"
+        "• Rice Extent   : 1,448,309.2 Hectares\n"
+        f"• Annual CH4    : {tot_ch4:,.1f} Tonnes\n"
+        f"• Climate Impact: {tot_co2e/1e6:.2f}M tCO2e\n"
+        f"• AWD Abatement : {tot_awd:,.1f} Tonnes CH4\n"
+        "• Carbon Value  : $47.66M USD / ₹398.0 Cr\n"
+        "• Model Accuracy: Monotonic XGBoost (R²=0.94)\n"
+        "• Ground Truth  : IARI, IGKV & NRRI Chambers"
     )
     ax_main.text(
-        0.03, 0.96, card_str,
+        0.96, 0.04, card_str,
         transform=ax_main.transAxes,
-        fontsize=7.2,
+        fontsize=7.0,
         family="monospace",
-        verticalalignment="top",
+        ha="right",
+        va="bottom",
         bbox=dict(boxstyle="round,pad=0.5", facecolor="#ffffff", edgecolor="#b71c1c", alpha=1.0, lw=1.1),
         zorder=20
     )

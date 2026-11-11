@@ -209,11 +209,11 @@ Grouped bar chart projecting Business-As-Usual (BAU SSP5-8.5) against AWD Pani-P
 
 ## 💻 Interactive Dashboards
 
-### 1. Standalone Interactive Web GIS Dashboard (`index.html`)
-A zero-dependency, ultra-fast Web GIS dashboard built with Leaflet and Chart.js, covering all 146 Blocks and 10m Field Parcels:
-- **Choropleth Visualizer**: Toggle between 8 core metrics (Total CH4, Kharif CH4, Rabi CH4, GW Stage, Co-Benefit Index, Soil Organic Carbon, 2035 Avoided CO2e, GW Saved).
-- **Interactive Scenario Simulation**: Sliders for **AWD Adoption (0–100%)**, **Rainfall Anomaly (-30% to +30%)**, and **Simulation Year (2024–2035)** with real-time recalculation of statewide carbon credits and aquifer head savings.
-- **District Zoom & 10m Parcel Inspector**: Instant boundary zoom and high-resolution parcel layer toggle.
+### 1. Standalone Interactive Web GIS Dashboard & FTW Live Panels (`index.html`)
+A zero-dependency, ultra-fast Web GIS dashboard built with Leaflet and Chart.js, covering all 146 Blocks and 14,405,396 FTW Field Parcels:
+- **Panel 1: 🛰️ Live Interactive GIS Map**: Interactive choropleth visualizing 14 core metrics (FTW Annual CH4, Kharif/Rabi Dual-Season, Verra VM0042 AWD Abatement, Carbon Revenue ₹ Crore, CGWB Extraction Stage, Co-Benefit Index) with real-time **Scenario Simulation Engine (2024–2035)** and 2,000 real 10m field parcel overlay.
+- **Panel 2: 📊 FTW Cartography Atlas**: Interactive gallery displaying all 7 publication plates (Statewide Methane Atlas Plate 01, Dual-Season Plate 02, AWD Carbon Credits Plate 03, Landholding Distribution Plate 04, Field Footprint Atlas Plate 05, Block Field Density Plate 10, Key Blocks Cadastral Plate 11) with zoom lightbox and auto-refresh.
+- **Panel 3: 🔬 146-Block Field Maps Gallery**: Instant search & inspect interface for dedicated 10m cadastral field maps across ALL 146 Community Development Blocks, displaying exact parcel counts, rice area, annual methane, AWD potential, and carbon valuation.
 
 **One-Click Launcher:**
 ```bash

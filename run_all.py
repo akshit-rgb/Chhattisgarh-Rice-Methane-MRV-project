@@ -30,9 +30,10 @@ PIPELINE_SCRIPTS = [
     ("Stage 11: 146 Block-Wise Field Parcel Maps Suite", "src/13_generate_block_field_maps.py"),
     ("Stage 12: Shapefile Block-Level Statewide Cartography", "src/12_create_maps_from_user_shapefile.py"),
     ("Stage 13: Shapefile Methane Emissions & Mitigation MRV", "src/14_methane_analysis_from_user_shapefile.py"),
-    ("Stage 14: Comprehensive Soil Science & Typology Suite", "src/10_generate_soil_maps_and_typology.py"),
-    ("Stage 15: Professional Publication Documentation", "src/07_update_readme.py"),
-    ("Stage 16: Automated Git & GitHub Remote Synchronization", "src/04_push_to_github.py")
+    ("Stage 14: Web GIS Dashboard & FTW Live Maps Asset Builder", "src/06_export_web_dashboard_assets.py"),
+    ("Stage 15: Comprehensive Soil Science & Typology Suite", "src/10_generate_soil_maps_and_typology.py"),
+    ("Stage 16: Professional Publication Documentation", "src/07_update_readme.py"),
+    ("Stage 17: Automated Git & GitHub Remote Synchronization", "src/04_push_to_github.py")
 ]
 
 def main():

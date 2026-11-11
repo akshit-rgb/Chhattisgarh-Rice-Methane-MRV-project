@@ -180,25 +180,23 @@ def render_block_level_statewide_map():
     if gdf_rivers is not None:
         gdf_rivers.plot(ax=ax_main, color="#0097a7", linewidth=0.7, alpha=0.85, zorder=5)
 
-    # Clean Callouts for the 3 Inset Blocks with Opaque Badges (No Text Overlap on Lines/Borders)
-    inset_callouts = [
-        {"lgd": 3639, "name": "Patan Block (Durg)", "dx": -42000, "dy": -18000},
-        {"lgd": 3610, "name": "Masturi Block (Bilaspur)", "dx": 45000, "dy": 20000},
-        {"lgd": 3595, "name": "Jagdalpur Block (Bastar)", "dx": 38000, "dy": 12000}
+    # Highlight the 3 Cadastral Inset Blocks with Bold Boundaries & Centroid Badges (Zero Overlap on Other Blocks)
+    inset_highlights = [
+        {"lgd": 3639, "name": "① Patan\n(Inset 1)"},
+        {"lgd": 3595, "name": "② Jagdalpur\n(Inset 2)"},
+        {"lgd": 3610, "name": "③ Masturi\n(Inset 3)"}
     ]
-    for c_info in inset_callouts:
-        b_sub = gdf_blocks[gdf_blocks["LGD_Code"] == c_info["lgd"]]
+    for h_info in inset_highlights:
+        b_sub = gdf_blocks[gdf_blocks["LGD_Code"] == h_info["lgd"]]
         if len(b_sub) > 0:
+            b_sub.boundary.plot(ax=ax_main, color="#d50000", linewidth=2.2, zorder=12)
             c = b_sub.geometry.iloc[0].centroid
-            ax_main.annotate(
-                c_info["name"],
-                xy=(c.x, c.y),
-                xytext=(c.x + c_info["dx"], c.y + c_info["dy"]),
-                fontsize=7.5,
-                fontweight="bold",
-                color="#003300",
-                arrowprops=dict(arrowstyle="->", color="#1b5e20", lw=1.2),
-                bbox=dict(boxstyle="round,pad=0.35", fc="#ffffff", ec="#1b5e20", alpha=1.0, lw=1.0),
+            ax_main.text(
+                c.x, c.y, h_info["name"],
+                ha="center", va="center",
+                fontsize=7.0, fontweight="bold",
+                color="#b71c1c",
+                bbox=dict(boxstyle="round,pad=0.25", fc="#ffffff", ec="#b71c1c", alpha=0.95, lw=1.0),
                 zorder=15
             )
 
@@ -213,28 +211,27 @@ def render_block_level_statewide_map():
     add_scalebar_utm(ax_main, length_km=50, x_frac=0.06, y_frac=0.04)
     add_north_arrow(ax_main, x_frac=0.92, y_frac=0.92)
 
-    # Census diagnostics card placed in clean upper-left blank space (zero overlap with state geometries)
+    # Census diagnostics card placed in clean southeastern blank space (strictly 0.0 sq km overlap with state)
     census_card = (
-        "╔══════════════════════════════════════════════════╗\n"
-        "║  146-BLOCK STATEWIDE AGRICULTURAL CENSUS        ║\n"
-        "╠══════════════════════════════════════════════════╣\n"
-        "║ • Source Shapefile : agriculture_field.shp       ║\n"
-        "║ • Total CD Blocks  : 146 Blocks Partitioned      ║\n"
-        "║ • Total Parcels    : 14,405,396 Physical Polygons║\n"
-        "║ • Total Rice Area  : 1,448,309.2 Hectares        ║\n"
-        "║ • Projected CRS    : EPSG:32644 (UTM Zone 44N)   ║\n"
-        "║ • Mean Field Size  : 0.1005 ha (1,005 m²)        ║\n"
-        "║ • Marginal (<1 ha) : 99.5% Holdings              ║\n"
-        "║ • Hydrology Layer  : WRIS Canals & Primary River ║\n"
-        "║ • Division Mode    : 100% CD Block Level         ║\n"
-        "╚══════════════════════════════════════════════════╝"
+        " 146-BLOCK STATEWIDE AGRICULTURAL CENSUS \n"
+        "─────────────────────────────────────────\n"
+        "• Source       : agriculture_field.shp\n"
+        "• CD Blocks    : 146 Blocks Partitioned\n"
+        "• Total Parcels: 14,405,396 Physical Polygons\n"
+        "• Rice Area    : 1,448,309.2 Hectares\n"
+        "• Projected CRS: EPSG:32644 (UTM Zone 44N)\n"
+        "• Mean Parcel  : 0.1005 ha (1,005 m²)\n"
+        "• Marginal     : 99.5% Holdings (<1.0 ha)\n"
+        "• Hydrology    : WRIS Primary Canals & Rivers\n"
+        "• Division     : 100% CD Block Level"
     )
     ax_main.text(
-        0.03, 0.96, census_card,
+        0.96, 0.04, census_card,
         transform=ax_main.transAxes,
-        fontsize=7.2,
+        fontsize=7.0,
         family="monospace",
-        verticalalignment="top",
+        ha="right",
+        va="bottom",
         bbox=dict(boxstyle="round,pad=0.5", facecolor="#ffffff", edgecolor="#1b5e20", alpha=1.0, lw=1.1),
         zorder=20
     )

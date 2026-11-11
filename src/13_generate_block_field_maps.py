@@ -187,39 +187,22 @@ def render_single_block_field_map(block_info):
         add_scalebar_utm(ax, length_km=scale_len, x_frac=0.06, y_frac=0.05)
         add_north_arrow(ax, x_frac=0.92, y_frac=0.92)
 
-        # Title at the top with ample padding (never overlaps boundaries or grid lines)
-        ax.set_title(
-            f"{block_name.upper()} BLOCK (LGD: {lgd_code}) - AGRICULTURAL FIELD FOOTPRINT\n"
-            f"{district} District, Chhattisgarh | 10m Resolution (EPSG:32644)",
-            fontsize=9.0, fontweight="bold", color="#1b5e20", pad=12
-        )
-        ax.set_xlabel("UTM Zone 44N Easting (m)", fontsize=8)
-        ax.set_ylabel("UTM Zone 44N Northing (m)", fontsize=8)
-        ax.grid(True, linestyle=":", alpha=0.35, color="#78909c")
-        ax.tick_params(labelsize=7.0)
-
-        # Diagnostics Census Card placed in upper-left with 100% opaque solid white background
+        # Subtitle at the top with full census metrics (Zero overlap on field geometries)
         tot_cnt = len(df)
         tot_area = df["area_ha"].sum()
         mean_ha = df["area_ha"].mean()
         marg_pct = (df["area_ha"] < 1.0).mean() * 100
 
-        card_str = (
-            f"BLOCK DIAGNOSTICS (LGD: {lgd_code})\n"
-            f"• Measured Parcels: {tot_cnt:,}\n"
-            f"• Rice Extent     : {tot_area:,.1f} ha\n"
-            f"• Mean Field Size : {mean_ha:.3f} ha\n"
-            f"• Marginal (<1 ha): {marg_pct:.1f}%"
+        ax.set_title(
+            f"{block_name.upper()} BLOCK (LGD: {lgd_code}) - AGRICULTURAL FIELD FOOTPRINT\n"
+            f"{district} District, Chhattisgarh | 10m Resolution (EPSG:32644)\n"
+            f"Parcels: {tot_cnt:,} | Rice Extent: {tot_area:,.1f} ha | Mean Field: {mean_ha:.3f} ha | Marginal (<1 ha): {marg_pct:.1f}%",
+            fontsize=8.5, fontweight="bold", color="#1b5e20", pad=12
         )
-        ax.text(
-            0.03, 0.96, card_str,
-            transform=ax.transAxes,
-            fontsize=7.5,
-            family="monospace",
-            verticalalignment="top",
-            bbox=dict(boxstyle="round,pad=0.5", facecolor="#ffffff", edgecolor="#1b5e20", alpha=1.0, lw=1.0),
-            zorder=15
-        )
+        ax.set_xlabel("UTM Zone 44N Easting (m)", fontsize=8)
+        ax.set_ylabel("UTM Zone 44N Northing (m)", fontsize=8)
+        ax.grid(True, linestyle=":", alpha=0.35, color="#78909c")
+        ax.tick_params(labelsize=7.0)
 
         plt.savefig(out_png, bbox_inches="tight", pad_inches=0.35)
         plt.close()
@@ -353,6 +336,21 @@ def render_statewide_block_density_plate():
     add_scalebar_utm(ax_main, length_km=50, x_frac=0.06, y_frac=0.04)
     add_north_arrow(ax_main, x_frac=0.92, y_frac=0.92)
 
+    # Highlight Inset Blocks on Main Map (Zero Overlap on Other Blocks)
+    for lgd, lbl in [(3639, "A. Patan\n(Inset A)"), (3595, "B. Jagdalpur\n(Inset B)")]:
+        b_sub = gdf_blocks[gdf_blocks["LGD_Code"] == lgd]
+        if len(b_sub) > 0:
+            b_sub.boundary.plot(ax=ax_main, color="#d50000", linewidth=2.2, zorder=10)
+            c = b_sub.geometry.iloc[0].centroid
+            ax_main.text(
+                c.x, c.y, lbl,
+                ha="center", va="center",
+                fontsize=7.0, fontweight="bold",
+                color="#1b5e20",
+                bbox=dict(boxstyle="round,pad=0.25", fc="#ffffff", ec="#1b5e20", alpha=0.95, lw=1.0),
+                zorder=15
+            )
+
     # Inset 1: Patan Block (LGD 3639 - Durg)
     print("  -> Rendering Inset 1: Patan Block (104,478 Parcels)...")
     b_poly_patan = gdf_blocks[gdf_blocks["LGD_Code"] == 3639]
@@ -448,30 +446,17 @@ def render_key_blocks_cadastral_plate():
             if len(c_riv) > 0:
                 c_riv.plot(ax=ax, color="#00acc1", linewidth=1.3, zorder=3)
 
-        # Metrics Card Box with 100% opaque solid white backdrop
+        # Panel Title with full diagnostics metrics (Zero Overlap on Field Geometries)
         tot_cnt = len(df_c)
         tot_area = df_c["area_ha"].sum()
         mean_ha = df_c["area_ha"].mean()
         marg_pct = (df_c["area_ha"] < 1.0).mean() * 100
 
-        card_str = (
-            f"• Parcels: {tot_cnt:,}\n"
-            f"• Rice Area: {tot_area:,.1f} ha\n"
-            f"• Mean Parcel: {mean_ha:.3f} ha\n"
-            f"• Marginal (<1ha): {marg_pct:.1f}%\n"
-            f"• Zone: {case['zone']}"
+        ax.set_title(
+            f"PANEL {chr(65+idx)}: {case['label'].upper()} ({case['zone']})\n"
+            f"{tot_cnt:,} Parcels | {tot_area:,.1f} ha Rice | Mean: {mean_ha:.3f} ha | Marginal (<1 ha): {marg_pct:.1f}%",
+            fontsize=8.2, fontweight="bold", pad=9, color="#1b5e20"
         )
-        ax.text(
-            0.03, 0.96, card_str,
-            transform=ax.transAxes,
-            fontsize=7.5,
-            family="monospace",
-            verticalalignment="top",
-            bbox=dict(boxstyle="round,pad=0.5", facecolor="#ffffff", edgecolor="#37474f", alpha=1.0, lw=1.0),
-            zorder=15
-        )
-
-        ax.set_title(f"{case['label']} - 10m Agricultural Field Footprint", fontsize=9.5, fontweight="bold", pad=9, color="#1b5e20")
         ax.set_xlabel("Easting (m)", fontsize=7.5)
         ax.set_ylabel("Northing (m)", fontsize=7.5)
         ax.tick_params(labelsize=6.5)
