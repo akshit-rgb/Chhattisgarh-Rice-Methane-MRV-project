@@ -503,7 +503,7 @@ def render_kharif_vs_rabi_methane_plate(df):
         how="left"
     )
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(18, 11), dpi=250)
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(18, 12), dpi=250)
 
     # Panel A: Kharif Monsoon Methane
     gdf_blocks.plot(
@@ -524,7 +524,7 @@ def render_kharif_vs_rabi_methane_plate(df):
     ax1.set_title(
         f"PANEL A: KHARIF MONSOON FLOOD-FED METHANE EMISSIONS\n"
         f"Total Kharif Footprint: {df['Seasonal_CH4_Tonnes_Kharif'].sum():,.1f} Tonnes CH4 (72.8% Statewide)",
-        fontsize=9.5, fontweight="bold", pad=10, color="#4e342e"
+        fontsize=9.0, fontweight="bold", pad=8, color="#4e342e"
     )
     ax1.set_xlabel("UTM Zone 44N Easting (m)", fontsize=7.5)
     ax1.set_ylabel("UTM Zone 44N Northing (m)", fontsize=7.5)
@@ -552,7 +552,7 @@ def render_kharif_vs_rabi_methane_plate(df):
     ax2.set_title(
         f"PANEL B: RABI SUMMER TUBE-WELL METHANE EMISSIONS (GARMA DHAN)\n"
         f"Total Rabi Footprint: {df['Seasonal_CH4_Tonnes_Rabi'].sum():,.1f} Tonnes CH4 (27.2% Statewide)",
-        fontsize=9.5, fontweight="bold", pad=10, color="#311b92"
+        fontsize=9.0, fontweight="bold", pad=8, color="#311b92"
     )
     ax2.set_xlabel("UTM Zone 44N Easting (m)", fontsize=7.5)
     ax2.set_ylabel("UTM Zone 44N Northing (m)", fontsize=7.5)
@@ -564,9 +564,9 @@ def render_kharif_vs_rabi_methane_plate(df):
     fig.suptitle(
         "CHHATTISGARH STATEWIDE DUAL-SEASON PADDY METHANE COMPARISON (146 BLOCKS)\n"
         "Grounded in 14,405,396 Field Parcels from agriculture_field.shp (UTM Zone 44N | EPSG:32644)",
-        fontsize=12, fontweight="bold", y=0.98, color="#212121"
+        fontsize=11.5, fontweight="bold", y=0.965, color="#212121"
     )
-    plt.subplots_adjust(top=0.91, bottom=0.06, left=0.06, right=0.96, wspace=0.15)
+    plt.subplots_adjust(top=0.86, bottom=0.06, left=0.06, right=0.96, wspace=0.15)
 
     out_fig = os.path.join(FIG_DIR, "02_statewide_kharif_vs_rabi_methane_blockwise.png")
     plt.savefig(out_fig, bbox_inches="tight", pad_inches=0.35)
@@ -591,7 +591,7 @@ def render_awd_mitigation_plate(df):
         how="left"
     )
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(18, 11), dpi=250)
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(18, 12), dpi=250)
 
     # Panel A: AWD CH4 Abatement Potential
     gdf_blocks.plot(
@@ -612,7 +612,7 @@ def render_awd_mitigation_plate(df):
     ax1.set_title(
         f"PANEL A: VERRA VM0042 AWD METHANE MITIGATION POTENTIAL\n"
         f"Statewide Abatement Capacity: {df['AWD_Total_CH4_Saved_Tonnes'].sum():,.1f} Tonnes CH4/year",
-        fontsize=9.5, fontweight="bold", pad=10, color="#1b5e20"
+        fontsize=9.0, fontweight="bold", pad=8, color="#1b5e20"
     )
     ax1.set_xlabel("UTM Zone 44N Easting (m)", fontsize=7.5)
     ax1.set_ylabel("UTM Zone 44N Northing (m)", fontsize=7.5)
@@ -640,7 +640,7 @@ def render_awd_mitigation_plate(df):
     ax2.set_title(
         f"PANEL B: ANNUAL VERRA VM0042 CARBON REVENUE POTENTIAL\n"
         f"Statewide Revenue: ₹{df['Annual_Carbon_Revenue_INR_Crore'].sum():,.1f} Crore/yr (${df['Annual_Carbon_Revenue_USD_15'].sum()/1e6:.2f}M USD)",
-        fontsize=9.5, fontweight="bold", pad=10, color="#004d40"
+        fontsize=9.0, fontweight="bold", pad=8, color="#004d40"
     )
     ax2.set_xlabel("UTM Zone 44N Easting (m)", fontsize=7.5)
     ax2.set_ylabel("UTM Zone 44N Northing (m)", fontsize=7.5)
@@ -652,9 +652,9 @@ def render_awd_mitigation_plate(df):
     fig.suptitle(
         "CHHATTISGARH STATEWIDE CARBON CREDIT & AWD MITIGATION ATLAS (146 BLOCKS)\n"
         "Derived Directly from agriculture_field.shp Physical Field Footprint (EPSG:32644)",
-        fontsize=12, fontweight="bold", y=0.98, color="#004d40"
+        fontsize=11.5, fontweight="bold", y=0.965, color="#004d40"
     )
-    plt.subplots_adjust(top=0.91, bottom=0.06, left=0.06, right=0.96, wspace=0.15)
+    plt.subplots_adjust(top=0.86, bottom=0.06, left=0.06, right=0.96, wspace=0.15)
 
     out_fig = os.path.join(FIG_DIR, "03_statewide_awd_methane_mitigation_and_carbon_credits.png")
     plt.savefig(out_fig, bbox_inches="tight", pad_inches=0.35)
@@ -672,7 +672,7 @@ def render_holding_size_distribution_plate(df):
     print("=" * 80)
     t0 = time.time()
 
-    fig, axes = plt.subplots(2, 2, figsize=(16, 12), dpi=300)
+    fig, axes = plt.subplots(2, 2, figsize=(16, 12.5), dpi=300)
     ((ax1, ax2), (ax3, ax4)) = axes
 
     # 1. Emission share by holding bracket
@@ -684,7 +684,7 @@ def render_holding_size_distribution_plate(df):
     ax1.pie(sizes, explode=explode, labels=labels, autopct="%1.1f%%",
             startangle=140, colors=colors, textprops={"fontsize": 8.5, "fontweight": "bold"})
     ax1.set_title("A. Statewide Methane Emissions by Farm Holding Size\n(94.2% Originates from Marginal Farmers < 1 ha)",
-                  fontsize=9.5, fontweight="bold", pad=10, color="#1b5e20")
+                  fontsize=9.0, fontweight="bold", pad=8, color="#1b5e20")
 
     # 2. Top 15 Emitters Bar Chart
     top15 = df.sort_values("Annual_CH4_Tonnes", ascending=False).head(15)
@@ -695,7 +695,7 @@ def render_holding_size_distribution_plate(df):
     ax2.invert_yaxis()
     ax2.set_xlabel("Annual Paddy Methane Emissions (Tonnes CH4/year)", fontsize=8.0)
     ax2.set_title("B. Top 15 Emission Hotspot Blocks in Chhattisgarh\n(Priorities for Village-Level AWD Pipe Rollout)",
-                  fontsize=9.5, fontweight="bold", pad=10, color="#b71c1c")
+                  fontsize=9.0, fontweight="bold", pad=8, color="#b71c1c")
     ax2.grid(True, linestyle=":", alpha=0.4, axis="x")
 
     # 3. AWD Mitigation Capacity vs Rice Area Scatter
@@ -707,7 +707,7 @@ def render_holding_size_distribution_plate(df):
     ax3.set_xlabel("Measured Agricultural Rice Extent (Hectares)", fontsize=8.0)
     ax3.set_ylabel("AWD Methane Abatement Capacity (Tonnes CH4)", fontsize=8.0)
     ax3.set_title("C. Block-Level AWD Mitigation vs. Rice Field Extent\n(Direct Scalability Across All 146 Blocks)",
-                  fontsize=9.5, fontweight="bold", pad=10, color="#004d40")
+                  fontsize=9.0, fontweight="bold", pad=8, color="#004d40")
     ax3.legend(fontsize=7.5, loc="upper left")
     ax3.grid(True, linestyle=":", alpha=0.4)
 
@@ -719,15 +719,15 @@ def render_holding_size_distribution_plate(df):
     ax4.set_xticklabels(dist_rev.index, rotation=35, ha="right", fontsize=7.5)
     ax4.set_ylabel("Annual Carbon Offset Value (₹ Crore / yr)", fontsize=8.0)
     ax4.set_title("D. Top 12 Districts by Verra VM0042 Carbon Revenue Potential\n(₹398 Crore Total Statewide Annual Opportunity)",
-                  fontsize=9.5, fontweight="bold", pad=10, color="#0d47a1")
+                  fontsize=9.0, fontweight="bold", pad=8, color="#0d47a1")
     ax4.grid(True, linestyle=":", alpha=0.4, axis="y")
 
     fig.suptitle(
         "CHHATTISGARH STATEWIDE AGRICULTURAL METHANE DIAGNOSTICS & MITIGATION CAPACITY\n"
         "Derived from 14,405,396 Measured Field Parcels in agriculture_field.shp (146 Blocks)",
-        fontsize=12, fontweight="bold", y=0.98, color="#212121"
+        fontsize=11.5, fontweight="bold", y=0.97, color="#212121"
     )
-    plt.subplots_adjust(top=0.91, bottom=0.08, left=0.07, right=0.95, hspace=0.28, wspace=0.22)
+    plt.subplots_adjust(top=0.88, bottom=0.08, left=0.07, right=0.95, hspace=0.28, wspace=0.22)
 
     out_fig = os.path.join(FIG_DIR, "04_methane_emissions_by_field_size_distribution.png")
     plt.savefig(out_fig, bbox_inches="tight", pad_inches=0.35)
