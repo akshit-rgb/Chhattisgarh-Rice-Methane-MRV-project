@@ -44,9 +44,15 @@ Two-panel high-resolution choropleth atlas comparing Season 1 (Kharif Monsoon) f
 
 ---
 
-### Plate 2: Statewide 10m Agricultural Field Footprints & Cropping Systems (All 33 Districts)
-Statewide agricultural cropland footprint overlaid with WRIS/SOI irrigation canals and primary drainage networks, featuring real FTW 10m field parcels across all 33 districts and regional zoom-ins (Central Mahanadi Plains vs. Bastar Plateau). Zero blank voids.
+### Plate 2: Statewide 10m Agricultural Field Footprints & Cropping Systems (146 Blocks)
+Statewide agricultural cropland footprint divided at the **BLOCK LEVEL** across all 146 Blocks, overlaid with WRIS/SOI irrigation canals and primary drainage networks, featuring real 10m field parcels derived directly from agriculture_field.shp (14,405,396 parcels | 1,448,309.2 ha). Zero blank voids.
 ![10m Field-Parcel Map](outputs/figures/07_agribound_ftw_10m_field_parcels_map.png)
+
+---
+
+### Plate 3: Statewide Block-Level Agriculture Field Cartography (300 DPI)
+Statewide 146-block cartographic atlas plate rendered directly from user `agriculture_field.shp` in EPSG:32644 (UTM Zone 44N), featuring Patan, Jagdalpur, and Masturi cadastral insets.
+![Statewide Block Field Cartography](outputs/figures/01_agriculture_field_statewide_cartography_300dpi.png)
 
 ---
 
@@ -76,53 +82,30 @@ Download Full Block Census: [`chhattisgarh_block_fields_summary.csv`](outputs/re
 
 ---
 
-## 🌾 33 Individual District Agricultural Field Footprint Maps
+## 🌾 146-Block Statewide Agricultural Field Footprint & Census Architecture
 
-Each of the **33 districts of Chhattisgarh** has a dedicated 300 DPI high-resolution field parcel plate showing block subdivisions, real 10m FTW parcel boundaries (*Medh*), holding size typology (Marginal, Small, Medium), WRIS irrigation canals, and a full census diagnostics card.
+The statewide agriculture field footprint is divided at the **BLOCK LEVEL** across all **146 Community Development Blocks** (in strict adherence to the Zero-District-Bloat protocol). Every metric is derived directly from the physical parcel geometries in user `agriculture_field.shp` (14,405,396 parcels | 1,448,309.2 ha) in projected CRS `EPSG:32644` (WGS 84 / UTM Zone 44N).
 
-Located in [`outputs/figures/district_field_footprints/`](outputs/figures/district_field_footprints/):
+### Key Representative Block Field Statistics (146 Blocks Total):
 
-| District | Real FTW Parcels | Total Area (ha) | Cropland Map Plate |
-| :--- | :---: | :---: | :--- |
-| **Balod** | 559,309 | 62,989.2 ha | [`Balod Map Plate`](outputs/figures/district_field_footprints/district_balod_field_footprint.png) |
-| **Baloda Bazar** | 671,456 | 77,028.0 ha | [`Baloda Bazar Map Plate`](outputs/figures/district_field_footprints/district_baloda_bazar_field_footprint.png) |
-| **Balrampur** | 465,357 | 39,624.3 ha | [`Balrampur Map Plate`](outputs/figures/district_field_footprints/district_balrampur_field_footprint.png) |
-| **Bastar** | 603,422 | 78,848.4 ha | [`Bastar Map Plate`](outputs/figures/district_field_footprints/district_bastar_field_footprint.png) |
-| **Bemetara** | 502,525 | 88,368.6 ha | [`Bemetara Map Plate`](outputs/figures/district_field_footprints/district_bemetara_field_footprint.png) |
-| **Bijapur** | 242,666 | 12,942.4 ha | [`Bijapur Map Plate`](outputs/figures/district_field_footprints/district_bijapur_field_footprint.png) |
-| **Bilaspur** | 566,405 | 75,262.3 ha | [`Bilaspur Map Plate`](outputs/figures/district_field_footprints/district_bilaspur_field_footprint.png) |
-| **Dantewada** | 181,944 | 7,912.1 ha | [`Dantewada Map Plate`](outputs/figures/district_field_footprints/district_dantewada_field_footprint.png) |
-| **Dhamtari** | 408,586 | 52,659.2 ha | [`Dhamtari Map Plate`](outputs/figures/district_field_footprints/district_dhamtari_field_footprint.png) |
-| **Durg** | 480,861 | 73,542.3 ha | [`Durg Map Plate`](outputs/figures/district_field_footprints/district_durg_field_footprint.png) |
-| **Gariyaband** | 376,699 | 36,528.8 ha | [`Gariyaband Map Plate`](outputs/figures/district_field_footprints/district_gariyaband_field_footprint.png) |
-| **Gaurella Pendra Marwahi** | 210,539 | 13,303.3 ha | [`Gaurella Pendra Marwahi Map Plate`](outputs/figures/district_field_footprints/district_gaurella_pendra_marwahi_field_footprint.png) |
-| **Janjgir-Champa** | 589,337 | 68,651.8 ha | [`Janjgir-Champa Map Plate`](outputs/figures/district_field_footprints/district_janjgir_champa_field_footprint.png) |
-| **Jashpur** | 654,892 | 55,275.5 ha | [`Jashpur Map Plate`](outputs/figures/district_field_footprints/district_jashpur_field_footprint.png) |
-| **Kabirdham** | 599,597 | 82,017.5 ha | [`Kabirdham Map Plate`](outputs/figures/district_field_footprints/district_kabirdham_field_footprint.png) |
-| **Kanker** | 656,423 | 44,827.3 ha | [`Kanker Map Plate`](outputs/figures/district_field_footprints/district_kanker_field_footprint.png) |
-| **Khairgarh Chhuikhadan Gandai** | 366,804 | 38,461.6 ha | [`Khairgarh Chhuikhadan Gandai Map Plate`](outputs/figures/district_field_footprints/district_khairgarh_chhuikhadan_gandai_field_footprint.png) |
-| **Kondagaon** | 580,551 | 39,388.1 ha | [`Kondagaon Map Plate`](outputs/figures/district_field_footprints/district_kondagaon_field_footprint.png) |
-| **Korba** | 375,283 | 24,725.7 ha | [`Korba Map Plate`](outputs/figures/district_field_footprints/district_korba_field_footprint.png) |
-| **Korea** | 94,772 | 5,954.8 ha | [`Korea Map Plate`](outputs/figures/district_field_footprints/district_korea_field_footprint.png) |
-| **Mahasamund** | 800,230 | 72,197.2 ha | [`Mahasamund Map Plate`](outputs/figures/district_field_footprints/district_mahasamund_field_footprint.png) |
-| **Manendragarh Chirimiri Bharatpur** | 187,466 | 12,517.2 ha | [`Manendragarh Chirimiri Bharatpur Map Plate`](outputs/figures/district_field_footprints/district_manendragarh_chirimiri_bharatpur_field_footprint.png) |
-| **Mohla Manpur Ambagarh Chouki** | 261,139 | 18,795.8 ha | [`Mohla Manpur Ambagarh Chouki Map Plate`](outputs/figures/district_field_footprints/district_mohla_manpur_ambagarh_chouki_field_footprint.png) |
-| **Mungeli** | 385,525 | 61,675.0 ha | [`Mungeli Map Plate`](outputs/figures/district_field_footprints/district_mungeli_field_footprint.png) |
-| **Narayanpur** | 113,202 | 6,164.6 ha | [`Narayanpur Map Plate`](outputs/figures/district_field_footprints/district_narayanpur_field_footprint.png) |
-| **Raigarh** | 472,314 | 36,532.3 ha | [`Raigarh Map Plate`](outputs/figures/district_field_footprints/district_raigarh_field_footprint.png) |
-| **Raipur** | 602,695 | 76,471.9 ha | [`Raipur Map Plate`](outputs/figures/district_field_footprints/district_raipur_field_footprint.png) |
-| **Rajnandgaon** | 609,649 | 59,891.4 ha | [`Rajnandgaon Map Plate`](outputs/figures/district_field_footprints/district_rajnandgaon_field_footprint.png) |
-| **Sakti** | 314,454 | 26,172.0 ha | [`Sakti Map Plate`](outputs/figures/district_field_footprints/district_sakti_field_footprint.png) |
-| **Sarangarh Bilaigarh** | 308,050 | 27,234.1 ha | [`Sarangarh Bilaigarh Map Plate`](outputs/figures/district_field_footprints/district_sarangarh_bilaigarh_field_footprint.png) |
-| **Sukma** | 307,324 | 13,918.4 ha | [`Sukma Map Plate`](outputs/figures/district_field_footprints/district_sukma_field_footprint.png) |
-| **Surajpur** | 400,106 | 25,901.8 ha | [`Surajpur Map Plate`](outputs/figures/district_field_footprints/district_surajpur_field_footprint.png) |
-| **Surguja** | 455,814 | 32,526.3 ha | [`Surguja Map Plate`](outputs/figures/district_field_footprints/district_surguja_field_footprint.png) |
-| **Total (33 Districts)** | **14,405,396** | **1,448,309.2 ha** | *All 33 Plates Generated (300 DPI)* |
+| District | CD Block | LGD Code | Measured Field Parcels | Measured Rice Extent (ha) | Mean Field Size (ha) | Marginal Holdings (<1 ha) |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: |
+| **Durg** | **Patan** | 3639 | 104,478 | 18,342.1 ha | 0.176 ha | 98.8% |
+| **Durg** | **Dhamdha** | 3632 | 121,659 | 22,104.5 ha | 0.182 ha | 98.6% |
+| **Durg** | **Durg** | 3635 | 68,218 | 12,042.8 ha | 0.177 ha | 98.9% |
+| **Raipur** | **Abhanpur** | 3693 | 75,412 | 12,840.6 ha | 0.170 ha | 99.1% |
+| **Bilaspur** | **Masturi** | 3610 | 90,259 | 12,410.3 ha | 0.137 ha | 99.4% |
+| **Balod** | **Gunderdehi** | 3636 | 173,180 | 19,925.3 ha | 0.115 ha | 99.6% |
+| **Bastar** | **Jagdalpur** | 3595 | 49,726 | 6,839.4 ha | 0.138 ha | 99.5% |
+| **Surguja** | **Ambikapur** | 3717 | 45,920 | 5,420.7 ha | 0.118 ha | 99.7% |
+| **Statewide Total** | **146 Blocks** | — | **14,405,396** | **1,448,309.2 ha** | **0.101 ha** | **99.5%** |
 
-#### Sample District Plates:
-| Durg District (Central Plains) | Bastar District (Southern Plateau) |
-| :---: | :---: |
-| ![Durg Field Footprint](outputs/figures/district_field_footprints/district_durg_field_footprint.png) | ![Bastar Field Footprint](outputs/figures/district_field_footprints/district_bastar_field_footprint.png) |
+Download Full 146-Block Census: [`chhattisgarh_block_fields_summary.csv`](outputs/reports/chhattisgarh_block_fields_summary.csv)
+
+### Statewide 146-Block Field Cartography Plates (300 DPI):
+1. **Statewide 146-Block Field Extents & Cadastral Insets**: [`01_agriculture_field_statewide_cartography_300dpi.png`](outputs/figures/01_agriculture_field_statewide_cartography_300dpi.png)
+2. **Statewide Field Density & Block Insets**: [`10_statewide_block_field_density_and_parcels.png`](outputs/figures/10_statewide_block_field_density_and_parcels.png)
+3. **4-Panel Key Blocks Cadastral Atlas (10m Resolution)**: [`11_key_blocks_cadastral_10m_field_maps.png`](outputs/figures/11_key_blocks_cadastral_10m_field_maps.png)
 
 ---
 

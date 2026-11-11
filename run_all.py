@@ -28,7 +28,7 @@ PIPELINE_SCRIPTS = [
     ("Stage 09: Essential ML Suite, 10 Tests & Future Simulator", "src/05_essential_ml_accuracy_future.py"),
     ("Stage 10: Automated Graph Suite & GEE Dashboard", "src/06_generate_essential_graphs.py"),
     ("Stage 11: Block-Wise 300 DPI Cadastral Maps Suite", "src/13_generate_block_field_maps.py"),
-    ("Stage 12: 33 Individual District Field Footprints", "src/09_generate_district_field_footprint_maps.py"),
+    ("Stage 12: Shapefile Block-Level Statewide Cartography", "src/12_create_maps_from_user_shapefile.py"),
     ("Stage 13: Comprehensive Soil Science & Typology Suite", "src/10_generate_soil_maps_and_typology.py"),
     ("Stage 14: Standalone QGIS Project & 300 DPI Cartography", "src/08_generate_qgis_project.py"),
     ("Stage 15: Professional Publication Documentation", "src/07_update_readme.py"),

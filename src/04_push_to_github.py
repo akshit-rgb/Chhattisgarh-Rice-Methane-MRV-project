@@ -70,7 +70,24 @@ def audit_large_files():
     print(f"✅ [AUDIT PASSED] No files exceed GitHub's {MAX_FILE_SIZE_MB} MB threshold.")
     return True
 
+def purge_workspace_bloat():
+    """Systematically purges caches, temporary files, and OS artifacts per gemini-code-1794387080919.md."""
+    import shutil
+    import glob
+    print("[INFO] Purging cache, build artifacts, and OS junk files...", flush=True)
+    for p in glob.glob("**/__pycache__", recursive=True) + glob.glob("**/.pytest_cache", recursive=True):
+        shutil.rmtree(p, ignore_errors=True)
+    for ext in ["**/*.pyc", "**/*.pyo", "**/Thumbs.db", "**/.DS_Store", "**/*.tmp"]:
+        for f in glob.glob(ext, recursive=True):
+            try:
+                os.remove(f)
+            except Exception:
+                pass
+
 def push_to_remote():
+    # 0. Purge bloat per security protocol
+    purge_workspace_bloat()
+
     # 1. Audit file sizes
     if not audit_large_files():
         sys.exit(1)
@@ -82,9 +99,9 @@ def push_to_remote():
     run_cmd("git add models/", "Staging trained ML model artifacts")
     run_cmd("git add gee_app/", "Staging GEE dashboard panels")
     run_cmd("git add outputs/accuracy_audit/", "Staging accuracy audit results")
-    run_cmd("git add data/processed/*.csv", "Staging processed CSV datasets")
+    run_cmd("git add data/processed/*.csv outputs/reports/*.csv", "Staging processed CSV datasets")
     run_cmd("git add data/processed/shapefiles/*.shp data/processed/shapefiles/*.dbf data/processed/shapefiles/*.shx data/processed/shapefiles/*.prj data/processed/shapefiles/*.cpg", "Staging vector shapefiles")
-    run_cmd("git add outputs/figures/*.png outputs/figures/district_field_footprints/*.png", "Staging cartography figures")
+    run_cmd("git add outputs/figures/*.png outputs/figures/*.pdf", "Staging cartography figures & vector PDFs")
     run_cmd("git add outputs/qgis/", "Staging QGIS project")
 
     # 3. Check what is staged
@@ -103,15 +120,16 @@ def push_to_remote():
                 sys.exit(1)
 
     # 4. Commit
-    commit_msg = (
-        "feat: 14.4M Master Parquet Dual-Season Extraction, Chamber Engine & Monotonic XGBoost v2\n\n"
-        "- Ingested 14,405,396 verified FTW field parcels directly from master parquet\n"
-        "- Multi-sensor Kharif & Rabi time series (2019-2026) across 146 blocks (EPSG:32644)\n"
-        "- Closed-chamber calibrated biogeochemical engine with Arrhenius Q10=2.2 & catena multipliers\n"
-        "- Monotonic-constrained XGBoost model v2 (models/xgboost_chhattisgarh_methane_v2.json)\n"
-        "- Full 10-test accuracy audit passed (Spatial CV R2=0.9704, Monotonicity Violations=0.0%)\n"
-        "- Automated synchronization with origin main"
+    default_msg = (
+        "feat: incorporate agriculture_field.shp block-wise, purge district maps, and divide statewide field cartography across 146 blocks\n\n"
+        "- Block-wise spatial partitioning of 14,405,396 field parcels (1,448,309.2 ha) across all 146 blocks in EPSG:32644\n"
+        "- Removed all 33 individual district footprint maps in strict adherence to block-level division protocol\n"
+        "- Re-architected statewide agriculture field maps divided strictly at 146-block level with 10m cadastral insets\n"
+        "- Rendered 300 DPI Matplotlib and QGIS Master Plate cartography (PNG/PDF)\n"
+        "- Updated README census table, MODEL_DIAGNOSTICS, and pipeline runner run_all.py\n"
+        "- Zero-bloat purge of caches and temporary artifacts (gemini-code-1794387080919.md)"
     )
+    commit_msg = sys.argv[1] if len(sys.argv) > 1 else default_msg
 
     print("\n[INFO] Committing staged changes...")
     subprocess.run(["git", "commit", "-m", commit_msg], check=False)
