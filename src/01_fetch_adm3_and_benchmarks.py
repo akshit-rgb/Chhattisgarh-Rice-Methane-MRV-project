@@ -8,12 +8,12 @@ Outputs standard GeoJSON layers, crosswalk tables, and the open-source data inve
 """
 
 import os
-import json
+
+import ee
+import geopandas as gpd
 import numpy as np
 import pandas as pd
-import geopandas as gpd
-from shapely.geometry import Polygon, MultiPolygon, Point
-import ee
+from shapely.geometry import Polygon
 
 # -----------------------------------------------------------------------------
 # 1. Earth Engine Initialization
@@ -240,8 +240,10 @@ def main():
     # 2. Dissolve to 33 district boundaries
     gdf_districts = create_district_geometries(gdf_blocks)
     print(f"[OK] Created {len(gdf_districts)} district boundaries.")
-    assert len(gdf_districts) == 33, f"Expected 33 districts, found {len(gdf_districts)}"
-    assert len(gdf_blocks) == 146, f"Expected 146 blocks, found {len(gdf_blocks)}"
+    if len(gdf_districts) != 33:
+        raise ValueError(f"Expected 33 districts, found {len(gdf_districts)}")
+    if len(gdf_blocks) != 146:
+        raise ValueError(f"Expected 146 blocks, found {len(gdf_blocks)}")
 
     # 3. Verify total state area
     total_area_ha = gdf_blocks["block_area_ha"].sum()

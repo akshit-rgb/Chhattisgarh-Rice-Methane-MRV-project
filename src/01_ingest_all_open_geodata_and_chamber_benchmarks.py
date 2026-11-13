@@ -24,15 +24,12 @@ Autonomous ingestion and geodatabase construction for Chhattisgarh Rice Methane 
 """
 
 import os
-import sys
-import json
-import time
-import requests
+
+import geopandas as gpd
 import numpy as np
 import pandas as pd
-import geopandas as gpd
-from shapely.geometry import box, Point, Polygon, MultiPolygon, LineString
-from shapely.ops import unary_union
+import requests
+from shapely.geometry import LineString, Point
 
 RAW_GEO_DIR = "data/raw/india_geodata"
 BENCHMARK_DIR = "data/raw/benchmarks"

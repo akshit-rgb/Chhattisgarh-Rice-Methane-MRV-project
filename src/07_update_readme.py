@@ -13,8 +13,8 @@ Directly generates a publication-grade, highly professional README.md in the pro
   - Summary table of the 10-test model accuracy and chamber validation results
 """
 
-import os
 import json
+import os
 
 README_PATH = "README.md"
 AUDIT_PATH = "outputs/accuracy_audit/accuracy_summary.json"

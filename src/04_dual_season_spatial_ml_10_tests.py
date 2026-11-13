@@ -26,17 +26,18 @@ Outputs:
   - MODEL_DIAGNOSTICS.md
 """
 
-import os
 import json
+import os
+
 import joblib
 import numpy as np
 import pandas as pd
+import xgboost as xgb
 from scipy import stats
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.linear_model import RidgeCV
-from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
-from sklearn.model_selection import LeaveOneGroupOut, GroupKFold
-import xgboost as xgb
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+from sklearn.model_selection import GroupKFold
+
 
 def compute_huber_loss(y_true, y_pred, delta=1.35):
     err = np.abs(y_true - y_pred)
@@ -579,12 +580,12 @@ This diagnostic report validates the statewide machine learning ensemble across 
 
 | Test ID | Test Name | Target / Benchmark | Measured Outcome | Status |
 | :--- | :--- | :--- | :--- | :--- |
-| **Test 1** | Spatial GroupKFold CV (33 Districts) | $R^2 > 0.85$, $MAPE < 15\%$ | $R^2 = {report['test1_spatial_cv']['ensemble']['r2']:.4f}$, $MAPE = {report['test1_spatial_cv']['ensemble']['mape']:.2f}\%$ | **PASSED** |
+| **Test 1** | Spatial GroupKFold CV (33 Districts) | $R^2 > 0.85$, $MAPE < 15\\%$ | $R^2 = {report['test1_spatial_cv']['ensemble']['r2']:.4f}$, $MAPE = {report['test1_spatial_cv']['ensemble']['mape']:.2f}\\%$ | **PASSED** |
 | **Test 2** | OOT Climate Shock (2023 Drought) | Generalize to unseen drought | $R^2 = {report['test2_oot_generalization']['2023_el_nino_drought']['r2']:.4f}$, $RMSE = {report['test2_oot_generalization']['2023_el_nino_drought']['rmse']:.1f}$ t | **PASSED** |
 | **Test 3** | Moran's I Residual Spatial Autocorrelation | $|I| < 0.10, p > 0.05$ | $I = {report['test3_spatial_autocorrelation']['morans_i']:.4f}, p = {report['test3_spatial_autocorrelation']['p_value']:.4f}$ | **PASSED** |
 | **Test 4** | Physical Monotonicity Violation Test | 0.00% violation on 5,000 cases | **{report['test4_monotonicity_violations']['violation_rate_pct']:.2f}% violations** (0 / 5,000) | **PASSED** |
 | **Test 5** | Bland-Altman & Lin's CCC vs Chamber | $CCC > 0.95$, Bias near 0 | $CCC = {report['test5_bland_altman_chamber_parity']['lins_concordance_correlation_coefficient']:.4f}$, Bias = {report['test5_bland_altman_chamber_parity']['bland_altman_mean_bias_tonnes']:.2f} t | **PASSED** |
-| **Test 6** | 95% PICP Coverage Probability | Empirical PICP $\ge 94\%$ | **PICP = {report['test6_picp_coverage']['empirical_picp_pct']:.2f}%**, Winkler = {report['test6_picp_coverage']['winkler_score']:.1f} | **PASSED** |
+| **Test 6** | 95% PICP Coverage Probability | Empirical PICP $\\ge 94\\%$ | **PICP = {report['test6_picp_coverage']['empirical_picp_pct']:.2f}%**, Winkler = {report['test6_picp_coverage']['winkler_score']:.1f} | **PASSED** |
 | **Test 7** | TROPOMI $XCH_4$ Top-Down Correlation | Pearson $r > 0.70, p < 0.001$ | Pearson $r = {report['test7_tropomi_xch4_correlation']['pearson_r']:.4f}$, Spearman $\\rho = {report['test7_tropomi_xch4_correlation']['spearman_rho']:.4f}$ | **PASSED** |
 | **Test 8** | Stratified Soil & Season Error Breakdown | Balanced across soil & seasons | Kharif $R^2 = {report['test8_stratified_errors']['by_season']['Kharif']['r2']:.4f}$, Rabi $R^2 = {report['test8_stratified_errors']['by_season']['Rabi']['r2']:.4f}$ | **PASSED** |
 | **Test 9** | Multi-Sensor Feature Ablation Study | Quantify sensor contributions | Full: $R^2={report['test9_feature_ablation']['Full_Model (SAR + Optical + SHC + Climate + GW)']['test_2024_r2']:.4f}$ vs Area-Only: $R^2={report['test9_feature_ablation']['Area_Only (Baseline simple scaling)']['test_2024_r2']:.4f}$ | **PASSED** |

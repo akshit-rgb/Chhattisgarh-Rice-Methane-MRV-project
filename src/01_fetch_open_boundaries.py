@@ -11,10 +11,10 @@ Saves deliverables into data/raw/india_geodata/.
 """
 
 import os
-import requests
-import numpy as np
-import pandas as pd
+
 import geopandas as gpd
+import pandas as pd
+import requests
 
 DATA_DIR = "data/raw/india_geodata"
 os.makedirs(DATA_DIR, exist_ok=True)

@@ -12,13 +12,13 @@ interactive Web GIS Dashboard (index.html) deployable directly via GitHub Pages:
       3. 🔬 146-Block Cadastral Maps Explorer (Searchable gallery for all 146 block field maps)
 """
 
-import os
 import glob
 import json
+import os
 import time
-import numpy as np
-import pandas as pd
+
 import geopandas as gpd
+import pandas as pd
 from shapely import from_wkb
 from shapely.geometry import Point
 

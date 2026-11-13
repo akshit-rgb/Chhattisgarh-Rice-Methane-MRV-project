@@ -11,15 +11,16 @@ Strict Domain Adherence:
 - Summary metrics compiled into outputs/reports/chhattisgarh_ftw_district_summary.csv
 """
 
-import os
-import glob
-import time
 import gc
-import pandas as pd
+import glob
+import os
+import time
+
 import geopandas as gpd
-from shapely.geometry import box
-import pyarrow as pa
+import pandas as pd
 import pyarrow.parquet as pq
+from shapely.geometry import box
+
 
 def sanitize_filename(name: str) -> str:
     return name.lower().replace(" ", "_").replace("-", "_")
@@ -65,7 +66,7 @@ def main():
     for old_f in glob.glob(os.path.join(temp_dir, "*.parquet")):
         try:
             os.remove(old_f)
-        except Exception:
+        except (FileNotFoundError, OSError):
             pass
             
     total_processed_raw = 0
@@ -233,11 +234,11 @@ def main():
     for cf in glob.glob(os.path.join(temp_dir, "*.parquet")):
         try:
             os.remove(cf)
-        except Exception:
+        except (FileNotFoundError, OSError):
             pass
     try:
         os.rmdir(temp_dir)
-    except Exception:
+    except (FileNotFoundError, OSError):
         pass
         
     total_time = time.time() - start_time

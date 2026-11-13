@@ -27,17 +27,16 @@ covering ALL 146+ LGD Blocks across ALL 33 Districts of Chhattisgarh:
      (Statewide India-WRIS canal density & Jal Dharohar 36,902 waterbodies density)
 """
 
-import os
 import json
+import os
+
+import geopandas as gpd
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import geopandas as gpd
-from shapely.geometry import Polygon, Point, box
-import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
-import matplotlib.cm as cm
+from matplotlib import cm
 from matplotlib.patches import Patch
-import seaborn as sns
+from shapely.geometry import Polygon
 
 # Set publication style
 plt.rcParams.update({

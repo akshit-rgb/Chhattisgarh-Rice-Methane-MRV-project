@@ -28,11 +28,11 @@ Outputs:
 """
 
 import os
-import sys
+
+import ee
+import geopandas as gpd
 import numpy as np
 import pandas as pd
-import geopandas as gpd
-import ee
 
 PROJECT_ID = "ee-akshitvaishnavonline"
 YEARS = [2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026]
@@ -509,7 +509,7 @@ def build_statewide_dual_season_groundwater_panel():
     out_csv = "data/processed/chhattisgarh_statewide_kharif_rabi_groundwater_panel_2019_2026.csv"
     df_panel.to_csv(out_csv, index=False)
 
-    print(f"\n[SUCCESS] Statewide dual-season groundwater panel created:")
+    print("\n[SUCCESS] Statewide dual-season groundwater panel created:")
     print(f"  -> {out_csv}")
     print(f"  -> Rows: {len(df_panel):,} (146 blocks x 8 years = {len(df_panel)})")
     print(f"  -> Columns: {len(df_panel.columns)}")

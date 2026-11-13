@@ -13,10 +13,12 @@ flood frequency / seasonal inundation duration calculations.
 """
 
 import os
+
+import ee
+import geopandas as gpd
 import numpy as np
 import pandas as pd
-import geopandas as gpd
-import ee
+
 
 def init_earth_engine():
     try:

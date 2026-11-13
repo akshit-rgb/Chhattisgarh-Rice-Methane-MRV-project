@@ -30,18 +30,14 @@ Also generates:
   - gee_app/chhattisgarh_mrv_dashboard.js (Enhanced Google Earth Engine Web Dashboard)
 """
 
-import os
-import sys
 import json
-import numpy as np
-import pandas as pd
+import os
+
 import geopandas as gpd
 import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
-import matplotlib.cm as cm
+import numpy as np
+import pandas as pd
 from matplotlib.patches import Patch, Rectangle
-import seaborn as sns
-from matplotlib.ticker import MultipleLocator, PercentFormatter
 
 FIG_DIR = "outputs/figures"
 GEE_DIR = "gee_app"

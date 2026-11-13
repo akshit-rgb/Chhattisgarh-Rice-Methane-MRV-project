@@ -22,18 +22,18 @@ Outputs Generated:
   - outputs/figures/11_key_blocks_cadastral_10m_field_maps.png (4-Panel Key Blocks Cadastral Plate)
 """
 
-import os
-import sys
-import glob
-import time
 import concurrent.futures
+import glob
+import os
+import time
+
+import geopandas as gpd
+import matplotlib.patheffects as pe
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import geopandas as gpd
-import matplotlib.pyplot as plt
-from matplotlib.patches import Rectangle
 from matplotlib.collections import PolyCollection
-import matplotlib.patheffects as pe
+from matplotlib.patches import Rectangle
 from shapely import from_wkb
 
 # Setup paths

@@ -10,14 +10,11 @@ Ingests and prepares:
 """
 
 import os
-import sys
-import json
-import time
-import requests
+
+import geopandas as gpd
 import numpy as np
 import pandas as pd
-import geopandas as gpd
-from shapely.geometry import box, Point, Polygon, MultiPolygon, LineString
+import requests
 
 RAW_GEO_DIR = "data/raw/india_geodata"
 BENCHMARK_DIR = "data/raw/benchmarks"

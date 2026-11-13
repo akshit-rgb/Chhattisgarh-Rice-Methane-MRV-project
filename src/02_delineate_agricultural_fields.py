@@ -20,14 +20,14 @@ Outputs:
 - outputs/accuracy_audit/field_segmentation_accuracy.json
 """
 
-import os
 import json
-import numpy as np
-import pandas as pd
-import geopandas as gpd
-from shapely.geometry import Polygon, MultiPolygon, Point, box
-from shapely.ops import unary_union
+import os
+
 import ee
+import geopandas as gpd
+import numpy as np
+from shapely.geometry import Point, Polygon
+
 
 def init_earth_engine():
     try:

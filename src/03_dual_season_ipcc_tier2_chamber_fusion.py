@@ -18,7 +18,7 @@ Outputs:
 """
 
 import os
-import sys
+
 import numpy as np
 import pandas as pd
 
@@ -280,7 +280,7 @@ def run_dual_season_chamber_fusion(n_simulations=2000):
     out_csv = "data/processed/chhattisgarh_dual_season_tier2_methane_panel.csv"
     df_out.to_csv(out_csv, index=False)
 
-    print(f"\n[SUCCESS] Chamber-calibrated dual-season panel saved:")
+    print("\n[SUCCESS] Chamber-calibrated dual-season panel saved:")
     print(f"  -> {out_csv}")
     print(f"  -> Total observations: {len(df_out):,} ({df_out['season'].value_counts().to_dict()})")
     

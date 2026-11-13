@@ -10,8 +10,10 @@ methane mass (t CH4), and CO2e (AR6 GWP: CH4=27.9, N2O=273).
 """
 
 import os
+
 import numpy as np
 import pandas as pd
+
 
 def run_monte_carlo_tier2(df_panel, n_simulations=2000):
     """
@@ -148,7 +150,7 @@ def main():
     # Validation against literature (Chen et al. 2025 GRPI benchmark ~450 - 650 Gg CH4 for CG)
     mean_state_ch4 = df_fused.groupby("year")["rice_ch4_emissions_tonnes"].sum().mean()
     print(f"\n[BENCHMARK] Multi-Year Mean Annual State Methane: {mean_state_ch4:,.1f} tonnes CH4 ({mean_state_ch4/1000:,.1f} Gg CH4)")
-    print(f"[BENCHMARK] Consistent with GRPI / IARI published estimates (420 - 680 Gg CH4).")
+    print("[BENCHMARK] Consistent with GRPI / IARI published estimates (420 - 680 Gg CH4).")
     print("\n[SUCCESS] Step 03 complete.\n")
 
 if __name__ == "__main__":

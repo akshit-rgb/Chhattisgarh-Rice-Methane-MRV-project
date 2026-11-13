@@ -20,11 +20,11 @@ Outputs:
 """
 
 import os
-import sys
+
+import ee
+import geopandas as gpd
 import numpy as np
 import pandas as pd
-import geopandas as gpd
-import ee
 
 PROJECT_ID = "ee-akshitvaishnavonline"
 YEARS = [2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026]

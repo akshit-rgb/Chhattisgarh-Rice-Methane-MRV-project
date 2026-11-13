@@ -20,18 +20,15 @@ Generates the interactive Google Earth Engine JavaScript dashboard:
   - gee_app/chhattisgarh_agribound_ftw_cropharvest_dashboard.js
 """
 
-import os
-import sys
 import json
+import os
+
+import geopandas as gpd
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import geopandas as gpd
-from shapely.geometry import Polygon, Point, box
-import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
-import matplotlib.cm as cm
-from matplotlib.patches import Patch
 import seaborn as sns
+from matplotlib.patches import Patch
 
 plt.rcParams.update({
     "font.family": "DejaVu Sans",
@@ -690,7 +687,7 @@ print('Statewide Chhattisgarh Rice Methane, Yield & Field Parcel MRV Dashboard L
         f.write(js_content)
     with open(js_path2, "w", encoding="utf-8") as f:
         f.write(js_content)
-    print(f"[SUCCESS] Exported interactive GEE dashboard scripts to:")
+    print("[SUCCESS] Exported interactive GEE dashboard scripts to:")
     print(f"  -> {js_path1}")
     print(f"  -> {js_path2}")
 

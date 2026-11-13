@@ -18,18 +18,16 @@ Generates the 6 mandatory publication plates and policy export:
 7. outputs/policy_tables/india_map_maker_chhattisgarh_blocks.csv
 """
 
-import os
 import json
+import os
+
+import geopandas as gpd
+import matplotlib.colors as mcolors
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import geopandas as gpd
-import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
 import seaborn as sns
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes, mark_inset
-from sklearn.inspection import partial_dependence
-from sklearn.ensemble import RandomForestRegressor
-import xgboost as xgb
 
 # Set publication style
 plt.rcParams.update({

@@ -15,15 +15,21 @@ Critical Safeguards:
 """
 
 import os
-import sys
 import subprocess
+import sys
 
 MAX_FILE_SIZE_MB = 95.0
 REMOTE_URL = "https://github.com/akshit-rgb/Chhattisgarh-Rice-Methane-MRV-project.git"
 
 def run_cmd(cmd, desc=""):
     print(f"[EXEC] {desc or cmd}...")
-    res = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+    # Safely handle list of command arguments without shell=True to prevent command injection
+    if isinstance(cmd, str):
+        import shlex
+        args = shlex.split(cmd)
+    else:
+        args = cmd
+    res = subprocess.run(args, shell=False, capture_output=True, text=True)
     if res.returncode != 0:
         print(f"[WARN/ERROR] Command failed with return code {res.returncode}:")
         if res.stdout:
@@ -72,8 +78,8 @@ def audit_large_files():
 
 def purge_workspace_bloat():
     """Systematically purges caches, temporary files, and OS artifacts per gemini-code-1794387080919.md."""
-    import shutil
     import glob
+    import shutil
     print("[INFO] Purging cache, build artifacts, and OS junk files...", flush=True)
     for p in glob.glob("**/__pycache__", recursive=True) + glob.glob("**/.pytest_cache", recursive=True):
         shutil.rmtree(p, ignore_errors=True)
@@ -81,7 +87,7 @@ def purge_workspace_bloat():
         for f in glob.glob(ext, recursive=True):
             try:
                 os.remove(f)
-            except Exception:
+            except (FileNotFoundError, OSError):
                 pass
 
 def push_to_remote():
@@ -107,7 +113,7 @@ def push_to_remote():
     success, staged_status, _ = run_cmd("git status --short", "Inspecting staged changes")
 
     # Double check staged file sizes
-    res = subprocess.run("git diff --cached --name-only", shell=True, capture_output=True, text=True)
+    res = subprocess.run(["git", "diff", "--cached", "--name-only"], shell=False, capture_output=True, text=True)
     staged_files = res.stdout.strip().splitlines()
     print(f"[INFO] Total staged files: {len(staged_files)}")
 

@@ -22,17 +22,15 @@ Outputs Generated:
   - Updates data/processed/shapefiles/chhattisgarh_blocks_mrv.shp with exact Rice_ha & Field_Count
 """
 
+import gc
+import glob
 import os
 import sys
-import glob
 import time
-import gc
+
+import geopandas as gpd
 import numpy as np
 import pandas as pd
-import geopandas as gpd
-from shapely.geometry import Point, box
-import pyarrow as pa
-import pyarrow.parquet as pq
 
 PROCESSED_DIR = "data/processed"
 SHP_DIR = os.path.join(PROCESSED_DIR, "shapefiles")

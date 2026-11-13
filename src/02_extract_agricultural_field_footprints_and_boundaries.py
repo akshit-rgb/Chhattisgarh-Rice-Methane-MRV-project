@@ -28,15 +28,13 @@ Outputs:
   - outputs/accuracy_audit/field_segmentation_accuracy.json
 """
 
-import os
-import sys
 import json
-import numpy as np
-import pandas as pd
-import geopandas as gpd
-from shapely.geometry import box, Point, Polygon, MultiPolygon
-from shapely.ops import unary_union
+import os
+
 import ee
+import geopandas as gpd
+import numpy as np
+from shapely.geometry import Polygon
 
 PROJECT_ID = "ee-akshitvaishnavonline"
 DATA_PROCESSED_DIR = "data/processed"

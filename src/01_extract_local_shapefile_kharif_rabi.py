@@ -31,11 +31,12 @@ Outputs:
 import os
 import sys
 import time
+
+import ee
+import geopandas as gpd
 import numpy as np
 import pandas as pd
-import geopandas as gpd
 import pyogrio
-import ee
 
 PROJECT_ID = "ee-akshitvaishnavonline"
 PROCESSED_DIR = "data/processed"

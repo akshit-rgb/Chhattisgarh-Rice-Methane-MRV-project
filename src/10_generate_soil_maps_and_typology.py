@@ -21,12 +21,10 @@ All in UTM Zone 44N (EPSG:32644).
 """
 
 import os
-import sys
-import numpy as np
-import pandas as pd
+
 import geopandas as gpd
 import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
+import numpy as np
 from matplotlib.patches import Patch, Rectangle
 
 PROCESSED_DIR = "data/processed"
@@ -193,10 +191,10 @@ def build_and_export_soil_shapefile():
     out_geo = os.path.join(PROCESSED_DIR, "chhattisgarh_soils_essential.geojson")
     gdf_b.to_file(out_geo, driver="GeoJSON")
 
-    print(f"[SUCCESS] Exported enriched soil shapefiles:")
+    print("[SUCCESS] Exported enriched soil shapefiles:")
     print(f"  -> {out_shp}")
     print(f"  -> {out_geo}")
-    print(f"Soil distribution across 146 blocks:")
+    print("Soil distribution across 146 blocks:")
     print(gdf_b["Soil_Class"].value_counts())
 
     return gdf_b

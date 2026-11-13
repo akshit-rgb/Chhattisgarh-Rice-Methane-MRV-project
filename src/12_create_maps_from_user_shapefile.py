@@ -28,15 +28,13 @@ Outputs Generated:
 """
 
 import os
-import sys
 import time
-import glob
-import numpy as np
-import pandas as pd
+
 import geopandas as gpd
-import matplotlib.pyplot as plt
-from matplotlib.patches import Patch, Rectangle
 import matplotlib.patheffects as pe
+import matplotlib.pyplot as plt
+import pandas as pd
+from matplotlib.patches import Rectangle
 
 # Setup paths
 PROCESSED_DIR = "data/processed"

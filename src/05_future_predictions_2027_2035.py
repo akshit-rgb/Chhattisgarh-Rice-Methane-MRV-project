@@ -17,10 +17,10 @@ Outputs:
 """
 
 import os
-import joblib
+
+import ee
 import numpy as np
 import pandas as pd
-import ee
 
 # IPCC AR6 100-year GWPs
 GWP_CH4 = 27.9
@@ -232,7 +232,7 @@ def run_future_forecasting_pipeline():
     out_csv = "data/processed/chhattisgarh_block_future_forecasts_2027_2035.csv"
     df_forecast.to_csv(out_csv, index=False)
 
-    print(f"\n[SUCCESS] Future forecasts generated and saved:")
+    print("\n[SUCCESS] Future forecasts generated and saved:")
     print(f"  -> {out_csv}")
     print(f"  -> Total rows: {len(df_forecast):,} (146 blocks x 3 horizons x 3 scenarios = 1,314)")
 

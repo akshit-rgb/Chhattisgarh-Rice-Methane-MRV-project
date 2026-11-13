@@ -26,15 +26,14 @@ Outputs Generated:
 """
 
 import os
-import sys
 import time
+
+import geopandas as gpd
+import matplotlib.patheffects as pe
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import geopandas as gpd
-import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
-from matplotlib.collections import PolyCollection
-import matplotlib.patheffects as pe
 from shapely import from_wkb
 
 # Paths
@@ -208,7 +207,7 @@ def generate_methane_analysis_report(df):
         f"| **AWD Methane Abatement** | **{tot_awd_ch4:,.1f} Tonnes CH4** | Verra VM0042 Alternate Wetting & Drying Potential |",
         f"| **AWD Carbon Offset Credits** | **{tot_awd_co2e:,.1f} tCO2e** | Certified carbon abatement credits per year |",
         f"| **Carbon Revenue Potential** | **${tot_usd/1e6:,.2f} Million USD** | Valued at $15/tCO2e (₹{tot_inr_cr:,.1f} Crore / year) |",
-        f"| **Mean Field Holding Size** | **0.1005 ha** | 99.5% Marginal holdings (< 1.0 ha) |",
+        "| **Mean Field Holding Size** | **0.1005 ha** | 99.5% Marginal holdings (< 1.0 ha) |",
         "",
         "---",
         "",
